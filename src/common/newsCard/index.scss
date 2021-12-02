@@ -1,0 +1,204 @@
+/* 新闻卡片样式 */
+.newsCard-box {
+  display: inline-block;
+  vertical-align: top;
+  width: 100%;
+  margin: 5px;
+  background: linear-gradient(145deg, #ffffff, #f0f0f0) !important;
+  box-shadow: 3px 3px 8px #a3a3a3,
+    -3px -3px 8px #ffffff;
+  transition: all .3s ease-in-out;
+
+  /* 卡片头样式 */
+  .arco-card-header {
+    height: 60px !important;
+    border-bottom: none;
+
+    .arco-card-header-title {
+      .arco-btn {
+        color: #000;
+        height: 60px;
+        width: 100%;
+
+        font-size: 36px !important;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        /* 加省略号 */
+        white-space: nowrap;
+        padding: 5px;
+        letter-spacing: .1em;
+        font-weight: 600;
+        transition: all .3s ease-in-out;
+        border-bottom: 2px transparent solid !important;
+        text-align: start;
+
+        /* 强制不换行 */
+        &:hover {
+          text-shadow: 1px 1px #ccc;
+          color: #000 !important;
+          background-color: transparent !important;
+          border-bottom: 2px #ccc solid !important;
+        }
+      }
+    }
+  }
+
+  /* 卡片内容样式 */
+  .arco-card-body {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding-top: 0 !important;
+    max-height: 300px;
+    margin-top: 5px;
+
+    // 图片样式
+    .arco-image {
+      width: 25%;
+      box-sizing: border-box;
+      text-align: center;
+      overflow: hidden;
+
+      img {
+        max-height: 110px;
+        max-width: 100%;
+        transition: all .3s ease-in-out;
+      }
+    }
+
+    // 内容样式
+    p {
+      box-sizing: border-box;
+      margin: 0;
+      margin: 5px 0;
+      padding-left: 1em;
+      font-size: 20px;
+      width: 70%;
+      height: 120px;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 4;
+      /* 显示三行，后面省略 */
+      overflow: hidden;
+      transition: all .3s;
+      letter-spacing: .1em;
+      text-indent: 1em;
+      transition: all .3s ease-in-out;
+
+      &:hover {
+        cursor: pointer;
+        color: #000 !important;
+      }
+    }
+
+    /* 下边按钮样式 */
+    .arco-card-meta {
+      width: 100%;
+
+      .arco-btn {
+        font-size: 18px;
+      }
+    }
+
+    .arco-card-meta-footer:last-child {
+      margin: 0;
+    }
+
+  }
+
+  &:hover {
+    background: linear-gradient(145deg, #ffffff, #e6e6e6);
+    box-shadow: 3px 3px 14px #a3a3a3,
+      -3px -3px 14px #ffffff;
+
+    img {
+      transform: scale(1.05);
+    }
+  }
+
+  .arco-skeleton {
+    width: 100%;
+  }
+
+  /* 星标动画 */
+  .arco-icon-star-fill {
+    animation-name: tada;
+    animation-duration: 1s;
+  }
+
+  .arco-icon-star {
+    animation-name: wobble;
+    animation-duration: 1s;
+  }
+}
+
+
+@keyframes tada {
+  from {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+
+  10%,
+  20% {
+    -webkit-transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);
+    transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);
+  }
+
+  30%,
+  50%,
+  70%,
+  90% {
+    -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+    transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+  }
+
+  40%,
+  60%,
+  80% {
+    -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+    transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+  }
+
+  to {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes wobble {
+  from {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  15% {
+    -webkit-transform: translate3d(-25%, 0, 0) rotate3d(0, 0, 1, -5deg);
+    transform: translate3d(-25%, 0, 0) rotate3d(0, 0, 1, -5deg);
+  }
+
+  30% {
+    -webkit-transform: translate3d(20%, 0, 0) rotate3d(0, 0, 1, 3deg);
+    transform: translate3d(20%, 0, 0) rotate3d(0, 0, 1, 3deg);
+  }
+
+  45% {
+    -webkit-transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -3deg);
+    transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -3deg);
+  }
+
+  60% {
+    -webkit-transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 2deg);
+    transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 2deg);
+  }
+
+  75% {
+    -webkit-transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg);
+    transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg);
+  }
+
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
