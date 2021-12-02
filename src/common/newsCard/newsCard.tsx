@@ -18,8 +18,6 @@ const NewsCard: React.FC<INewCardProps> = ({
   loading = false,
   star = false,
 }) => {
-
-
   return (
     <Card
       className="newsCard-box"
