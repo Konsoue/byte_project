@@ -1,10 +1,33 @@
-import React from 'react';
-
+import React from "react";
+import NewsCard from "../../common/newsCard/newsCard";
 
 function Home() {
-  return (<div>
-    home
-  </div>)
+  return (
+    <div style={{ width: "1000px" }}>
+      home
+      <NewsCard
+        id={123}
+        title={"昨日XX县某某村造啥啥啥被啥啥啥了"}
+        content={
+          "这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西"
+        }
+        img={"https://i.loli.net/2021/11/14/p9tv7PWslCcwqi2.png"}
+        loading={false}
+        star={false}
+      />
+      <NewsCard
+        id={1223}
+        title={
+          "这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西"
+        }
+        content={"昨日XX县某某村造啥啥啥被啥啥啥了"}
+        img={"https://i.loli.net/2021/11/30/sxe73E5WjSbZlz6.jpg"}
+        loading={false}
+        star={true}
+      />
+      <NewsCard loading={true} />
+    </div>
+  );
 }
 
 export default Home;
