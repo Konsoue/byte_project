@@ -4,6 +4,8 @@ import NotFound from "./pages/notFound";
 import { useRoutes, BrowserRouter as Router } from "react-router-dom";
 import "./index.less";
 import "@arco-design/web-react/dist/css/arco.css";
+import { createBrowserHistory } from "history";
+export const history = createBrowserHistory();
 
 function CreateRoutes() {
   const homeElement = <Home />;
