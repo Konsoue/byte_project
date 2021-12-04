@@ -7,7 +7,6 @@ import { routeMethod } from './getRoute'
 export const history = createBrowserHistory();
 const RouteComponent: React.FC = () => {
   const routes = routeMethod.requirePage();
-  console.log(routes);
   return (
     <Router history={history}>
       <Switch>
