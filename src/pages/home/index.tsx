@@ -1,10 +1,26 @@
 import React from "react";
 import NewsCard from "../../common/newsCard/newsCard";
+import useFetch from '@/hooks/useFetch';
+import { userUrl } from '@/Utils/urls'
 
 function Home() {
+
+  const userCreate = useFetch({
+    url: userUrl.create,
+    type: 'post'
+  });
+
+
   return (
     <div style={{ width: "1000px" }}>
-      home
+      <button onClick={() => {
+        userCreate.run({
+          name: 'csx',
+          email: '8874@qq.com',
+          password: '123'
+        })
+      }} >注册账号</button>
+      <button onClick={() => { }}>登录</button>
       <NewsCard
         id={123}
         title={"昨日XX县某某村造啥啥啥被啥啥啥了"}

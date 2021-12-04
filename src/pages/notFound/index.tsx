@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import './index.scss'
 
-function NotFound() {
+const NotFound: React.FC = () => {
   return (
     <div className="not-found">
       <Link to="/">
