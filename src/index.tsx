@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import RouteComponent from './route';
+import "@arco-design/web-react/dist/css/arco.css";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <RouteComponent />
   </React.StrictMode>,
   document.getElementById('root')
 );

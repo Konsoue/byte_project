@@ -1,5 +1,5 @@
 import axios from "axios";
-import { history } from "@/App";
+import { history } from "@/route";
 import { Modal, Message } from "@arco-design/web-react";
 import { fetchFunc } from "./types";
 import localStorageUtils from "@/Utils/localStorageUtils";
@@ -26,8 +26,6 @@ instance.interceptors.request.use(
     const filterPathNames = [
       "/register",
       "/",
-      "/Manager/dataPreview/Temperature",
-      "/Manager/dataPreview/Rain",
     ];
     // 要过滤掉的url
     const filterUrls = ["/api/user/register", "/api/user/login"];

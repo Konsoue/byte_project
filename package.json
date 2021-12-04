@@ -59,6 +59,7 @@
     "react-dev-utils": "^11.0.3",
     "react-dom": "^17.0.2",
     "react-refresh": "^0.8.3",
+    "react-router-dom": "^5.3.0",
     "resolve": "1.18.1",
     "resolve-url-loader": "^3.1.2",
     "sass": "^1.44.0",
@@ -152,7 +153,9 @@
       "react-app"
     ]
   },
+  "proxy": "http://106.54.76.56:8877",
   "devDependencies": {
-    "react-router-dom": "^6.0.2"
+    "@types/react-router-dom": "^5.3.2",
+    "@types/webpack-env": "^1.16.3"
   }
 }
