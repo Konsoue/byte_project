@@ -1,0 +1,36 @@
+$header-height: 52px;
+
+.pub-header-container {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 3px rgb(18 18 18 / 10%);
+  overflow: hidden;
+  height: $header-height;
+
+  .arco-tabs-header-nav::before {
+    background-color: transparent;
+  }
+}
+
+.pub-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.logo {
+  font-size: 25px;
+  line-height: $header-height;
+}
+
+.pub-header,
+.header-tabs {
+  height: inherit;
+
+  .arco-tabs-header-nav,
+  .arco-tabs-header-scroll {
+    height: inherit;
+  }
+}
