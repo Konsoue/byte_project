@@ -2,33 +2,19 @@ import React from "react";
 import SideBar from "@/common/sideBar/index";
 import { Layout, Card } from "@arco-design/web-react";
 import { Switch, Route } from "react-router-dom";
-import personal from "./personal";
-import mySettings from "./mySettings";
-// import PlaceholderPage from '@/Components/PlaceholderPage';
+import { routeMethod } from "@/route/getRoute";
 import { withRouter, RouteComponentProps } from "react-router";
-const linkTo = {
-  topRoute: "/user",
-  to(route: string) {
-    return this.topRoute + route;
-  },
-};
 const { Sider, Content } = Layout;
 
 const User: React.FC<RouteComponentProps> = (props) => {
-  const pathName = props.location.pathname.split("/");
   const renderContent = () => {
     return (
       <Switch>
-        <Route
-          path={linkTo.topRoute + "/personal"}
-          key={linkTo.topRoute + "/personal"}
-          component={personal}
-        />
-        <Route
-          path={linkTo.topRoute + "/mySettings"}
-          key={linkTo.topRoute + "/mySettings"}
-          component={mySettings}
-        />
+        {routeMethod.requirePage("/user").map((item) => {
+          return (
+            <Route path={item.url} key={item.url} component={item.component} />
+          );
+        })}
       </Switch>
     );
   };

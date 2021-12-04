@@ -44,36 +44,21 @@ const SideBar: FC<RouteComponentProps> = (props) => {
     const pathname = arg.location.pathname;
     let str: string;
     str = "/" + pathname.split("/").slice(1, 3).join("/");
-    switch (str) {
-      case linkTo.topRoute + "/user":
-        console.log(menuConfig);
-        return menuConfig.map((item) => {
-          console.log(item);
-          return (
-            <Item key={item.key}>
-              <item.icon />
-              {item.title}
-            </Item>
-          );
-        });
-      default:
-        return <Fragment></Fragment>;
-    }
+    return menuConfig.map((item) => {
+      console.log(item);
+      return (
+        <Item key={item.key}>
+          <item.icon />
+          {item.title}
+        </Item>
+      );
+    });
   }
-
-  // 监听 Affix 固定状态改变
-  const handleAffixChange = (affixed: boolean | undefined) => {
-    if (affixed) {
-      setSiderHeight("100vh");
-    } else {
-      setSiderHeight("calc(100vh - 100px)");
-    }
-  };
 
   return (
     <Fragment>
       {/* 侧边栏 */}
-      <Affix offsetTop={0} onChange={handleAffixChange}>
+      <Affix offsetTop={0} style={{ height: "100vh" }}>
         <Menu
           mode="vertical"
           style={{ height: siderHeight }}
