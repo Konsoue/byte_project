@@ -17,7 +17,14 @@ $header-height: 52px;
 .pub-header {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
+  padding: 0 50px;
+}
+
+.header-left,
+.header-right {
+  display: flex;
+  flex-direction: row;
 }
 
 .logo {
@@ -26,11 +33,49 @@ $header-height: 52px;
 }
 
 .pub-header,
-.header-tabs {
+.header-tabs,
+.header-left {
   height: inherit;
 
   .arco-tabs-header-nav,
   .arco-tabs-header-scroll {
     height: inherit;
   }
+}
+
+.pub-avatar {
+  line-height: $header-height;
+  cursor: pointer;
+
+  .arco-avatar-text {
+    font-size: 14px;
+    user-select: none;
+  }
+}
+
+.content-container {
+  padding: 5px 10px 1px 10px;
+  text-align: center;
+  background-color: var(--color-bg-popup);
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+}
+
+.content-item {
+  cursor: pointer;
+  color: rgb(var(--gray-6));
+
+  .item-icon {
+    display: inline-block;
+    vertical-align: text-top;
+    margin-right: 8px;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+.content-item:hover {
+  color: rgb(var(--gray-8));
 }
