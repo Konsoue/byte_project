@@ -33,7 +33,7 @@ function Home() {
       <article className="article-container">
         {newsList.map((news: INewsList) => (
           <NewsCard
-            id={news._id}
+            key={news._id}
             title={news.title}
             img={news.img}
             content={news.digest}
