@@ -2,7 +2,7 @@ import React, { useReducer, useMemo } from "react";
 // import useFetch from '@/hooks/useFetch';
 // import { userUrl } from '@/Utils/urls'
 import Header from '@/common/Header';
-import NewsCard from "@/common/newsCard";
+import NewsCard from "@/common/NewsCard";
 import { IHomeAction, IHomeState, INewsList } from './types'
 import { SS } from '@/Utils'
 import './index.scss';
