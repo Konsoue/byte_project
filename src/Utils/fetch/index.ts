@@ -23,12 +23,9 @@ instance.interceptors.request.use(
   function (config) {
     const { pathname } = history.location;
     // 要过滤掉的路由
-    const filterPathNames = [
-      "/register",
-      "/",
-    ];
+    const filterPathNames = ["/register", "/"];
     // 要过滤掉的url
-    const filterUrls = ["/api/user/register", "/api/user/login"];
+    const filterUrls = ["/api/user/create", "/api/user/login",'/api/user/sendCreateMail'];
     // 因为dataPreview的接口太多了，因此用路由排除
     let isFilterPathName = filterPathNames.indexOf(pathname) === -1;
     // 由于有可能页面跳转了仍然未完成请求，被modal拦截，因此需要排除掉登陆和注册接口
@@ -80,13 +77,14 @@ instance.interceptors.response.use(
     if (data.status.toString()[0] === '2') {
       return data;
     } else {
-      Message.error(data.Message);
+      Message.error(data.message);
       return Promise.reject(data);
     }
   },
-  function (error) {
+  (error) => {
+    const res = error.response.data;
     // 对响应错误做点什么
-    Message.error(error.Message);
+    Message.error(res.message);
     return Promise.reject(error);
   }
 );

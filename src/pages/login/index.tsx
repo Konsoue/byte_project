@@ -1,21 +1,20 @@
-import React, { useEffect } from "react";
-import { Layout } from '@arco-design/web-react';
-// import { useHistory } from 'react-router-dom'
-// import useFetch from '@/hooks/useFetch';
-// import { userUrl } from '@/Utils/urls'
+import React, { useState } from "react";
+import "./index.scss";
 
-const { Header, Content, Footer } = Layout;
+import LoginForm from "./LoginForm";
+import RegisterForm from "./RegisterForm";
 
 const Login: React.FC = () => {
-  return (
-    <div>
-      <Layout style={{ height: '400px' }}>
-        <Header>Header</Header>
-        <Content>Content</Content>
-        <Footer>Footer</Footer>
-      </Layout>
-    </div>
-  )
-}
+  const [registerState, setRegisterState] = useState(false);
 
-export default Login
+  return (
+    <div className="index-page">
+      {registerState ? (
+        <RegisterForm setRegisterState={setRegisterState} />
+      ) : (
+        <LoginForm setRegisterState={setRegisterState} />
+      )}
+    </div>
+  );
+};
+export default Login;
