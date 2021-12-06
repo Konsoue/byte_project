@@ -4,8 +4,6 @@ import RouteComponent from './route';
 import "@arco-design/web-react/dist/css/arco.css";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <RouteComponent />
-  </React.StrictMode>,
+  <RouteComponent />,
   document.getElementById('root')
 );

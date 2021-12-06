@@ -3,9 +3,8 @@ import React from "react";
 // import { userUrl } from '@/Utils/urls'
 import Header from '@/common/Header';
 
+
 function Home() {
-
-
   return (
     <div>
       <Header />
