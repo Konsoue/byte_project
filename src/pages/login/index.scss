@@ -1,5 +1,5 @@
 .index-page {
-  // background: url('../../static/background.png') no-repeat fixed;
+  // background: url('../../static/images/background.jpg') no-repeat fixed;
   background-size: cover;
   position: relative;
   background-position: 20% 90%;
@@ -26,17 +26,15 @@
       margin: 0 0 20px 0;
       text-align: center;
       user-select: none;
-      font-size: 24px;
+      font-size: 28px;
+      font-weight: 500;
     }
 
     .arco-card-body {
       height: 100%;
 
       form {
-        // height: 100%;
-        // height: 200px;
         justify-content: center;
-
       }
 
       .register-form {
@@ -54,7 +52,7 @@
   }
 
   .register-box {
-    height: 390px;
+    height: 400px;
   }
 
   .login-box {
@@ -99,6 +97,10 @@
   .arco-input-group-addafter {
     padding: 0 !important;
   }
+
+  .arco-card-size-default .arco-card-body {
+    padding: 16px 0;
+  }
 }
 
 // loginpage模糊效果
@@ -109,7 +111,8 @@
   position: absolute;
   left: 0;
   top: 0;
-  background: inherit;
+
+  background: rgba(255, 255, 255, 0.747);
   filter: blur(2px);
   z-index: 1;
 }

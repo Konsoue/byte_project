@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./index.scss";
+import { Card } from "@arco-design/web-react";
 
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
@@ -9,11 +10,17 @@ const Login: React.FC = () => {
 
   return (
     <div className="index-page">
-      {registerState ? (
-        <RegisterForm setRegisterState={setRegisterState} />
-      ) : (
-        <LoginForm setRegisterState={setRegisterState} />
-      )}
+      <Card
+        className={`index-card-box ${
+          registerState ? "register-box" : "login-box"
+        }`}
+      >
+        {registerState ? (
+          <RegisterForm setRegisterState={setRegisterState} />
+        ) : (
+          <LoginForm setRegisterState={setRegisterState} />
+        )}
+      </Card>
     </div>
   );
 };
