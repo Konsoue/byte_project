@@ -10,7 +10,7 @@ export default {
   get: () => {
     let userData = localStorage.getItem(name) ? JSON.parse((localStorage.getItem(name) as string)) : null
     //如果localstorage中存在登陆信息且还未过期，则返回数据
-    if (userData && (userData.expires > new Date().valueOf())) {
+    if (userData && (userData.expireAt > new Date().valueOf())) {
       return userData
     } else {
       // 若过期则移除localstorage

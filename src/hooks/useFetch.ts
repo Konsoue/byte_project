@@ -6,7 +6,7 @@ import fetch from '@/Utils/fetch'
 interface IuseFetchRes {
   loading: boolean;
   data: undefined | object | [];
-  err: any,
+  err: any;
   run: (currentConfig?: object | any[], isReset?: boolean) => Promise<any>
 }
 /**

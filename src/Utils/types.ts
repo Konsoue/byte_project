@@ -8,7 +8,6 @@ export interface IUserUrl {
 
 export interface INewsUrl {
   addItem: string;
-  getNewsDigest: string;
   getNewsItem: string;
   [attr: string]: string;
 }
@@ -33,4 +32,11 @@ export interface ILikeUrl {
   delete: string;
   getMyLikes: string;
   [attr: string]: string;
+}
+
+
+export interface IStorageData {
+  val?: any;
+  expire?: Date;
+  [attr: string]: any;
 }
