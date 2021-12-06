@@ -1,11 +1,12 @@
 import React from "react";
-import { Form, Input, Button, Card, Message } from "@arco-design/web-react";
+import { Form, Input, Button, Message } from "@arco-design/web-react";
 import useFetch from "@/hooks/useFetch";
 import { loginFetchConfig } from "./actionCreator";
 import "./index.scss";
 import localStorageUtils from "@/Utils/localStorageUtils";
 import { history } from "@/route";
 import { ILoginFormProps } from "./types";
+import { IconEmail, IconPen } from "@arco-design/web-react/icon";
 const layout = {
   labelCol: { span: 6 },
   wrapperCol: { span: 18 },
@@ -33,7 +34,7 @@ const LoginForm: React.FC<ILoginFormProps> = ({ setRegisterState }) => {
   };
 
   return (
-    <Card className="index-card-box login-box">
+    <>
       <h3 className="index-box-title">Issue新闻</h3>
       <Form
         {...layout}
@@ -45,7 +46,12 @@ const LoginForm: React.FC<ILoginFormProps> = ({ setRegisterState }) => {
         onSubmitFailed={onSubmitFailed}
       >
         <Form.Item
-          label="邮箱"
+          label={
+            <>
+              邮箱&nbsp;
+              <IconEmail />
+            </>
+          }
           field="email"
           rules={[
             {
@@ -60,7 +66,12 @@ const LoginForm: React.FC<ILoginFormProps> = ({ setRegisterState }) => {
         </Form.Item>
 
         <Form.Item
-          label="密码"
+          label={
+            <>
+              密码&nbsp;
+              <IconPen />
+            </>
+          }
           field="password"
           rules={[{ required: true, message: "请输入密码" }]}
         >
@@ -84,7 +95,7 @@ const LoginForm: React.FC<ILoginFormProps> = ({ setRegisterState }) => {
           </Button>
         </div>
       </Form>
-    </Card>
+    </>
   );
 };
 export default LoginForm;

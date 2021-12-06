@@ -1,13 +1,19 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Card, Message } from "@arco-design/web-react";
+import { Form, Input, Button, Message } from "@arco-design/web-react";
 import useFetch from "@/hooks/useFetch";
 import { createFetchConfig, sendCreateMailConfig } from "./actionCreator";
+import {
+  IconEmail,
+  IconPen,
+  IconUser,
+  IconSend,
+} from "@arco-design/web-react/icon";
 import { ILoginFormProps } from "./types";
 import "./index.scss";
 
 const layout = {
-  labelCol: { span: 6 },
-  wrapperCol: { span: 18 },
+  labelCol: { span: 7 },
+  wrapperCol: { span: 17 },
 };
 
 const RegisterForm: React.FC<ILoginFormProps> = ({ setRegisterState }) => {
@@ -25,7 +31,7 @@ const RegisterForm: React.FC<ILoginFormProps> = ({ setRegisterState }) => {
   };
   // 校验失败的回掉
   const onSubmitFailed = (errorInfo: any) => {
-    Message.error("请正确填写账号密码");
+    Message.error("请正确填写格式");
   };
 
   const downCounter = () => {
@@ -51,7 +57,7 @@ const RegisterForm: React.FC<ILoginFormProps> = ({ setRegisterState }) => {
       });
   };
   return (
-    <Card className="index-card-box register-box">
+    <>
       <h3 className="index-box-title">注册</h3>
       <Form
         {...layout}
@@ -63,14 +69,24 @@ const RegisterForm: React.FC<ILoginFormProps> = ({ setRegisterState }) => {
         onSubmitFailed={onSubmitFailed}
       >
         <Form.Item
-          label="用户名"
+          label={
+            <>
+              用户名&nbsp;
+              <IconUser />
+            </>
+          }
           field="name"
           rules={[{ required: true, message: "请输入用户名" }]}
         >
           <Input />
         </Form.Item>
         <Form.Item
-          label="邮箱"
+          label={
+            <>
+              邮箱&nbsp;
+              <IconEmail />
+            </>
+          }
           field="email"
           rules={[
             {
@@ -85,7 +101,12 @@ const RegisterForm: React.FC<ILoginFormProps> = ({ setRegisterState }) => {
         </Form.Item>
 
         <Form.Item
-          label="密码"
+          label={
+            <>
+              密码&nbsp;
+              <IconPen />
+            </>
+          }
           field="password"
           rules={[
             {
@@ -101,7 +122,12 @@ const RegisterForm: React.FC<ILoginFormProps> = ({ setRegisterState }) => {
         </Form.Item>
 
         <Form.Item
-          label="验证码"
+          label={
+            <>
+              验证码&nbsp;
+              <IconSend />
+            </>
+          }
           field="verifyCode"
           rules={[
             {
@@ -116,7 +142,6 @@ const RegisterForm: React.FC<ILoginFormProps> = ({ setRegisterState }) => {
           <Input
             addAfter={
               <Button
-                className=""
                 onClick={() => downCounter()}
                 disabled={Boolean(loading)}
                 type="primary"
@@ -144,7 +169,7 @@ const RegisterForm: React.FC<ILoginFormProps> = ({ setRegisterState }) => {
           </Button>
         </div>
       </Form>
-    </Card>
+    </>
   );
 };
 export default RegisterForm;
