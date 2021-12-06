@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Input } from '@arco-design/web-react';
-import useFetch from '@/hooks/useFetch';
 import './index.scss';
 
 const InputSearch = Input.Search;
@@ -20,7 +19,7 @@ const PubSearch: React.FC = () => {
         searchButton
         loading={loading}
         onSearch={searchNews}
-        placeholder='Enter keyword to search'
+        placeholder=''
         style={{ width: 350 }}
       />
     </div>

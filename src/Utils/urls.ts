@@ -18,6 +18,7 @@ export const newsUrl: INewsUrl = {
   addItem: '/api/news/addItem',
   getNewsDigest: '/api/news/getNewsDigest',
   getNewsItem: '/api/news/getNewsItem',
+  getNewsType: '/api/news/getNewsType'
 }
 
 
