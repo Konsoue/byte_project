@@ -97,11 +97,15 @@ class MyStorage {
   getItem(key: string) {
     const item = this.storage.getItem(key);
     if (is.Void(item)) return false;
-    const data = JSON.parse(this.storage.getItem(key) as string);
-    if (is.Undefined(data.expire)) return data.val;
-    else if (!is.Undefined(data.expire) && (data.expire > new Date().valueOf())) return data.val;
-    this.removeItem(key);
-    return false;
+    try {
+      const data = JSON.parse(this.storage.getItem(key) as string);
+      if (is.Undefined(data.expire)) return data.val;
+      else if (!is.Undefined(data.expire) && (data.expire > new Date().valueOf())) return data.val;
+      this.removeItem(key);
+      return false;
+    } catch (error) {
+      return this.storage.getItem(key);
+    }
   }
   removeItem(key: string) {
     this.storage.removeItem(key)
