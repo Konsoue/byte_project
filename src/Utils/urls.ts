@@ -5,6 +5,8 @@ import {
   ICommentUrl,
   ILikeUrl
 } from './types'
+import localStorageUtils from "@/Utils/localStorageUtils";
+
 
 export const userUrl: IUserUrl = {
   login: '/api/user/login',
@@ -17,8 +19,14 @@ export const userUrl: IUserUrl = {
 
 export const newsUrl: INewsUrl = {
   addItem: '/api/news/addItem',
-  getNewsDigest: '/api/news/getNewsDigest',
+  getMyNewsDigest: '/api/news/getNewsDigest',
   getNewsItem: '/api/news/getNewsItem',
+  getNewsType: '/api/news/getNewsType',
+  visitorGetNewsDigest: '/api/news/visitorGetNewsDigest',
+  get getNewsDigest() {
+    const userData = localStorageUtils.get();
+    return userData.token ? this.getMyNewsDigest : this.visitorGetNewsDigest;
+  }
 }
 
 

@@ -1,0 +1,13 @@
+$header-height: 52px;
+
+.pub-search-conatiner {
+  position: relative;
+  width: 350px;
+  height: $header-height;
+
+  .arco-input-group-wrapper {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}

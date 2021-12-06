@@ -1,4 +1,4 @@
-
+import { IStorageData } from './types'
 
 // 判断类型
 export const is = {
@@ -79,3 +79,37 @@ export const injectUnmount = (target: React.ComponentClass) => {
     }
   } catch { }
 }
+
+/**
+ * 构造 Storage 类，方便生产 localStorage、sessionStrage 工具函数
+ */
+class MyStorage {
+  storage: Storage
+  constructor(storage: Storage) {
+    this.storage = storage;
+  }
+  setItem(key: string, val: any, expire?: any) {
+    const data = { val } as IStorageData;
+    if (is.Number(expire)) data.expire = new Date().valueOf() + expire;
+    this.storage.setItem(key, JSON.stringify(data))
+    return true;
+  }
+  getItem(key: string) {
+    const item = this.storage.getItem(key);
+    if (is.Void(item)) return false;
+    const data = JSON.parse(this.storage.getItem(key) as string);
+    if (is.Undefined(data.expire)) return data.val;
+    else if (!is.Undefined(data.expire) && (data.expire > new Date().valueOf())) return data.val;
+    this.removeItem(key);
+    return false;
+  }
+  removeItem(key: string) {
+    this.storage.removeItem(key)
+  }
+  clear() {
+    this.storage.clear()
+  }
+}
+
+export const LS = new MyStorage(window.localStorage);
+export const SS = new MyStorage(window.sessionStorage);

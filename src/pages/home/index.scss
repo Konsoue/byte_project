@@ -1,0 +1,7 @@
+$header-height: 52px;
+$article-container-padding: 10px 0 0 0;
+
+.article-container {
+  margin: $header-height auto 10px;
+  padding: $article-container-padding;
+}

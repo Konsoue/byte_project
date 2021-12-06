@@ -74,7 +74,7 @@ instance.interceptors.response.use(
         })
       );
     }
-    if (data.code.toString().indexOf("2") > -1) {
+    if (data.status.toString()[0] === '2') {
       return data;
     } else {
       Message.error(data.message);
