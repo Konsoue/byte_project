@@ -3,6 +3,13 @@ import "./index.scss";
 import { Card } from "@arco-design/web-react";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
+import ForgetForm from "./ForgetForm";
+enum Status {
+  login = "login",
+  register = "register",
+  forget = "forget",
+}
+// 背景svg代码
 const svgStr = `
 <div class="playbox issue-box" style="font-size: 500px;"><svg width="238.5" height="500" viewBox="0 0 238.5 504" xmlns="http://www.w3.org/2000/svg" data-copyright="https://github.com/oubenruing/svg-text-animate" style="vertical-align: text-top; ">
     <g id="svgGroup" stroke-linecap="round" stroke="#000" fill="none" style="fill:none;stroke:#444444;stroke-width:4px;"><path d="M234.50 183.50L234.50 183.50L234.50 189.50Q234.50 203 226 209L226 209Q220 213.50 208.50 217.50L208.50 217.50Q204 219 188 221.50L188 221.50Q177.50 222 172 224.50L172 224.50Q170 245.50 158 263.50L158 263.50L158 273.50Q154.50 294 150 303.50L150 303.50Q146.50 312.50 146.50 314.50L146.50 314.50Q142 341 135 353.50L135 353.50Q133 362 131 370.50L131 370.50Q121.50 413 108.50 426L108.50 426Q96.50 440 96 443.50L96 443.50Q95.50 445.50 97.50 445.50L97.50 445.50Q109.50 457 123 459L123 459L154.50 467Q154.50 480.50 135.50 485L135.50 485Q115.50 489.50 90 494L90 494Q85.50 492 78 492L78 492L72.50 500L62.50 494Q60 496 52.50 496L52.50 496Q38.50 496 37 490L37 490L15.50 484.50Q3.50 484.50 2 470.50L2 470.50Q8 461 21.50 461L21.50 461Q27.50 461 29.50 463L29.50 463Q52 452 68.50 447.50L68.50 447.50Q72 431.50 84 422L84 422Q82 418.50 82 412L82 412Q82 404.50 90 398.50L90 398.50Q88 396.50 88 394.50L88 394.50Q90 392 90 383L90 383L90 379Q91.50 376.50 93.50 370.50L93.50 370.50Q95 366.50 99.50 363.50L99.50 363.50L105.50 334Q111 330 112.50 322L112.50 322Q113 314.50 117 310.50L117 310.50L121 279.50Q127 273.50 129 267.50L129 267.50L129 260Q135 254 136.50 236.50L136.50 236.50Q136.50 230.50 131 230.50L131 230.50Q117.50 232 99.50 240L99.50 240Q89.50 240 77.50 234L77.50 234Q64.50 227.50 60.50 219L60.50 219Q62 199 80 199L80 199L101.50 199Q115.50 199 125 201L125 201Q140.50 201 143.50 197L143.50 197Q146.50 193.50 162 193.50L162 193.50Q164 193.50 165 194.50L165 194.50Q166 195.50 168 195.50L168 195.50Q175.50 195.50 181.50 189.50L181.50 189.50L207 183.50Q208.50 181.50 220.50 181.50L220.50 181.50Q231 181.50 234.50 183.50Z" style="stroke-dasharray: 1149, 1151; stroke-dashoffset: 1150;"><animate attributeName="stroke-dashoffset" to="0" dur="1500ms" calcMode="linear" repeatCount="1" fill="freeze" begin="0ms"></animate></path></g>
@@ -26,21 +33,26 @@ const svgStr = `
 
 const Login: React.FC = () => {
   // 切换注册或登录
-  const [registerState, setRegisterState] = useState(false);
+  const [loginStatus, setStatus] = useState(Status.login);
 
   return (
     <div className="index-page">
       <Card
         // 更改类名变换高度（有过渡效果）
-        className={`index-card-box ${
-          registerState ? "register-box" : "login-box"
-        }`}
+        className={`index-card-box ${loginStatus}-box`}
       >
-        {registerState ? (
-          <RegisterForm setRegisterState={setRegisterState} />
-        ) : (
-          <LoginForm setRegisterState={setRegisterState} />
-        )}
+        {(() => {
+          switch (loginStatus) {
+            case "login":
+              return <LoginForm setStatus={setStatus} />;
+            case "register":
+              return <RegisterForm setStatus={setStatus} />;
+            case "forget":
+              return <ForgetForm setStatus={setStatus} />;
+            default:
+              break;
+          }
+        })()}
       </Card>
       <div
         className="svg-box"

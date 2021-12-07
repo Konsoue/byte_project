@@ -13,7 +13,9 @@ export const userUrl: IUserUrl = {
   create: '/api/user/create',
   updateAvatar: '/api/user/updateAvatar',
   updatePassword: '/api/user/updatePassword',
-  sendCreateMail:'/api/user/sendCreateMail'
+  sendCreateMail:'/api/user/sendCreateMail',
+  resetPassword:'/api/user/resetPassword',
+  sendForgotMail:'/api/user/sendForgotMail',
 }
 
 

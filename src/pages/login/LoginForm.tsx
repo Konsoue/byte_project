@@ -12,7 +12,7 @@ const layout = {
   wrapperCol: { span: 18 },
 };
 
-const LoginForm: React.FC<ILoginFormProps> = ({ setRegisterState }) => {
+const LoginForm: React.FC<ILoginFormProps> = ({ setStatus }) => {
   const [formLogin] = Form.useForm();
   const { run: login } = useFetch(loginFetchConfig);
 
@@ -81,7 +81,14 @@ const LoginForm: React.FC<ILoginFormProps> = ({ setRegisterState }) => {
         </Form.Item>
 
         <div className="forget-box">
-          <Button type='text' className="forget-password">
+          <Button
+            type="text"
+            className="forget-password"
+            onClick={() => {
+              // 点击注册切换至注册框
+              setStatus && setStatus("forget");
+            }}
+          >
             忘记密码
           </Button>
         </div>
@@ -90,7 +97,7 @@ const LoginForm: React.FC<ILoginFormProps> = ({ setRegisterState }) => {
             className="operation-button cancel-btn"
             onClick={() => {
               // 点击注册切换至注册框
-              setRegisterState && setRegisterState(true);
+              setStatus && setStatus("register");
             }}
           >
             注册

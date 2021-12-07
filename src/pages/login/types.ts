@@ -1,3 +1,3 @@
 export interface ILoginFormProps {
-  setRegisterState?: Function;
+  setStatus?: Function;
 }

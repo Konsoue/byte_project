@@ -52,7 +52,6 @@ instance.interceptors.request.use(
         },
       });
     } else {
-      console.log(config)
       return config;
     }
     return config;
