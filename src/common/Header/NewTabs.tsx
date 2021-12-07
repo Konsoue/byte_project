@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Tabs } from '@arco-design/web-react';
 import useFetch from '@/hooks/useFetch';
 import { newsUrl } from '@/Utils/urls'
-import { ITabsPaneProps, INewTabProps, IResponceResult } from './types'
+import {
+  ITabsPaneProps,
+  INewTabProps,
+  IResponceResult,
+} from './types'
 import { SS } from '@/Utils'
 const { TabPane } = Tabs;
 
@@ -35,7 +39,7 @@ const NewTabs: React.FC<INewTabProps> = (props) => {
   })
 
   useEffect(() => {
-    getNewsType({ data: {} })
+    getNewsType()
   }, [])
 
   useEffect(() => {
@@ -43,19 +47,21 @@ const NewTabs: React.FC<INewTabProps> = (props) => {
       const { data } = newsType as IResponceResult;
       setArr(data);
       const type = data[0].id
+      SS.setItem('newsType', type);
       getNewsDigest({ type })
     }
   }, [newsType])
 
   useEffect(() => {
     if (newsDigest) {
-      const { data } = newsDigest as IResponceResult;
+      const { data: { records: data } } = newsDigest as IResponceResult;
       SS.setItem('newsDigest', data);
       toFlash?.({ type: 'flash' })
     }
   }, [newsDigest])
 
   const tabChange = (key: string) => {
+    SS.setItem('newsType', key);
     getNewsDigest({ type: key })
   }
 

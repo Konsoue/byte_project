@@ -1,11 +1,16 @@
-import React, { useReducer, useMemo } from "react";
-// import useFetch from '@/hooks/useFetch';
-// import { userUrl } from '@/Utils/urls'
-import Header from "@/common/Header";
-import NewsCard from "@/common/NewsCard";
-import { IHomeAction, IHomeState, INewsList } from "./types";
-import { SS } from "@/Utils";
-import "./index.scss";
+/*
+ * @Author: your name
+ * @Date: 2021-12-06 21:39:41
+ * @LastEditTime: 2021-12-07 22:27:16
+ * @LastEditors: your name
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: \byte_project\src\pages\home\index.tsx
+ */
+import { useReducer } from "react";
+import Header from '@/common/Header';
+import { IHomeAction, IHomeState } from './types'
+import NewsList from '@/common/NewsList';
+import './index.scss';
 
 const initialState = {
   flash: false,
@@ -24,22 +29,13 @@ const homeReducer = (state: IHomeState, action: IHomeAction) => {
 };
 
 function Home() {
-  const [state, dispatch] = useReducer(homeReducer, initialState);
-  const newsList = useMemo(() => {
-    return (SS.getItem("newsDigest") as INewsList[]) || [];
-  }, [state.flash]);
+  const [state, dispatch] = useReducer(homeReducer, initialState)
+
   return (
     <div>
       <Header toFlash={dispatch} flash={state.flash} />
       <article className="article-container">
-        {newsList.map((news: INewsList) => (
-          <NewsCard
-            key={news._id}
-            title={news.title}
-            img={news.img}
-            content={news.digest}
-          />
-        ))}
+        <NewsList flash={state.flash} toFlash={dispatch} />
       </article>
     </div>
   );

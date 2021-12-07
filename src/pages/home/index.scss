@@ -4,7 +4,8 @@ $article-container-padding: 10px 12% 0 12%;
 .article-container {
   height: calc(100vh - $header-height - 10px);
   box-sizing: border-box;
-  margin: $header-height auto 10px;
+  margin: $header-height auto 0;
   padding: $article-container-padding;
   background-color: rgb(var(--gray-1));
+  overflow: auto;
 }

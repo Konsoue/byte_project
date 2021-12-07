@@ -1,7 +1,4 @@
 .user-box {
-
-
-
   .card-box {
     background-color: #f0f2f5;
     padding: 0;
@@ -49,5 +46,19 @@
 
   .pub-header-container {
     position: static;
+  }
+}
+
+.userPage {
+  height: 100%;
+  color: var(--theme-text);
+  background: var(--theme-background);
+
+  .arco-menu-light {
+    background: var(--theme-background);
+
+    .arco-menu-item {
+      background: transparent;
+    }
   }
 }
