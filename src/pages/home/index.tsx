@@ -27,9 +27,10 @@ function Home() {
   const newsList = useMemo(() => {
     return SS.getItem('newsDigest') as INewsList[] || [];
   }, [state.flash])
+
   return (
     <div>
-      <Header toFlash={dispatch} />
+      <Header toFlash={dispatch} flash={state.flash} />
       <article className="article-container">
         {newsList.map((news: INewsList) => (
           <NewsCard
@@ -37,6 +38,8 @@ function Home() {
             title={news.title}
             img={news.img}
             content={news.digest}
+            time={news.publishTime}
+            source={news.source}
           />
         ))}
       </article>

@@ -1,13 +1,7 @@
 import { Card, Skeleton, Button, Image } from "@arco-design/web-react";
-import {
-  IconStarFill,
-  IconDelete,
-  IconMessage,
-  IconStar,
-} from "@arco-design/web-react/icon";
 import { INewCardProps } from "./types";
 import "./index.scss";
-const { Meta } = Card;
+// const { Meta } = Card;
 
 const NewsCard: React.FC<INewCardProps> = ({
   title = "昨日XX县某某村造啥啥啥被啥啥啥了",
@@ -15,54 +9,26 @@ const NewsCard: React.FC<INewCardProps> = ({
   img = "https://i.loli.net/2021/11/14/p9tv7PWslCcwqi2.png",
   loading = false,
   star = false,
+  source = "央视新闻",
+  time = "2021-02-05"
 }) => {
   return (
-    <Card
-      className="newsCard-box"
-      title={
-        <Skeleton loading={loading} text={{ rows: 1, width: 72 }}>
-          <Button type="text">{title}</Button>
-        </Skeleton>
-      }
-    >
-      <Skeleton loading={loading} text={{ rows: 2, width: ["100%", "80%"] }}>
-        {img ? <Image src={img} /> : null}
-        <p style={img ? { width: "70%" } : { width: "100%" }}>{content}</p>
-      </Skeleton>
-
-      <Meta
-        avatar={
-          <Skeleton loading={loading}>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                flexWrap: "wrap",
-              }}
-            >
-              <Button
-                size="large"
-                type="text"
-                icon={
-                  star ? (
-                    <IconStarFill style={{ color: "#ffcd00" }} />
-                  ) : (
-                    <IconStar />
-                  )
-                }
-              >
-                收藏
-              </Button>
-              <Button size="large" type="text" icon={<IconMessage />}>
-                评论
-              </Button>
-              <Button size="large" type="text" icon={<IconDelete />}>
-                不感兴趣
-              </Button>
-            </div>
-          </Skeleton>
-        }
-      />
+    <Card className="card-item">
+      <div className="card-left">
+        <div className="img-container">
+          <Image
+            src={img}
+          />
+        </div>
+      </div>
+      <div className="card-right">
+        <header className="title">{title}</header>
+        <article className="content">{content}</article>
+        <footer className="footer">
+          <div className="time">{time}</div>
+          <div className="source">{source}</div>
+        </footer>
+      </div>
     </Card>
   );
 };
