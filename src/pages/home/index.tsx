@@ -38,6 +38,8 @@ function Home() {
             title={news.title}
             img={news.img}
             content={news.digest}
+            time={news.publishTime}
+            source={news.source}
           />
         ))}
       </article>

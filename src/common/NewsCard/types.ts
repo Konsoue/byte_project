@@ -5,4 +5,6 @@ export interface INewCardProps {
   img?: string;
   loading?: boolean;
   star?: boolean;
+  time?: string;
+  source?: string;
 }
