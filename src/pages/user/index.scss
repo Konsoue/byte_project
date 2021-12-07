@@ -1,11 +1,11 @@
 .user-box {
   .card-box {
-    background-color: #f0f2f5;
+    background-color: var(--theme-background-2);
+    border-color: var(--theme-background-2);
     padding: 0;
     height: calc(100vh - 68px);
     display: flex;
     flex-direction: column;
-    // overflow: auto;
 
     .arco-card-body {
       height: 100%;
@@ -14,8 +14,11 @@
       .content-box {
         height: 100%;
         box-sizing: border-box;
+        border-color: var(--theme-background-2);
+        background-color: var(--theme-background);
 
         .arco-card-body {
+          background-color: var(--theme-background);
           box-sizing: border-box;
         }
       }
