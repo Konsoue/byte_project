@@ -6,11 +6,8 @@ import { IHeaderProps, IPubAvatarProps } from './types'
 import localStorageUtils from '@/Utils/localStorageUtils'
 import './index.scss'
 
-const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWFkZmJlOGJjOGM2OGViZTY5YWIwMjAiLCJlbWFpbCI6Ijg3NDExMTc1MkBxcS5jb20iLCJpYXQiOjE2Mzg3OTIxODcsImV4cCI6MTYzODg3ODU4N30.17Wxjp-VvmiQFqib6AHObNiSrw9Yc-IpiCiKBVF0Nf4`
-
-
 const Header: React.FC<IHeaderProps> = (props) => {
-  const { toFlash } = props;
+  const { toFlash, flash } = props;
 
   const loginData: IPubAvatarProps = useMemo(() => {
     const data = localStorageUtils.get();
@@ -19,7 +16,7 @@ const Header: React.FC<IHeaderProps> = (props) => {
     } else {
       return { login: true, avatarUrl: data.user.avatar }
     }
-  }, [])
+  }, [flash])
 
   return (
     <div className="pub-header-container">
@@ -32,7 +29,11 @@ const Header: React.FC<IHeaderProps> = (props) => {
           <PubSearch />
         </div>
         <div className="header-right">
-          <PubAvatar login={!!loginData?.login} avatarUrl={loginData?.avatarUrl} />
+          <PubAvatar
+            {...props}
+            login={!!loginData?.login}
+            avatarUrl={loginData?.avatarUrl}
+          />
         </div>
       </div>
     </div>
