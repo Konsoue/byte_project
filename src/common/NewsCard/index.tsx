@@ -1,4 +1,4 @@
-import { Card, Skeleton, Image } from "@arco-design/web-react";
+import { Card, Image } from "@arco-design/web-react";
 import { INewCardProps } from "./types";
 import "./index.scss";
 
