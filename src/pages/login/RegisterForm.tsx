@@ -34,13 +34,14 @@ const RegisterForm: React.FC<ILoginFormProps> = ({ setRegisterState }) => {
     Message.error("请正确填写格式");
   };
 
+  // 验证email后发送验证码请求 并设置60秒倒计时状态
   const downCounter = () => {
     formRegister
       .validate(["email"])
       .then((res) => {
-        console.log(res);
         sendCreateMail({ email: formRegister.getFieldValue("email") }).then(
-          (res) => {
+          () => {
+            // 开始倒计时
             if (formRegister.getFieldValue("email")) setloading(60);
             let num = 59;
             let time = setInterval(() => {
@@ -58,7 +59,9 @@ const RegisterForm: React.FC<ILoginFormProps> = ({ setRegisterState }) => {
   };
   return (
     <>
-      <h3 className="index-box-title">注册</h3>
+      <h3 className="index-box-title">
+        <div className="title-font"></div>
+      </h3>
       <Form
         {...layout}
         size="large"
@@ -78,7 +81,7 @@ const RegisterForm: React.FC<ILoginFormProps> = ({ setRegisterState }) => {
           field="name"
           rules={[{ required: true, message: "请输入用户名" }]}
         >
-          <Input />
+          <Input placeholder="输入注册的用户名" />
         </Form.Item>
         <Form.Item
           label={
@@ -97,7 +100,7 @@ const RegisterForm: React.FC<ILoginFormProps> = ({ setRegisterState }) => {
             { required: true, message: "请输入邮箱" },
           ]}
         >
-          <Input />
+          <Input placeholder="输入注册的邮箱" />
         </Form.Item>
 
         <Form.Item
@@ -118,7 +121,7 @@ const RegisterForm: React.FC<ILoginFormProps> = ({ setRegisterState }) => {
             { required: true, message: "请输入密码" },
           ]}
         >
-          <Input.Password />
+          <Input.Password placeholder="输入至少三位密码" />
         </Form.Item>
 
         <Form.Item
@@ -140,6 +143,7 @@ const RegisterForm: React.FC<ILoginFormProps> = ({ setRegisterState }) => {
           ]}
         >
           <Input
+            placeholder="输入验证码"
             addAfter={
               <Button
                 onClick={() => downCounter()}

@@ -1,5 +1,5 @@
 .index-page {
-  // background: url('../../static/images/background.jpg') no-repeat fixed;
+  // background: url('../../static/images/logo-animation.svg') no-repeat fixed;
   background-size: cover;
   position: relative;
   background-position: 20% 90%;
@@ -23,11 +23,22 @@
     transition: height .3s;
 
     .index-box-title {
-      margin: 0 0 20px 0;
+      margin: 0 0 10px 0;
       text-align: center;
       user-select: none;
       font-size: 28px;
       font-weight: 500;
+      height: 50px;
+
+      .title-font {
+        margin: 0 auto;
+        width: 300px;
+        height: 80px;
+        transform: scale(.6) translate(0, -30px);
+        background: url('../../static/images/logo.svg') no-repeat;
+        background-size: 300px 80px;
+      }
+
     }
 
     .arco-card-body {
@@ -52,17 +63,19 @@
   }
 
   .register-box {
+    opacity: .95;
     height: 400px;
   }
 
   .login-box {
+    opacity: .95;
     height: 290px;
   }
 
   .operation-buttons {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 10px;
     // align-content: center;
 
     .operation-button {
@@ -101,6 +114,36 @@
   .arco-card-size-default .arco-card-body {
     padding: 16px 0;
   }
+
+  .svg-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1000px;
+    z-index: -2;
+
+    .issue-box {
+      transform: translate(0, 20%);
+    }
+
+    .news-box {
+      transform: translate(0, -20%);
+    }
+  }
+
+  .forget-box {
+    .forget-password {
+      margin-top: -5px;
+      padding: 0;
+      float: right;
+      height:auto;
+      font-size: 12px;
+      // height: 25px;
+      // width: 30px;
+    }
+  }
+
 }
 
 // loginpage模糊效果
@@ -112,7 +155,7 @@
   left: 0;
   top: 0;
 
-  background: rgba(255, 255, 255, 0.747);
+  background: rgba(255, 255, 255, 0.5);
   filter: blur(2px);
   z-index: 1;
 }
@@ -194,4 +237,6 @@
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
   }
+
+
 }
