@@ -1,4 +1,3 @@
-import React from 'react';
 
 export interface IHeaderProps {
   toFlash?: Function;
@@ -16,8 +15,13 @@ export interface IPubAvatarProps extends IHeaderProps {
   login?: boolean;
   avatarUrl?: string;
 }
+
+export interface INewsDigest {
+  records: any[];
+}
+
 export interface IResponceResult {
-  data?: any;
+  data?: any | INewsDigest
 }
 
 
