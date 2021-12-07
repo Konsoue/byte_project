@@ -6,8 +6,9 @@ import { routeMethod } from "@/route/getRoute";
 import { withRouter, RouteComponentProps } from "react-router";
 import { IconFaceSmileFill } from "@arco-design/web-react/icon";
 import { history } from "@/route";
-
-const { Sider, Content } = Layout;
+import TopHeader from "@/common/Header";
+import "./index.scss";
+const { Sider, Content, Header } = Layout;
 
 const User: React.FC<RouteComponentProps> = (props) => {
   const renderContent = () => {
@@ -28,7 +29,7 @@ const User: React.FC<RouteComponentProps> = (props) => {
             return (
               <Result
                 style={{
-                  marginTop: "20vh",
+                  marginTop: "10vh",
                 }}
                 status={null}
                 icon={
@@ -56,25 +57,21 @@ const User: React.FC<RouteComponentProps> = (props) => {
   };
 
   return (
-    <Layout>
-      {/* 侧边栏 */}
-      <Sider className="home-page-sider-bar" collapsed={false}>
-        <SideBar />
-      </Sider>
-      <Content style={{ overflow: "hidden" }}>
-        <Card
-          style={{ height: "100%" }}
-          bodyStyle={{
-            backgroundColor: "#f0f2f5",
-            padding: 0,
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          {renderContent()}
-        </Card>
-      </Content>
+    <Layout className="user-box">
+      <Header>
+        <TopHeader />
+      </Header>
+      <Layout>
+        {/* 侧边栏 */}
+        <Sider className="home-page-sider-bar" collapsed={false}>
+          <SideBar />
+        </Sider>
+        <Content>
+          <Card className="card-box">
+            <Card className="content-box">{renderContent()}</Card>
+          </Card>
+        </Content>
+      </Layout>
     </Layout>
   );
 };

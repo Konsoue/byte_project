@@ -20,7 +20,7 @@ const PubSearch: React.FC = () => {
         loading={loading}
         onSearch={searchNews}
         placeholder=''
-        style={{ width: 350 }}
+        style={{ width: '100%' }}
       />
     </div>
   )

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./index.scss";
-import { Card, Button } from "@arco-design/web-react";
+import { Card } from "@arco-design/web-react";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 const svgStr = `

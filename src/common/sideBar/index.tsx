@@ -34,10 +34,10 @@ const SideBar: FC<RouteComponentProps> = (props) => {
   return (
     <Fragment>
       {/* 侧边栏 */}
-      <Affix offsetTop={0} style={{ height: "100vh" }}>
+      <Affix offsetTop={0} style={{ height: "calc(100vh - 64px)" }}>
         <Menu
           mode="vertical"
-          style={{ height: "100vh" }}
+          style={{ height: "calc(100vh - 64px)" }}
           className="side-bar"
           onClickMenuItem={(key) => handleClick(key)}
           selectedKeys={["/" + pathName.split("/")[2]]}
