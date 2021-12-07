@@ -1,7 +1,6 @@
-import { Card, Skeleton, Button, Image } from "@arco-design/web-react";
+import { Card, Image } from "@arco-design/web-react";
 import { INewCardProps } from "./types";
 import "./index.scss";
-// const { Meta } = Card;
 
 const NewsCard: React.FC<INewCardProps> = ({
   title = "昨日XX县某某村造啥啥啥被啥啥啥了",
@@ -25,7 +24,7 @@ const NewsCard: React.FC<INewCardProps> = ({
         <header className="title">{title}</header>
         <article className="content">{content}</article>
         <footer className="footer">
-          <div className="time">{time}</div>
+          <div className="time">{time.split(' ')[0]}</div>
           <div className="source">{source}</div>
         </footer>
       </div>

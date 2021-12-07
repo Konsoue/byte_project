@@ -1,0 +1,43 @@
+.more-news {
+  text-align: center;
+}
+
+.more-icon {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 18px;
+  padding-right: 8px;
+
+  svg {
+    width: 20px;
+    color: red;
+  }
+}
+
+.more-word {
+  display: inline-block;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.more-word:hover {
+  color: rgb(var(--orangered-8));
+  text-decoration: underline;
+}
+
+@keyframes rotateIn {
+  from {
+    -webkit-transform: rotate3d(0, 0, 1, -180deg);
+    transform: rotate3d(0, 0, 1, -180deg);
+  }
+
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate__rotateIn {
+  transform-origin: center;
+  animation: rotateIn 1s infinite;
+}
