@@ -17,15 +17,16 @@ const MyCollection: React.FC = () => {
   }, [])
 
   useEffect(() => {
+    console.log(myCollections)
     if (myCollections) {
       const { data } = myCollections as IResponseResult;
       //将收藏的新闻数组存入collectionArr
-      setArr(data);
+      setArr(data.records);
     }
   }, [myCollections])
 
   return (
-    <article className="article-container">
+    <article >
       {collectionArr.map((news: INewsList) => (
         <NewsCard
           key={news._id}
