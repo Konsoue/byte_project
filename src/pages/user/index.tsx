@@ -13,36 +13,39 @@ import { Switch, Route } from "react-router-dom";
 import { routeMethod } from "@/route/getRoute";
 import { withRouter, RouteComponentProps } from "react-router";
 import { IconFaceSmileFill } from "@arco-design/web-react/icon";
-import { IUserAction, IUserState } from './types'
+import { IUserAction, IUserState } from "./types";
 import { history } from "@/route";
-import { LS } from '@/Utils'
-import '@/theme.scss'
-import './index.scss'
+import TopHeader from "@/common/Header";
+import "./index.scss";
+import { LS } from "@/Utils";
+import "@/theme.scss";
+import "./index.scss";
 export const UserContext = createContext((a: any) => a);
 
-const { Sider, Content } = Layout;
+const { Sider, Content, Header } = Layout;
 
 const initialState = {
-  flash: false
-}
+  flash: false,
+};
 
 const userReducer = (state: IUserState, action: IUserAction) => {
   switch (action.type) {
-    case 'flash':
+    case "flash":
       return {
         ...state,
-        flash: !state.flash
-      }
-    default: return state
+        flash: !state.flash,
+      };
+    default:
+      return state;
   }
-}
+};
 
 const User: React.FC<RouteComponentProps> = (props) => {
-  const [state, dispatch] = useReducer(userReducer, initialState)
+  const [state, dispatch] = useReducer(userReducer, initialState);
 
   const theme = useMemo(() => {
-    return LS.getItem('useDark')
-  }, [state.flash])
+    return LS.getItem("useDark");
+  }, [state.flash]);
 
   const renderContent = () => {
     return (
@@ -62,7 +65,7 @@ const User: React.FC<RouteComponentProps> = (props) => {
             return (
               <Result
                 style={{
-                  marginTop: "20vh",
+                  marginTop: "10vh",
                 }}
                 status={null}
                 icon={
@@ -89,35 +92,27 @@ const User: React.FC<RouteComponentProps> = (props) => {
     );
   };
 
-
-
   return (
     <UserContext.Provider value={dispatch}>
       <div className={`userPage ${theme}`}>
-        <Layout>
-          {/* 侧边栏 */}
-          <Sider className="home-page-sider-bar" collapsed={false}>
-            <SideBar />
-          </Sider>
-          <Content style={{ overflow: "hidden" }}>
-            <Card
-              style={{ height: "100%" }}
-              bodyStyle={{
-                backgroundColor: "#f0f2f5",
-                padding: 0,
-                height: "100%",
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              {renderContent()}
-            </Card>
-          </Content>
+        <Layout className="user-box">
+          <Header>
+            <TopHeader />
+          </Header>
+          <Layout>
+            {/* 侧边栏 */}
+            <Sider className="home-page-sider-bar" collapsed={false}>
+              <SideBar />
+            </Sider>
+            <Content>
+              <Card className="card-box">
+                <Card className="content-box">{renderContent()}</Card>
+              </Card>
+            </Content>
+          </Layout>
         </Layout>
       </div>
-
     </UserContext.Provider>
-
   );
 };
 

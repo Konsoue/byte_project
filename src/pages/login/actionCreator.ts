@@ -13,3 +13,13 @@ export const sendCreateMailConfig: IfetchParams = {
   url: userUrl.sendCreateMail,
   type: "get",
 };
+
+export const resetPasswordConfig: IfetchParams = {
+  url: userUrl.resetPassword,
+  type: "post",
+};
+
+export const sendForgotMailConfig: IfetchParams = {
+  url: userUrl.sendForgotMail,
+  type: "get",
+};

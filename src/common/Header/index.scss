@@ -1,4 +1,4 @@
-$header-height: 52px;
+$header-height: 64px;
 
 .pub-header-container {
   position: fixed;
@@ -8,11 +8,30 @@ $header-height: 52px;
   box-shadow: 0 1px 3px rgb(18 18 18 / 10%);
   overflow: hidden;
   height: $header-height;
-  background-color: #fff;
+  background-color: var(--theme-background);
 
   .arco-tabs-header-nav::before {
     background-color: transparent;
   }
+
+  .title-font {
+    margin: 0 auto;
+    width: 300px;
+    height: 80px;
+    transform: scale(.6) translate(-140px, -20px);
+    background: url('../../static/images/logo.svg') no-repeat;
+    background-size: 300px 80px;
+  }
+
+  .header-middle {
+    width: 40%;
+    padding: 0 20px;
+  }
+
+  .header-left {
+    width: 40%;
+  }
+
 }
 
 .pub-header {
@@ -29,6 +48,7 @@ $header-height: 52px;
 }
 
 .logo {
+  width: 180px;
   font-size: 25px;
   line-height: $header-height;
 }
@@ -47,6 +67,12 @@ $header-height: 52px;
 .pub-avatar {
   line-height: $header-height;
   cursor: pointer;
+
+  .arco-avatar-circle {
+    width: 48px;
+    height: 48px;
+    border: 3px rgb(var(--gray-6)) solid;
+  }
 
   .arco-avatar-text {
     font-size: 14px;

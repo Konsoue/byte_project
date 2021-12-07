@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { Form, Input, Button, Message } from "@arco-design/web-react";
 import useFetch from "@/hooks/useFetch";
-import { createFetchConfig, sendCreateMailConfig } from "./actionCreator";
+import { resetPasswordConfig, sendForgotMailConfig } from "./actionCreator";
 import {
   IconEmail,
   IconPen,
-  IconUser,
   IconSend,
 } from "@arco-design/web-react/icon";
 import { ILoginFormProps } from "./types";
@@ -16,17 +15,17 @@ const layout = {
   wrapperCol: { span: 17 },
 };
 
-const RegisterForm: React.FC<ILoginFormProps> = ({ setStatus }) => {
-  const [formRegister] = Form.useForm();
+const ForgetForm: React.FC<ILoginFormProps> = ({ setStatus }) => {
+  const [formForget] = Form.useForm();
   const [loading, setloading] = useState(0);
-  const { run: register } = useFetch(createFetchConfig);
-  const { run: sendCreateMail } = useFetch(sendCreateMailConfig);
+  const { run: reset } = useFetch(resetPasswordConfig);
+  const { run: sendForgotMail } = useFetch(sendForgotMailConfig);
 
-  const onRegister = (values: any) => {
-    register(values).then((res) => {
+  const onForget = (values: any) => {
+    reset(values).then((res) => {
       // 注册成功提示
-      Message.success("注册成功");
-      setStatus && setStatus('login');
+      Message.success("密码重置成功");
+      setStatus && setStatus("login");
     });
   };
   // 校验失败的回掉
@@ -36,13 +35,13 @@ const RegisterForm: React.FC<ILoginFormProps> = ({ setStatus }) => {
 
   // 验证email后发送验证码请求 并设置60秒倒计时状态
   const downCounter = () => {
-    formRegister
+    formForget
       .validate(["email"])
       .then((res) => {
-        sendCreateMail({ email: formRegister.getFieldValue("email") }).then(
+        sendForgotMail({ email: formForget.getFieldValue("email") }).then(
           () => {
             // 开始倒计时
-            if (formRegister.getFieldValue("email")) setloading(60);
+            if (formForget.getFieldValue("email")) setloading(60);
             let num = 59;
             let time = setInterval(() => {
               if (num === 0) {
@@ -65,24 +64,12 @@ const RegisterForm: React.FC<ILoginFormProps> = ({ setStatus }) => {
       <Form
         {...layout}
         size="large"
-        name="register"
-        form={formRegister}
-        className="register-form"
-        onSubmit={onRegister}
+        name="reset"
+        form={formForget}
+        className="reset-form"
+        onSubmit={onForget}
         onSubmitFailed={onSubmitFailed}
       >
-        <Form.Item
-          label={
-            <>
-              用户名&nbsp;
-              <IconUser />
-            </>
-          }
-          field="name"
-          rules={[{ required: true, message: "请输入用户名" }]}
-        >
-          <Input placeholder="输入注册的用户名" />
-        </Form.Item>
         <Form.Item
           label={
             <>
@@ -100,17 +87,17 @@ const RegisterForm: React.FC<ILoginFormProps> = ({ setStatus }) => {
             { required: true, message: "请输入邮箱" },
           ]}
         >
-          <Input placeholder="输入注册的邮箱" />
+          <Input placeholder="输入注册过的邮箱" />
         </Form.Item>
 
         <Form.Item
           label={
             <>
-              密码&nbsp;
+              新密码&nbsp;
               <IconPen />
             </>
           }
-          field="password"
+          field="newPassword"
           rules={[
             {
               type: "string",
@@ -121,7 +108,7 @@ const RegisterForm: React.FC<ILoginFormProps> = ({ setStatus }) => {
             { required: true, message: "请输入密码" },
           ]}
         >
-          <Input.Password placeholder="输入至少三位密码" />
+          <Input.Password placeholder="输入至少三位的新密码" />
         </Form.Item>
 
         <Form.Item
@@ -159,7 +146,7 @@ const RegisterForm: React.FC<ILoginFormProps> = ({ setStatus }) => {
           <Button
             className="operation-button cancel-btn"
             onClick={() => {
-              setStatus && setStatus('login');
+              setStatus && setStatus("login");
             }}
           >
             取消
@@ -176,4 +163,4 @@ const RegisterForm: React.FC<ILoginFormProps> = ({ setStatus }) => {
     </>
   );
 };
-export default RegisterForm;
+export default ForgetForm;

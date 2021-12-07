@@ -12,7 +12,7 @@ const layout = {
   wrapperCol: { span: 18 },
 };
 
-const LoginForm: React.FC<ILoginFormProps> = ({ setRegisterState }) => {
+const LoginForm: React.FC<ILoginFormProps> = ({ setStatus }) => {
   const [formLogin] = Form.useForm();
   const { run: login } = useFetch(loginFetchConfig);
 
@@ -35,7 +35,9 @@ const LoginForm: React.FC<ILoginFormProps> = ({ setRegisterState }) => {
 
   return (
     <>
-      <h3 className="index-box-title">Issue新闻</h3>
+      <h3 className="index-box-title">
+        <div className="title-font"></div>
+      </h3>
       <Form
         {...layout}
         size="large"
@@ -62,7 +64,7 @@ const LoginForm: React.FC<ILoginFormProps> = ({ setRegisterState }) => {
             { required: true, message: "请输入邮箱" },
           ]}
         >
-          <Input />
+          <Input placeholder="输入登录的邮箱" />
         </Form.Item>
 
         <Form.Item
@@ -75,13 +77,27 @@ const LoginForm: React.FC<ILoginFormProps> = ({ setRegisterState }) => {
           field="password"
           rules={[{ required: true, message: "请输入密码" }]}
         >
-          <Input.Password />
+          <Input.Password placeholder="输入密码" />
         </Form.Item>
+
+        <div className="forget-box">
+          <Button
+            type="text"
+            className="forget-password"
+            onClick={() => {
+              // 点击注册切换至注册框
+              setStatus && setStatus("forget");
+            }}
+          >
+            忘记密码
+          </Button>
+        </div>
         <div className="operation-buttons">
           <Button
             className="operation-button cancel-btn"
             onClick={() => {
-              setRegisterState && setRegisterState(true);
+              // 点击注册切换至注册框
+              setStatus && setStatus("register");
             }}
           >
             注册

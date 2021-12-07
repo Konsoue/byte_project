@@ -22,7 +22,7 @@ const Header: React.FC<IHeaderProps> = (props) => {
     <div className="pub-header-container">
       <div className="pub-header">
         <div className="header-left">
-          <div className="logo">Logo</div>
+          <div className="logo"><div className="title-font"></div></div>
           <NewTabs toFlash={toFlash} />
         </div>
         <div className="header-middle">

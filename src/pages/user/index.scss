@@ -1,9 +1,65 @@
+.user-box {
+  .card-box {
+    background-color: var(--theme-background-2);
+    border-color: var(--theme-background-2);
+    padding: 0;
+    height: calc(100vh - 68px);
+    display: flex;
+    flex-direction: column;
+
+    .arco-card-body {
+      height: 100%;
+      overflow: auto;
+
+      .content-box {
+        height: 100%;
+        box-sizing: border-box;
+        border-color: var(--theme-background-2);
+        background-color: var(--theme-background);
+
+        .arco-card-body {
+          background-color: var(--theme-background);
+          box-sizing: border-box;
+        }
+      }
+
+      &::-webkit-scrollbar {
+        /*滚动条整体样式*/
+        width: 4px;
+        /*高宽分别对应横竖滚动条的尺寸*/
+        height: 1px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        /*滚动条里面小方块*/
+        border-radius: 10px;
+        background: #535353;
+      }
+
+      &::-webkit-scrollbar-track {
+        /*滚动条里面轨道*/
+        border-radius: 10px;
+      }
+    }
+  }
+
+  .arco-layout-content {
+    overflow: hidden;
+  }
+
+  .pub-header-container {
+    position: static;
+  }
+}
+
 .userPage {
   height: 100%;
   color: var(--theme-text);
   background: var(--theme-background);
+
   .arco-menu-light {
     background: var(--theme-background);
+
     .arco-menu-item {
       background: transparent;
     }

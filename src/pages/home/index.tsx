@@ -14,18 +14,19 @@ import './index.scss';
 
 const initialState = {
   flash: false,
-}
+};
 
 const homeReducer = (state: IHomeState, action: IHomeAction) => {
   switch (action.type) {
-    case 'flash':
+    case "flash":
       return {
         ...state,
-        flash: !state.flash
-      }
-    default: return state
+        flash: !state.flash,
+      };
+    default:
+      return state;
   }
-}
+};
 
 function Home() {
   const [state, dispatch] = useReducer(homeReducer, initialState)
