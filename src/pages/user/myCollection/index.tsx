@@ -17,7 +17,6 @@ const MyCollection: React.FC = () => {
   }, [])
 
   useEffect(() => {
-    console.log(myCollections)
     if (myCollections) {
       const { data } = myCollections as IResponseResult;
       //将收藏的新闻数组存入collectionArr
