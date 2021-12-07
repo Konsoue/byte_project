@@ -1,4 +1,3 @@
-// import { useState } from "react";
 import { Card, Skeleton, Button, Image } from "@arco-design/web-react";
 import { INewCardProps } from "./types";
 import "./index.scss";

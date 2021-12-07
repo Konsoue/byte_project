@@ -1,6 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
+import useFetch from '@/hooks/useFetch';
+import { commentUrl } from '@/Utils/urls'
+import { List } from '@arco-design/web-react';
 
-const index: React.FC = () => {
-  return <div>user</div>;
+const MyComments: React.FC = () => {
+  const { run: getCommentsArr } = useFetch({
+    url: commentUrl.getMyComments,
+    type: 'GET',
+  })
+  useEffect(() => {
+    getCommentsArr({
+      size: '10',
+      current: '1'
+    })
+      .then((res) => {
+        const data = res.data;
+        console.log(data)
+      })
+      .catch((err) => { })
+  }, [])
+
+  return (<List
+    style={{ width: 1000 }}
+    size='large'
+    render={(item, index) => <List.Item key={index}>{item}</List.Item>}
+  />)
 };
-export default index;
+export default MyComments;
