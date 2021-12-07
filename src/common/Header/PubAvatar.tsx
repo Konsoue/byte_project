@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { Avatar, Trigger } from '@arco-design/web-react';
+import { useHistory } from 'react-router-dom'
 import { IPubAvatarProps } from './types';
 
 const UserContent: React.FC = () => {
@@ -27,9 +28,10 @@ const UserContent: React.FC = () => {
 
 const PubAvatar: React.FC<IPubAvatarProps> = (props) => {
   const { login, avatarUrl } = props;
+  const history = useHistory();
 
   const userAvatar = useMemo(() => {
-    if (!login) return (<Avatar>未登录</Avatar>)
+    if (!login) return (<Avatar onClick={() => history.push('/login')}>未登录</Avatar>)
     return (
       <Trigger
         showArrow

@@ -1,8 +1,9 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import PubSearch from '@/common/PubSearch';
 import PubAvatar from './PubAvatar'
 import NewTabs from './NewTabs'
-import { IHeaderProps } from './types'
+import { IHeaderProps, IPubAvatarProps } from './types'
+import localStorageUtils from '@/Utils/localStorageUtils'
 import './index.scss'
 
 const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWFkZmJlOGJjOGM2OGViZTY5YWIwMjAiLCJlbWFpbCI6Ijg3NDExMTc1MkBxcS5jb20iLCJpYXQiOjE2Mzg3OTIxODcsImV4cCI6MTYzODg3ODU4N30.17Wxjp-VvmiQFqib6AHObNiSrw9Yc-IpiCiKBVF0Nf4`
@@ -10,6 +11,15 @@ const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWFkZmJlOGJjOGM2
 
 const Header: React.FC<IHeaderProps> = (props) => {
   const { toFlash } = props;
+
+  const loginData: IPubAvatarProps = useMemo(() => {
+    const data = localStorageUtils.get();
+    if (JSON.stringify(data) === '{}') {
+      return { login: false }
+    } else {
+      return { login: true, avatarUrl: data.user.avatar }
+    }
+  }, [])
 
   return (
     <div className="pub-header-container">
@@ -22,7 +32,7 @@ const Header: React.FC<IHeaderProps> = (props) => {
           <PubSearch />
         </div>
         <div className="header-right">
-          <PubAvatar />
+          <PubAvatar login={!!loginData?.login} avatarUrl={loginData?.avatarUrl} />
         </div>
       </div>
     </div>
