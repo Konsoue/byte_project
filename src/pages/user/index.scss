@@ -1,0 +1,11 @@
+.userPage {
+  height: 100%;
+  color: var(--theme-text);
+  background: var(--theme-background);
+  .arco-menu-light {
+    background: var(--theme-background);
+    .arco-menu-item {
+      background: transparent;
+    }
+  }
+}
