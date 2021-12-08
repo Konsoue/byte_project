@@ -23,9 +23,13 @@ instance.interceptors.request.use(
   function (config) {
     const { pathname } = history.location;
     // 要过滤掉的路由
-    const filterPathNames = ["/register", "/"];
+    const filterPathNames = ["/login", "/"];
     // 要过滤掉的url
-    const filterUrls = ["/api/user/create", "/api/user/login",'/api/user/sendCreateMail'];
+    const filterUrls = [
+      "/api/news/visitorGetNewsItem",
+      "/api/news/getNewsType",
+      "/api/news/visitorGetNewsDigest",
+    ];
     // 因为dataPreview的接口太多了，因此用路由排除
     let isFilterPathName = filterPathNames.indexOf(pathname) === -1;
     // 由于有可能页面跳转了仍然未完成请求，被modal拦截，因此需要排除掉登陆和注册接口
@@ -42,10 +46,10 @@ instance.interceptors.request.use(
       isInterceptoring = true;
       Modal.confirm({
         title: "登陆过期提示",
-        content: "登陆状态已过期，请重新登陆，点击确定将返回主页",
+        content: "登陆状态已过期，请重新登陆，点击确定将返回登录",
         onOk: () => {
           isInterceptoring = false;
-          history.replace("/");
+          history.replace("/login");
         },
         onCancel: () => {
           isInterceptoring = false;
@@ -74,7 +78,7 @@ instance.interceptors.response.use(
         })
       );
     }
-    if (data.status.toString()[0] === '2') {
+    if (data.status.toString()[0] === "2") {
       return data;
     } else {
       Message.error(data.message);
@@ -84,7 +88,12 @@ instance.interceptors.response.use(
   (error) => {
     const res = error.response.data;
     // 对响应错误做点什么
-    Message.error(res.message);
+    if (error.response.status === "500") {
+      Message.clear();
+      Message.error("网络超时");
+    } else {
+      Message.error(res.message);
+    }
     return Promise.reject(error);
   }
 );
