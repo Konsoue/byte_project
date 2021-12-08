@@ -1,4 +1,4 @@
-import { newsUrl } from "@/Utils/urls";
+import { newsUrl,commentUrl } from "@/Utils/urls";
 import { IfetchParams } from "@/Utils/fetch/types";
 export const getNewsItemConfig: IfetchParams = {
   url: newsUrl.getNewsItem,
@@ -7,5 +7,10 @@ export const getNewsItemConfig: IfetchParams = {
 
 export const visitorGetNewsItemConfig: IfetchParams = {
   url: newsUrl.visitorGetNewsItem,
+  type: "get",
+};
+
+export const commentUrlConfig: IfetchParams = {
+  url: commentUrl.getComments,
   type: "get",
 };

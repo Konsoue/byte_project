@@ -19,6 +19,10 @@
         animation-name: contentEnter;
         animation-duration: calc(1s * 0.75);
         padding: 0 25px;
+
+        img {
+          width: 80%;
+        }
       }
 
       footer {

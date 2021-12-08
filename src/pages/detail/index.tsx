@@ -1,19 +1,25 @@
 import { useState, useEffect } from "react";
-import Header from "@/common/Header";
-import { getNewsItemConfig, visitorGetNewsItemConfig } from "./actionCreator";
 import useFetch from "@/hooks/useFetch";
-import localStorageUtils from "@/Utils/localStorageUtils";
-import { history } from "@/route";
-import { IDetailProps } from "./types";
-import "./index.scss";
 import { Result, Button } from "@arco-design/web-react";
 import { IconFaceSmileFill } from "@arco-design/web-react/icon";
+import localStorageUtils from "@/Utils/localStorageUtils";
+import { history } from "@/route";
+import Header from "@/common/Header";
+import PubComment from "@/common/PubComment";
+import { IDetailProps } from "./types";
+import {
+  getNewsItemConfig,
+  visitorGetNewsItemConfig,
+  commentUrlConfig,
+} from "./actionCreator";
+import "./index.scss";
 
 function Detail() {
   // 获取新闻id
   const detailId = history.location.pathname.split("/")[2];
+  const userData = localStorageUtils.get();
   // 判断是否登陆状态
-  const isLogin = JSON.stringify(localStorageUtils.get()) === "{}";
+  const isLogin = JSON.stringify(userData) === "{}";
   // 存储新闻主题
   const [detail, setDetail] = useState<IDetailProps>({
     title: "",
@@ -22,10 +28,18 @@ function Detail() {
     publishTime: "",
   });
 
+  const [comment, setComment] = useState({
+    records: [],
+    total: 0,
+  });
+
   // 获取新闻主体请求
   const { run: getNews } = useFetch(
     isLogin ? visitorGetNewsItemConfig : getNewsItemConfig
   );
+
+  // 获取新闻评论请求
+  const { run: getComment } = useFetch(commentUrlConfig);
 
   // 开始请求
   useEffect(() => {
@@ -33,6 +47,11 @@ function Detail() {
       getNews({ id: detailId })
         .then((res) => {
           setDetail(res.data);
+
+          if (!isLogin) {
+            // 主体请求成功再去请求评论
+            toRefresh();
+          }
         })
         .catch((res) => {
           history.push({ pathname: "/detail" }); // 路由变化,push到对应的页面组件
@@ -61,6 +80,27 @@ function Detail() {
       ></Result>
     );
   };
+
+  // 刷新评论函数
+  const toRefresh = (
+    size: number = 10,
+    current: number = 1,
+    orderBy: number = 2
+  ) => {
+    getComment({
+      size: size,
+      current: current,
+      orderBy: orderBy,
+      type: 1,
+      id: detailId,
+    }).then((res) => {
+      setComment({
+        records: res.data.records,
+        total: res.data.total,
+      });
+    });
+  };
+
   return (
     <div className="detail-box">
       <Header />
@@ -102,6 +142,15 @@ function Detail() {
               ></span>
               <span dangerouslySetInnerHTML={{ __html: detail.source }}></span>
             </footer>
+
+            {isLogin ? null : (
+              <PubComment
+                detailId={detailId}
+                avatarUrl={userData.user.avatar}
+                data={comment}
+                toRefresh={toRefresh}
+              />
+            )}
           </div>
         )}
       </article>
