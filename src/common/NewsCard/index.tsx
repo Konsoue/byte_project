@@ -1,5 +1,7 @@
 import { Card, Image } from "@arco-design/web-react";
 import { INewCardProps } from "./types";
+import { history } from "@/route";
+
 import "./index.scss";
 
 const NewsCard: React.FC<INewCardProps> = ({
@@ -9,22 +11,28 @@ const NewsCard: React.FC<INewCardProps> = ({
   loading = false,
   star = false,
   source = "央视新闻",
-  time = "2021-02-05"
+  time = "2021-02-05",
+  id = "123",
 }) => {
   return (
     <Card className="card-item">
       <div className="card-left">
         <div className="img-container">
-          <Image
-            src={img}
-          />
+          <Image src={img} />
         </div>
       </div>
       <div className="card-right">
-        <header className="title">{title}</header>
+        <header
+          className="title"
+          onClick={() => {
+            history.push({ pathname: `/detail/${id}` });
+          }}
+        >
+          {title}
+        </header>
         <article className="content">{content}</article>
         <footer className="footer">
-          <div className="time">{time.split(' ')[0]}</div>
+          <div className="time">{time.split(" ")[0]}</div>
           <div className="source">{source}</div>
         </footer>
       </div>

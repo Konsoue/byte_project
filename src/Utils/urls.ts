@@ -23,6 +23,7 @@ export const newsUrl: INewsUrl = {
   addItem: '/api/news/addItem',
   getMyNewsDigest: '/api/news/getNewsDigest',
   getNewsItem: '/api/news/getNewsItem',
+  visitorGetNewsItem: '/api/news/visitorGetNewsItem',
   getNewsType: '/api/news/getNewsType',
   visitorGetNewsDigest: '/api/news/visitorGetNewsDigest',
   get getNewsDigest() {
