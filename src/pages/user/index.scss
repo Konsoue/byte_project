@@ -57,11 +57,55 @@
   color: var(--theme-text);
   background: var(--theme-background);
 
+  // 侧边栏
   .arco-menu-light {
     background: var(--theme-background);
 
     .arco-menu-item {
       background: transparent;
+
     }
+
+    .arco-menu-selected {
+      color: var(--theme-color-text);
+
+      .arco-icon {
+        stroke: var(--theme-color-text);
+      }
+    }
+
+  }
+
+  // 按钮
+  .arco-btn-primary {
+    background-color: var(--theme-color-background);
+  }
+
+  .arco-btn-primary:not(.arco-btn-disabled):not(.arco-btn-loading) {
+    background: var(--theme-color-background);
+  }
+
+  .arco-btn-primary:not(.arco-btn-disabled):not(.arco-btn-loading):hover {
+    background: var(--theme-color-background);
+  }
+
+  // 单选框
+  .arco-radio-button.arco-radio-checked {
+    color: var(--theme-color-text);
+  }
+
+  // header
+  .arco-tabs-header-title-active,
+  .arco-tabs-header-title-active:hover {
+    color: var(--theme-color-text);
+  }
+
+  .arco-tabs-header-ink {
+    background: var(--theme-color-background);
+  }
+
+  .arco-input-inner-wrapper,
+  .arco-input-inner-wrapper:hover {
+    border-color: var(--theme-color-text);
   }
 }
