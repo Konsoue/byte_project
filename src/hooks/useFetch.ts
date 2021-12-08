@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { fetchFunc } from '@/Utils/fetch/types'
 import fetch from '@/Utils/fetch'
+import { rejects } from 'assert'
 
 //useFetch返回值类型
 interface IuseFetchRes {
@@ -30,7 +31,7 @@ const useFetch: fetchFunc<IuseFetchRes> = (config) => {
    * isReset： 是否要重置，若为true 则data值为完整的config
    */
   const run = useCallback((data: any, isReset = false) => {
-    return new Promise(async (resolve) => {
+    return new Promise(async (resolve,reject) => {
       // 非重置且有data，则重置data
       (!isReset && data) && (fetchConfig.current.data = data);
       // 重置则替换整个config
@@ -44,7 +45,9 @@ const useFetch: fetchFunc<IuseFetchRes> = (config) => {
         resolve(res)
       } catch (err) {
         setLoading(false)
+        console.error(err)
         setErr(err as string)
+        reject(err)
       }
     })
   }, [])

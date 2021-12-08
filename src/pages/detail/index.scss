@@ -1,0 +1,41 @@
+.detail-box {
+
+  .article-container {
+    .detail-content {
+      padding: 15px;
+      min-height: calc(100vh - 120px);
+      background: var(--theme-background);
+      background: #fff;
+
+      h1 {
+        text-align: center;
+      }
+
+      .content {
+        font-size: 18px;
+        animation-name: identifier;
+        animation-duration: calc(1s * 0.75);
+        padding: 0 25px;
+      }
+
+      footer {
+        text-align: end;
+
+        span {
+          color: #aaa;
+          margin: 5px;
+        }
+      }
+    }
+  }
+}
+
+@keyframes identifier {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

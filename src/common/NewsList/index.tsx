@@ -44,6 +44,7 @@ const NewsList: React.FC<INewsListProps> = (props) => {
       {newsList?.map((news: INewsList) => (
         <NewsCard
           key={news._id}
+          id={news._id}
           title={news.title}
           img={news.img}
           content={news.digest}
