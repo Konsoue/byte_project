@@ -52,7 +52,9 @@ const NewTabs: React.FC<INewTabProps> = (props) => {
         const { data } = newsType as IResponceResult;
         const typeId = SS.getItem('newsTypeId') || data[0].id;
         SS.setItem('newsTypeId', typeId);
-        LS.setItem('newsType', data);
+        if (!LS.getItem('newsType')) {
+          LS.setItem('newsType', data);
+        }
         getNewsDigest({ type: typeId });
         setReloadTab(!reloadTabs);
       }
