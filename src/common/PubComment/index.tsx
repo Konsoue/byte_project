@@ -8,16 +8,12 @@ import {
   Message,
   Pagination,
   Radio,
+  Spin,
 } from "@arco-design/web-react";
-import {
-  IconHeart,
-  IconMessage,
-  IconHeartFill,
-  IconStarFill,
-  IconStar,
-} from "@arco-design/web-react/icon";
+import { IconStarFill, IconSend, IconStar } from "@arco-design/web-react/icon";
 import { addCommentConfig } from "./actionCreator";
 import { IPubCommentProps } from "./types";
+import CommentCard from "./CommentCard";
 import "./index.scss";
 const RadioGroup = Radio.Group;
 const PubComment: React.FC<IPubCommentProps> = ({
@@ -25,6 +21,8 @@ const PubComment: React.FC<IPubCommentProps> = ({
   detailId,
   data,
   toRefresh,
+  collectionRefresh,
+  collection,
 }) => {
   // 输入的评论信息
   const [comment, setComment] = useState("");
@@ -32,8 +30,21 @@ const PubComment: React.FC<IPubCommentProps> = ({
   const [current, setCurrent] = useState(1);
   const [size, setSize] = useState(10);
   const [orderBy, setOrderBy] = useState(2);
+  // loading状态
+  const [loading, setLoading] = useState(false);
   // 评论请求
   const { run: addComment } = useFetch(addCommentConfig);
+
+  // 分页更换时调用
+  useEffect(() => {
+    setLoading(true);
+    toRefresh(size, current, orderBy);
+  }, [size, current, orderBy]);
+
+  // 数据变更结束loading
+  useEffect(() => {
+    setLoading(false);
+  }, [data]);
 
   // 评论函数
   const toComment = () => {
@@ -52,13 +63,6 @@ const PubComment: React.FC<IPubCommentProps> = ({
   const sizeChange = (toCurrent: number, toSize: number) => {
     size !== toSize && setSize(toSize);
     current !== toCurrent && setCurrent(toCurrent);
-    toRefresh(toSize, toCurrent, orderBy);
-  };
-
-  // 单选框变化函数
-  const orderByChange = (toOrderBy: number) => {
-    setOrderBy(toOrderBy);
-    toRefresh(size, current, toOrderBy);
   };
 
   return (
@@ -67,7 +71,12 @@ const PubComment: React.FC<IPubCommentProps> = ({
       <Comment
         align="right"
         actions={[
-          <Button key="1" type="primary" onClick={toComment}>
+          <Button key="1" type="text" onClick={collectionRefresh}>
+            {collection ? <IconStarFill /> : <IconStar />}
+            收藏
+          </Button>,
+          <Button key="2" type="primary" onClick={toComment}>
+            <IconSend />
             回复
           </Button>,
         ]}
@@ -86,85 +95,50 @@ const PubComment: React.FC<IPubCommentProps> = ({
         }
       />
 
-      {/* 评论页 */}
-      <List
-        bordered={false}
-        header={
-          <span>
-            {data.total}条评论
-            <RadioGroup
-              type="button"
-              name="Radio"
-              defaultValue={2}
-              style={{ marginLeft: 20 }}
-              onChange={orderByChange}
-            >
-              <Radio value={2}>按热度排序</Radio>
-              <Radio value={1}>按时间排序</Radio>
-            </RadioGroup>
-          </span>
-        }
-      >
-        {data.records?.map((item, index) => {
-          item.userName = "Socrates";
-          item.usetAvatar =
-            "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/e278888093bef8910e829486fb45dd69.png~tplv-uwbnlip3yd-webp.webp";
-          item.isMine = true;
-          return (
-            <List.Item className="comment-list" key={item._id + "-" + index}>
-              <Comment
-                author={item.userName}
-                avatar={item.usetAvatar}
-                content={item.content}
-                datetime={item.time}
-                actions={[
-                  <span
-                    className="custom-comment-action"
-                    key="heart"
-                    /*  onClick={() =>
-                    setLikes(
-                      like
-                        ? likes.filter((x) => x !== item.id)
-                        : [...likes, item.id]
-                    )
-                  } */
-                  >
-                    <IconHeart />
-                    {item.likesNum}
-                  </span>,
-                  <span
-                    className="custom-comment-action"
-                    key="star"
-                    /* onClick={() =>
-                    setStars(
-                      star
-                        ? stars.filter((x) => x !== item.id)
-                        : [...stars, item.id]
-                    )
-                  } */
-                  >
-                    <IconStar />
-                  </span>,
-                  <span className="custom-comment-action" key="reply">
-                    <IconMessage /> Reply
-                  </span>,
-                  <span className="custom-comment-action" key="all">
-                    <IconMessage /> 查看回复
-                  </span>,
-                ]}
-              ></Comment>
-            </List.Item>
-          );
-        })}
-      </List>
+      <Spin tip="请等待" loading={loading}>
+        {/* 评论页 */}
+        <List
+          bordered={false}
+          header={
+            <span>
+              {data.total}条评论
+              <RadioGroup
+                type="button"
+                name="Radio"
+                defaultValue={2}
+                style={{ marginLeft: 20 }}
+                onChange={(toOrderBy) => {
+                  setOrderBy(toOrderBy);
+                }}
+              >
+                <Radio value={2}>按热度排序</Radio>
+                <Radio value={1}>按时间排序</Radio>
+              </RadioGroup>
+            </span>
+          }
+        >
+          {/* 遍历返回卡片 */}
+          {data.records?.map((item, index) => {
+            return (
+              <List.Item className="comment-list" key={item._id + "-" + index}>
+                <CommentCard avatarUrl={avatarUrl} data={item} />
+              </List.Item>
+            );
+          })}
+        </List>
 
-      <Pagination
-        defaultCurrent={current}
-        total={data.total}
-        defaultPageSize={size}
-        sizeCanChange
-        onChange={sizeChange}
-      />
+        {/* 分页其 */}
+        {data.total > 10 && (
+          <Pagination
+            key="comment"
+            defaultCurrent={current}
+            total={data.total}
+            defaultPageSize={size}
+            sizeCanChange
+            onChange={sizeChange}
+          />
+        )}
+      </Spin>
     </div>
   );
 };

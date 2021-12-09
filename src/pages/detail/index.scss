@@ -29,27 +29,39 @@
         text-align: end;
 
         span {
-          color: #aaa;
+          color: rgb(var(--gray-6));
           margin: 5px;
         }
       }
     }
   }
+
+  .comment-null {
+    margin-top: 20px;
+    display: flex;
+    background: rgb(var(--gray-2));
+    height: 150px;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 @keyframes contentEnter {
   from {
-    transform: translate(0,10%);
+    transform: translate(0, 10%);
     opacity: 0;
   }
 
   to {
-    transform: translate(0,0);
+    transform: translate(0, 0);
     opacity: 1;
   }
 }
 
 @keyframes bounceIn {
+
   from,
   20%,
   40%,
