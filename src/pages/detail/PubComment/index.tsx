@@ -37,8 +37,11 @@ const PubComment: React.FC<IPubCommentProps> = ({
 
   // 分页更换时调用
   useEffect(() => {
-    setLoading(true);
-    toRefresh(size, current, orderBy);
+    if (data.records.length !== 0) {
+      setLoading(true);
+      toRefresh(size, current, orderBy);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size, current, orderBy]);
 
   // 数据变更结束loading
@@ -73,7 +76,7 @@ const PubComment: React.FC<IPubCommentProps> = ({
         actions={[
           <Button key="1" type="text" onClick={collectionRefresh}>
             {collection ? <IconStarFill /> : <IconStar />}
-            收藏
+            {collection ? "已收藏" : "收藏"}
           </Button>,
           <Button key="2" type="primary" onClick={toComment}>
             <IconSend />

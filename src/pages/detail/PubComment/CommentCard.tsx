@@ -30,12 +30,6 @@ const PubComment: React.FC<ICommentCardProps> = ({ data, avatarUrl }) => {
     total: 0,
   });
 
-  useEffect(() => {
-    if (replyState === ReplyState.all) {
-      toRefresh();
-    }
-  }, [replyState]);
-
   // 刷新评论函数
   const toRefresh = (current: number = 1) => {
     getComment({
@@ -83,7 +77,9 @@ const PubComment: React.FC<ICommentCardProps> = ({ data, avatarUrl }) => {
             size="mini"
             key="reply"
             onClick={() => {
-              setReplyState(ReplyState.reply);
+              if (replyState === ReplyState.close) {
+                setReplyState(ReplyState.reply);
+              }
             }}
           >
             <IconSend />
@@ -95,10 +91,10 @@ const PubComment: React.FC<ICommentCardProps> = ({ data, avatarUrl }) => {
             size="mini"
             key="all"
             onClick={() => {
-              if (replyState !== ReplyState.all) {
-                setReplyState(ReplyState.all);
-              } else {
+              if (replyState === ReplyState.all) {
                 setReplyState(ReplyState.close);
+              } else {
+                setReplyState(ReplyState.all);
               }
             }}
           >
