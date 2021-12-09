@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Tabs } from '@arco-design/web-react';
 import useFetch from '@/hooks/useFetch';
+import { useHistory } from 'react-router-dom'
 import { newsUrl } from '@/Utils/urls'
 import {
   ITabsPaneProps,
   INewTabProps,
   IResponceResult,
 } from './types'
-import { SS } from '@/Utils'
+import { SS, LS } from '@/Utils'
 const { TabPane } = Tabs;
 
 const defaultTabs = [
@@ -25,10 +26,13 @@ const defaultTabs = [
   },
 ]
 
+let newTabsList = [] as ITabsPaneProps[];
+let newsActiveTab: string = '';
+
 const NewTabs: React.FC<INewTabProps> = (props) => {
   const { toFlash } = props;
-  const [newsTabArr, setArr] = useState<ITabsPaneProps[]>(defaultTabs);
-
+  const [reloadTabs, setReloadTab] = useState(false);
+  const { location: { pathname }, push: pushRoute } = useHistory();
   const { run: getNewsType, data: newsType } = useFetch({
     url: newsUrl.getNewsType
   })
@@ -44,33 +48,50 @@ const NewTabs: React.FC<INewTabProps> = (props) => {
 
   useEffect(() => {
     if (newsType) {
-      const { data } = newsType as IResponceResult;
-      setArr(data);
-      const type = data[0].id
-      SS.setItem('newsType', type);
-      getNewsDigest({ type })
+      if (!pathname.includes('/user')) {
+        const { data } = newsType as IResponceResult;
+        const typeId = SS.getItem('newsTypeId') || data[0].id;
+        SS.setItem('newsTypeId', typeId);
+        if (!LS.getItem('newsType')) {
+          LS.setItem('newsType', data);
+        }
+        getNewsDigest({ type: typeId });
+        setReloadTab(!reloadTabs);
+      }
     }
   }, [newsType])
 
+  // 按需刷新 Tabs，例如获取 newType，排序 newType 后刷新页面
+  useEffect(() => {
+    newTabsList = LS.getItem('newsType') || defaultTabs;
+  }, [reloadTabs])
+
+  // 获取新闻列表
   useEffect(() => {
     if (newsDigest) {
       const { data: { records: data } } = newsDigest as IResponceResult;
       SS.setItem('newsDigest', data);
-      toFlash?.({ type: 'flash' })
+      toFlash?.({ type: 'flash' });
     }
   }, [newsDigest])
 
   const tabChange = (key: string) => {
-    SS.setItem('newsType', key);
-    getNewsDigest({ type: key })
+    SS.setItem('newsTypeId', key);
+    if (pathname !== '/') pushRoute('/')
+    else {
+      setReloadTab(!reloadTabs);
+      getNewsDigest({ type: key });
+    }
   }
+  newsActiveTab = SS.getItem('newsTypeId');
 
   return (
     <Tabs className="header-tabs"
+      activeTab={newsActiveTab}
       onChange={tabChange}
     >
       {
-        newsTabArr.map(news => <TabPane key={news.id} title={news.name} />)
+        newTabsList.map(news => <TabPane key={news.id} title={news.name} />)
       }
     </Tabs>
   )

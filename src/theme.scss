@@ -4,9 +4,40 @@
   --theme-text: #111;
 }
 
-
 .dark {
   --theme-background: #111;
   --theme-background-2: #000;
   --theme-text: #FFF;
+}
+
+.small {
+  font-size: 12px;
+}
+
+.medium {
+  font-size: 16px;
+}
+
+.large {
+  font-size: 20px;
+}
+
+.pink {
+  --theme-color-text: rgb(255, 151, 168);
+  --theme-color-background: rgb(255, 151, 168);
+}
+
+.blue {
+  --theme-color-text: rgba(23, 93, 254);
+  --theme-color-background: rgba(23, 93, 254);
+}
+
+.green {
+  --theme-color-text: rgb(51, 189, 85);
+  --theme-color-background: rgb(51, 189, 85);
+}
+
+.purple {
+  --theme-color-text: rgba(149, 20, 255, 0.938);
+  --theme-color-background: rgba(149, 20, 255, 0.938);
 }
