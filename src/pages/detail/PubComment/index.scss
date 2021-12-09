@@ -40,6 +40,15 @@
   .arco-icon-send {
     transform: rotate(-40deg) translate(0, -20%);
   }
+
+  .arco-icon-heart-fill {
+    color: rgb(var(--red-6)) !important;
+    font-size: 14px;
+  }
+
+  textarea {
+    font-size: 16px;
+  }
 }
 
 @keyframes tada {

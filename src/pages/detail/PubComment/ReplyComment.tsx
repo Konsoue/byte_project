@@ -3,16 +3,16 @@ import useFetch from "@/hooks/useFetch";
 import {
   Comment,
   List,
-  Button,
   Input,
   Message,
   Pagination,
   Spin,
 } from "@arco-design/web-react";
-import { IconHeart, IconDelete, IconSend } from "@arco-design/web-react/icon";
-import { addCommentConfig } from "./actionCreator";
+import { IconSend } from "@arco-design/web-react/icon";
+import { addCommentConfig, deleteCommentConfig } from "./actionCreator";
 import { IReplyCommentProps } from "./types";
-import "./index.scss";
+import ReplyCard from "./ReplyCard";
+
 const ReplyComment: React.FC<IReplyCommentProps> = ({
   avatarUrl,
   commentId,
@@ -28,6 +28,7 @@ const ReplyComment: React.FC<IReplyCommentProps> = ({
   const [loading, setLoading] = useState(false);
   // 评论请求
   const { run: addComment } = useFetch(addCommentConfig);
+  const { run: deleteComment } = useFetch(deleteCommentConfig);
 
   // 分页更换时调用
   useEffect(() => {
@@ -53,6 +54,14 @@ const ReplyComment: React.FC<IReplyCommentProps> = ({
     }
   };
 
+  // 删除评论函数
+  const toDeleteComment = (id: string) => {
+    deleteComment({ id: id }).then((res) => {
+      Message.success("删除成功");
+      toRefresh(current);
+    });
+  };
+
   return (
     <div className="reply-box">
       {/* 回复框 */}
@@ -74,6 +83,8 @@ const ReplyComment: React.FC<IReplyCommentProps> = ({
               }
               size="large"
               onSearch={toReply}
+              maxLength={200}
+              showWordLimit
             />
           </div>
         }
@@ -84,46 +95,27 @@ const ReplyComment: React.FC<IReplyCommentProps> = ({
           <List bordered={false}>
             {data.records?.map((item, index) => {
               return (
-                <List.Item className="reply-list" key={item._id + "-" + index}>
-                  <Comment
-                    author={item.userName}
-                    avatar={item.userAvatar}
-                    content={item.content}
-                    datetime={item.time}
-                    actions={[
-                      <Button
-                        className="custom-reply-action"
-                        key="heart"
-                        type="text"
-                        size="mini"
-                      >
-                        <IconHeart />
-                        {item.likesNum}
-                      </Button>,
-                      item.isMine && (
-                        <Button
-                          className="custom-reply-action"
-                          type="text"
-                          size="mini"
-                          key="delete"
-                        >
-                          <IconDelete />
-                          删除
-                        </Button>
-                      ),
-                    ]}
-                  ></Comment>
+                <List.Item
+                  className="reply-list"
+                  key={item._id + "-reply-" + index}
+                >
+                  <ReplyCard
+                    avatarUrl={avatarUrl}
+                    data={item}
+                    toDeleteComment={toDeleteComment}
+                  />
                 </List.Item>
               );
             })}
           </List>
 
-          {data.total > 10 && (
+          {/* 分页器 */}
+          {data.total > 5 && (
             <Pagination
               key="reply"
               defaultCurrent={current}
               total={data.total}
-              defaultPageSize={10}
+              defaultPageSize={5}
               onChange={(current) => setCurrent(current)}
             />
           )}

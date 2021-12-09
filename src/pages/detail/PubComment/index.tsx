@@ -11,18 +11,19 @@ import {
   Spin,
 } from "@arco-design/web-react";
 import { IconStarFill, IconSend, IconStar } from "@arco-design/web-react/icon";
-import { addCommentConfig } from "./actionCreator";
+import { addCommentConfig, deleteCommentConfig } from "./actionCreator";
 import { IPubCommentProps } from "./types";
-import CommentCard from "./CommentCard";
+import CommentCard from "./CardComment";
 import "./index.scss";
+
 const RadioGroup = Radio.Group;
 const PubComment: React.FC<IPubCommentProps> = ({
   avatarUrl,
   detailId,
   data,
   toRefresh,
-  collectionRefresh,
   collection,
+  collectionRefresh,
 }) => {
   // 输入的评论信息
   const [comment, setComment] = useState("");
@@ -34,6 +35,8 @@ const PubComment: React.FC<IPubCommentProps> = ({
   const [loading, setLoading] = useState(false);
   // 评论请求
   const { run: addComment } = useFetch(addCommentConfig);
+  // 删除评论
+  const { run: deleteComment } = useFetch(deleteCommentConfig);
 
   // 分页更换时调用
   useEffect(() => {
@@ -68,6 +71,14 @@ const PubComment: React.FC<IPubCommentProps> = ({
     current !== toCurrent && setCurrent(toCurrent);
   };
 
+  // 删除评论函数
+  const toDeleteComment = (id: string) => {
+    deleteComment({ id: id }).then((res) => {
+      Message.success("删除成功");
+      toRefresh(size, current, orderBy);
+    });
+  };
+
   return (
     <div className="comment-box">
       {/* 回复框 */}
@@ -91,13 +102,16 @@ const PubComment: React.FC<IPubCommentProps> = ({
               onChange={(value) => {
                 setComment(value);
               }}
-              rows={5}
+              rows={4}
               placeholder="写下你的留言"
+              maxLength={200}
+              showWordLimit
             />
           </div>
         }
       />
 
+      {/* 评论页 */}
       <Spin tip="请等待" loading={loading}>
         {/* 评论页 */}
         <List
@@ -124,13 +138,17 @@ const PubComment: React.FC<IPubCommentProps> = ({
           {data.records?.map((item, index) => {
             return (
               <List.Item className="comment-list" key={item._id + "-" + index}>
-                <CommentCard avatarUrl={avatarUrl} data={item} />
+                <CommentCard
+                  avatarUrl={avatarUrl}
+                  data={item}
+                  toDeleteComment={toDeleteComment}
+                />
               </List.Item>
             );
           })}
         </List>
 
-        {/* 分页其 */}
+        {/* 分页器 */}
         {data.total > 10 && (
           <Pagination
             key="comment"

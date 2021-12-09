@@ -1,16 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import useFetch from "@/hooks/useFetch";
-import { Comment, Button } from "@arco-design/web-react";
+import { Message, Comment, Button } from "@arco-design/web-react";
 import {
   IconHeart,
   IconMessage,
   IconDelete,
   IconSend,
+  IconHeartFill,
 } from "@arco-design/web-react/icon";
-import { commentUrlConfig } from "./actionCreator";
+import {
+  commentUrlConfig,
+  addLikeConfig,
+  deleteLikeConfig,
+} from "./actionCreator";
 import ReplyComment from "./ReplyComment";
 import { ICommentCardProps } from "./types";
-import "./index.scss";
 
 enum ReplyState {
   close = "close",
@@ -18,11 +22,17 @@ enum ReplyState {
   all = "all",
 }
 
-// 获取新闻评论请求
-
-const PubComment: React.FC<ICommentCardProps> = ({ data, avatarUrl }) => {
-  const { content, likesNum, time, _id, userName, userAvatar, isMine } = data;
+const CommentCard: React.FC<ICommentCardProps> = ({
+  data,
+  avatarUrl,
+  toDeleteComment,
+}) => {
+  const { content, likesNum, time, _id, userName, userAvatar, isMine, isLike } =
+    data;
   const { run: getComment } = useFetch(commentUrlConfig);
+  const { run: addLike } = useFetch(addLikeConfig);
+  const { run: deleteLike } = useFetch(deleteLikeConfig);
+  const [like, setLike] = useState(isLike);
   const [replyState, setReplyState] = useState(ReplyState.close);
   // 回复详情
   const [replyData, setReply] = useState({
@@ -30,12 +40,27 @@ const PubComment: React.FC<ICommentCardProps> = ({ data, avatarUrl }) => {
     total: 0,
   });
 
+  // 点赞
+  const likeRefresh = () => {
+    if (!like) {
+      addLike({ commentId: _id }).then(() => {
+        setLike(!like);
+        Message.success("点赞成功");
+      });
+    } else {
+      deleteLike({ commentId: _id }).then(() => {
+        setLike(!like);
+        Message.success("取消点赞成功");
+      });
+    }
+  };
+
   // 刷新评论函数
   const toRefresh = (current: number = 1) => {
     getComment({
-      size: 10,
+      size: 5,
       current: current,
-      orderBy: 1,
+      orderBy: 2,
       type: 2,
       id: _id,
     })
@@ -67,9 +92,10 @@ const PubComment: React.FC<ICommentCardProps> = ({ data, avatarUrl }) => {
             key="heart"
             type="text"
             size="mini"
+            onClick={likeRefresh}
           >
-            <IconHeart />
-            {likesNum}
+            {like ? <IconHeartFill /> : <IconHeart />}
+            {likesNum + Number(!isLike ? Number(like) : -Number(!like))}
           </Button>,
           <Button
             className="custom-comment-action"
@@ -79,6 +105,8 @@ const PubComment: React.FC<ICommentCardProps> = ({ data, avatarUrl }) => {
             onClick={() => {
               if (replyState === ReplyState.close) {
                 setReplyState(ReplyState.reply);
+              } else if (replyState === ReplyState.reply) {
+                setReplyState(ReplyState.close);
               }
             }}
           >
@@ -107,6 +135,7 @@ const PubComment: React.FC<ICommentCardProps> = ({ data, avatarUrl }) => {
               type="text"
               size="mini"
               key="delete"
+              onClick={() => toDeleteComment(_id)}
             >
               <IconDelete />
               删除
@@ -130,4 +159,4 @@ const PubComment: React.FC<ICommentCardProps> = ({ data, avatarUrl }) => {
   );
 };
 
-export default PubComment;
+export default CommentCard;

@@ -6,12 +6,6 @@ export const addCommentConfig: IfetchParams = {
   type: "post",
 };
 
-// 删除评论
-export const deleteCommentConfig: IfetchParams = {
-  url: commentUrl.delete,
-  type: "post",
-};
-
 // 点赞
 export const addLikeConfig: IfetchParams = {
   url: likeUrl.add,
@@ -28,4 +22,10 @@ export const deleteLikeConfig: IfetchParams = {
 export const commentUrlConfig: IfetchParams = {
   url: commentUrl.getComments,
   type: "get",
+};
+
+// 删除评论
+export const deleteCommentConfig: IfetchParams = {
+  url: commentUrl.delete,
+  type: "post",
 };

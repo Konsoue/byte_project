@@ -5,7 +5,7 @@ import { IconFaceSmileFill } from "@arco-design/web-react/icon";
 import localStorageUtils from "@/Utils/localStorageUtils";
 import { history } from "@/route";
 import Header from "@/common/Header";
-import PubComment from "./PubComment";
+import PubComment from "./PubComment/index";
 import { IDetailProps } from "./types";
 import {
   getNewsItemConfig,
