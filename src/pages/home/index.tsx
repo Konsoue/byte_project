@@ -32,7 +32,7 @@ function Home() {
   const [state, dispatch] = useReducer(homeReducer, initialState)
 
   return (
-    <div>
+    <div id="home-container">
       <Header toFlash={dispatch} flash={state.flash} />
       <article className="article-container">
         <NewsList flash={state.flash} toFlash={dispatch} />
