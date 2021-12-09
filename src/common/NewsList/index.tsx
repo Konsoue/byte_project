@@ -1,16 +1,16 @@
-import { useMemo, useEffect } from 'react'
+import { useMemo, useEffect, useState } from 'react'
 import NewsCard from "@/common/NewsCard";
 import { INewsListProps, INewsList, IResponceResult } from './types'
 import useFetch from '@/hooks/useFetch';
 import { newsUrl } from '@/Utils/urls'
 import { SS } from '@/Utils'
+import { Spin } from '@arco-design/web-react';
 import './index.scss'
 
 let current = 1;
 
 const NewsList: React.FC<INewsListProps> = (props) => {
   const { flash, toFlash } = props;
-
   const { run: getNewsDigest, data: newsDigest, loading: newsLoad } = useFetch({
     url: newsUrl.getNewsDigest,
     type: 'get'
@@ -26,7 +26,7 @@ const NewsList: React.FC<INewsListProps> = (props) => {
    * 获取更多的新闻
    */
   const getMoreNews = () => {
-    const type = SS.getItem('newsType');
+    const type = SS.getItem('newsTypeId');
     getNewsDigest({ type, current: ++current })
   }
 
@@ -41,6 +41,9 @@ const NewsList: React.FC<INewsListProps> = (props) => {
 
   return (
     <div className="newslist-container">
+      <div className="spin-container">
+        {newsLoad && <Spin dot />}
+      </div>
       {newsList?.map((news: INewsList) => (
         <NewsCard
           key={news._id}
