@@ -3,7 +3,7 @@ import NewsCard from "@/common/NewsCard";
 import { INewsListProps, INewsList, IResponceResult } from './types'
 import useFetch from '@/hooks/useFetch';
 import { newsUrl } from '@/Utils/urls'
-import { SS } from '@/Utils'
+import { SS, LS } from '@/Utils'
 import { Spin } from '@arco-design/web-react';
 import './index.scss'
 
@@ -18,8 +18,12 @@ const NewsList: React.FC<INewsListProps> = (props) => {
   })
 
   useEffect(() => {
-    const typeId = SS.getItem('newsTypeId');
-    const current = SS.getItem('newsCurrent');
+    let typeId = SS.getItem('newsTypeId');
+    if (!typeId) {
+      const newsType = LS.getItem('newsType');
+      typeId = newsType[0].id;
+    }
+    const current = SS.getItem('newsCurrent') || 1;
     getNewsDigest({ type: typeId, current });
   }, [flash])
 
