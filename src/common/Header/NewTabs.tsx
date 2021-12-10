@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { Tabs } from '@arco-design/web-react';
 import useFetch from '@/hooks/useFetch';
 import { useHistory } from 'react-router-dom'
@@ -37,50 +37,36 @@ const NewTabs: React.FC<INewTabProps> = (props) => {
     url: newsUrl.getNewsType
   })
 
-  const { run: getNewsDigest, data: newsDigest } = useFetch({
-    url: newsUrl.getNewsDigest,
-    type: 'get'
-  })
-
-  useEffect(() => {
+  useLayoutEffect(() => {
     getNewsType()
   }, [])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (newsType) {
-      if (!pathname.includes('/user')) {
-        const { data } = newsType as IResponceResult;
-        const typeId = SS.getItem('newsTypeId') || data[0].id;
-        SS.setItem('newsTypeId', typeId);
-        if (!LS.getItem('newsType')) {
-          LS.setItem('newsType', data);
-        }
-        getNewsDigest({ type: typeId });
-        setReloadTab(!reloadTabs);
-      }
+      if (pathname.includes('/user')
+        || pathname.includes('/detail')
+      ) return;
+
+      const { data } = newsType as IResponceResult;
+      const typeId = SS.getItem('newsTypeId') || data[0].id;
+      SS.setItem('newsTypeId', typeId);
+      if (!LS.getItem('newsType')) LS.setItem('newsType', data);
+      setReloadTab(!reloadTabs);
     }
   }, [newsType])
 
   // 按需刷新 Tabs，例如获取 newType，排序 newType 后刷新页面
-  useEffect(() => {
+  useLayoutEffect(() => {
     newTabsList = LS.getItem('newsType') || defaultTabs;
+    toFlash?.({ type: 'flash' });
   }, [reloadTabs])
-
-  // 获取新闻列表
-  useEffect(() => {
-    if (newsDigest) {
-      const { data: { records: data } } = newsDigest as IResponceResult;
-      SS.setItem('newsDigest', data);
-      toFlash?.({ type: 'flash' });
-    }
-  }, [newsDigest])
 
   const tabChange = (key: string) => {
     SS.setItem('newsTypeId', key);
     if (pathname !== '/') pushRoute('/')
     else {
       setReloadTab(!reloadTabs);
-      getNewsDigest({ type: key });
+      SS.setItem('newsCurrent', 1);
     }
   }
   newsActiveTab = SS.getItem('newsTypeId');

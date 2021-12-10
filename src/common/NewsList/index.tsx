@@ -1,43 +1,62 @@
-import { useMemo, useEffect, useState } from 'react'
+import { useMemo, useEffect, useState, memo } from 'react'
 import NewsCard from "@/common/NewsCard";
 import { INewsListProps, INewsList, IResponceResult } from './types'
 import useFetch from '@/hooks/useFetch';
 import { newsUrl } from '@/Utils/urls'
-import { SS } from '@/Utils'
+import { SS, LS } from '@/Utils'
 import { Spin } from '@arco-design/web-react';
 import './index.scss'
 
-let current = 1;
 
 const NewsList: React.FC<INewsListProps> = (props) => {
-  const { flash, toFlash } = props;
+
+  const { flash } = props;
+  const [reload, setReload] = useState(false);
   const { run: getNewsDigest, data: newsDigest, loading: newsLoad } = useFetch({
     url: newsUrl.getNewsDigest,
     type: 'get'
   })
+
+  useEffect(() => {
+    let typeId = SS.getItem('newsTypeId');
+    if (!typeId) {
+      const newsType = LS.getItem('newsType');
+      typeId = newsType[0].id;
+    }
+    const current = SS.getItem('newsCurrent') || 1;
+    getNewsDigest({ type: typeId, current });
+  }, [flash])
+
+  useEffect(() => {
+    if (newsDigest) {
+      const { data: { records: data } } = newsDigest as IResponceResult;
+      const current = SS.getItem('newsCurrent');
+      if (current > 1) {
+        const oldData = SS.getItem('newsDigest') || [];
+        SS.setItem('newsDigest', [...oldData, ...data]);
+      } else {
+        SS.setItem('newsDigest', data);
+      }
+      setReload(!reload);
+    }
+  }, [newsDigest])
+
   /**
    * 缓存新闻列表
    */
   const newsList = useMemo(() => {
     return SS.getItem('newsDigest') as INewsList[] || [];
-  }, [flash]);
+  }, [reload]);
 
   /**
    * 获取更多的新闻
    */
   const getMoreNews = () => {
     const type = SS.getItem('newsTypeId');
-    getNewsDigest({ type, current: ++current })
+    const current = Number(SS.getItem('newsCurrent')) + 1;
+    SS.setItem('newsCurrent', current);
+    getNewsDigest({ type, current })
   }
-
-  useEffect(() => {
-    if (newsDigest) {
-      const oldData = SS.getItem('newsDigest');
-      const { data: { records: data } } = newsDigest as IResponceResult;
-      SS.setItem('newsDigest', [...oldData, ...data]);
-      toFlash?.({ type: 'flash' });
-    }
-  }, [newsDigest])
 
   return (
     <div className="newslist-container">
@@ -67,4 +86,4 @@ const NewsList: React.FC<INewsListProps> = (props) => {
   )
 }
 
-export default NewsList;
+export default memo(NewsList);

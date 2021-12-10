@@ -19,8 +19,9 @@ $header-height: 64px;
     width: 300px;
     height: 80px;
     transform: scale(.6) translate(-140px, -20px);
-    background: url('../../static/images/logo.svg') no-repeat;
+    background: url('~@/static/images/logo.svg') no-repeat;
     background-size: 300px 80px;
+    cursor: pointer;
   }
 
   .header-middle {
@@ -32,6 +33,9 @@ $header-height: 64px;
     width: 40%;
   }
 
+  .arco-avatar {
+    background-color: var(--theme-background);
+  }
 }
 
 .pub-header {
@@ -71,7 +75,7 @@ $header-height: 64px;
   .arco-avatar-circle {
     width: 48px;
     height: 48px;
-    border: 3px rgb(var(--gray-6)) solid;
+    border: 2px rgb(var(--blue-7)) solid;
   }
 
   .arco-avatar-text {

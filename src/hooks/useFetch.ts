@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { fetchFunc } from '@/Utils/fetch/types'
 import fetch from '@/Utils/fetch'
-import { rejects } from 'assert'
 
 //useFetch返回值类型
 interface IuseFetchRes {

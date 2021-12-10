@@ -1,37 +1,45 @@
-/*
- * @Author: your name
- * @Date: 2021-12-07 22:51:34
- * @LastEditTime: 2021-12-10 22:33:54
- * @LastEditors: Please set LastEditors
- * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- * @FilePath: \byte_project\src\common\Header\index.tsx
- */
-import React, { memo, useMemo } from 'react';
-import PubSearch from '@/common/PubSearch';
-import PubAvatar from './PubAvatar'
-import NewTabs from './NewTabs'
-import { IHeaderProps, IPubAvatarProps } from './types'
-import localStorageUtils from '@/Utils/localStorageUtils'
-import './index.scss'
+import React, { memo, useMemo, useLayoutEffect } from "react";
+import PubSearch from "@/common/PubSearch";
+import PubAvatar from "./PubAvatar";
+import NewTabs from "./NewTabs";
+import { IHeaderProps, IPubAvatarProps } from "./types";
+import localStorageUtils from "@/Utils/localStorageUtils";
+import { useHistory, useLocation } from 'react-router-dom'
+import "./index.scss";
 
 const Header: React.FC<IHeaderProps> = (props) => {
   const { toFlash, flash } = props;
-
+  const history = useHistory();
+  const location = useLocation();
   const loginData: IPubAvatarProps = useMemo(() => {
     const data = localStorageUtils.get();
-    if (JSON.stringify(data) === '{}') {
-      return { login: false }
+    if (JSON.stringify(data) === "{}") {
+      return { login: false };
     } else {
-      return { login: true, avatarUrl: data.user.avatar }
+      return { login: true, avatarUrl: data.user.avatar };
     }
-  }, [flash])
-  
+  }, [flash]);
+
+  // 用户设置的路由拦截
+  useLayoutEffect(() => {
+    const { pathname } = location;
+    if (pathname.includes('/user')) {
+      if (!loginData.login) history.push('/login');
+    }
+  }, [])
 
   return (
     <div className="pub-header-container">
       <div className="pub-header">
         <div className="header-left">
-          <div className="logo"><div className="title-font"></div></div>
+          <div className="logo">
+            <div
+              className="title-font"
+              onClick={() => {
+                history.push("/");
+              }}
+            ></div>
+          </div>
           <NewTabs toFlash={toFlash} />
         </div>
         <div className="header-middle">
@@ -46,8 +54,7 @@ const Header: React.FC<IHeaderProps> = (props) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-
-export default memo(Header)
+export default memo(Header);
