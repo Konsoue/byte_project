@@ -104,8 +104,7 @@
     background: var(--theme-color-background);
   }
 
-  .arco-input-inner-wrapper,
-  .arco-input-inner-wrapper:hover {
-    border-color: var(--theme-color-text);
+  .arco-input-inner-wrapper-focus {
+    border-color:var(--theme-color-text);
   }
 }
