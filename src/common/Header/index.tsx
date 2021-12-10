@@ -1,15 +1,16 @@
-import React, { memo, useMemo } from "react";
+import React, { memo, useMemo, useLayoutEffect } from "react";
 import PubSearch from "@/common/PubSearch";
 import PubAvatar from "./PubAvatar";
 import NewTabs from "./NewTabs";
 import { IHeaderProps, IPubAvatarProps } from "./types";
 import localStorageUtils from "@/Utils/localStorageUtils";
-import { history } from "@/route";
+import { useHistory, useLocation } from 'react-router-dom'
 import "./index.scss";
 
 const Header: React.FC<IHeaderProps> = (props) => {
   const { toFlash, flash } = props;
-
+  const history = useHistory();
+  const location = useLocation();
   const loginData: IPubAvatarProps = useMemo(() => {
     const data = localStorageUtils.get();
     if (JSON.stringify(data) === "{}") {
@@ -19,6 +20,14 @@ const Header: React.FC<IHeaderProps> = (props) => {
     }
   }, [flash]);
 
+  // 用户设置的路由拦截
+  useLayoutEffect(() => {
+    const { pathname } = location;
+    if (pathname.includes('/user')) {
+      if (!loginData.login) history.push('/login');
+    }
+  }, [])
+
   return (
     <div className="pub-header-container">
       <div className="pub-header">
@@ -26,9 +35,6 @@ const Header: React.FC<IHeaderProps> = (props) => {
           <div className="logo">
             <div
               className="title-font"
-              style={{
-                cursor:'pointer'
-              }}
               onClick={() => {
                 history.push("/");
               }}

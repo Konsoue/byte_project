@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { Tabs } from '@arco-design/web-react';
 import useFetch from '@/hooks/useFetch';
 import { useHistory } from 'react-router-dom'
@@ -37,11 +37,11 @@ const NewTabs: React.FC<INewTabProps> = (props) => {
     url: newsUrl.getNewsType
   })
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     getNewsType()
   }, [])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (newsType) {
       if (pathname.includes('/user')
         || pathname.includes('/detail')
@@ -56,7 +56,7 @@ const NewTabs: React.FC<INewTabProps> = (props) => {
   }, [newsType])
 
   // 按需刷新 Tabs，例如获取 newType，排序 newType 后刷新页面
-  useEffect(() => {
+  useLayoutEffect(() => {
     newTabsList = LS.getItem('newsType') || defaultTabs;
     toFlash?.({ type: 'flash' });
   }, [reloadTabs])
