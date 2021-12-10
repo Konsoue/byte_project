@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-12-07 22:51:34
+ * @LastEditTime: 2021-12-10 22:33:54
+ * @LastEditors: Please set LastEditors
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: \byte_project\src\common\Header\index.tsx
+ */
 import React, { memo, useMemo } from 'react';
 import PubSearch from '@/common/PubSearch';
 import PubAvatar from './PubAvatar'
@@ -17,6 +25,7 @@ const Header: React.FC<IHeaderProps> = (props) => {
       return { login: true, avatarUrl: data.user.avatar }
     }
   }, [flash])
+  
 
   return (
     <div className="pub-header-container">
