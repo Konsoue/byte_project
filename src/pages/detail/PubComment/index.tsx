@@ -10,7 +10,13 @@ import {
   Radio,
   Spin,
 } from "@arco-design/web-react";
-import { IconStarFill, IconSend, IconStar } from "@arco-design/web-react/icon";
+import {
+  IconStarFill,
+  IconSend,
+  IconStar,
+  IconFire,
+  IconClockCircle,
+} from "@arco-design/web-react/icon";
 import { addCommentConfig, deleteCommentConfig } from "./actionCreator";
 import { IPubCommentProps } from "./types";
 import CommentCard from "./CardComment";
@@ -57,6 +63,14 @@ const PubComment: React.FC<IPubCommentProps> = ({
     if (comment === "") {
       Message.error("评论不能为空");
     } else {
+      document
+        .querySelector(".reply-button .arco-icon-send")
+        ?.classList.add("animation_fly");
+      setTimeout(() => {
+        document
+          .querySelector(".reply-button .arco-icon-send")
+          ?.classList.remove("animation_fly");
+      }, 1000);
       addComment({ id: detailId, content: comment, type: 1 }).then(() => {
         Message.success("评论成功");
         setComment("");
@@ -80,7 +94,7 @@ const PubComment: React.FC<IPubCommentProps> = ({
   };
 
   return (
-    <div className="comment-box">
+    <div className="comment-box" id="comment-top">
       {/* 回复框 */}
       <Comment
         align="right"
@@ -89,7 +103,12 @@ const PubComment: React.FC<IPubCommentProps> = ({
             {collection ? <IconStarFill /> : <IconStar />}
             {collection ? "已收藏" : "收藏"}
           </Button>,
-          <Button key="2" type="primary" onClick={toComment}>
+          <Button
+            key="2"
+            type="primary"
+            className="reply-button"
+            onClick={toComment}
+          >
             <IconSend />
             回复
           </Button>,
@@ -128,8 +147,14 @@ const PubComment: React.FC<IPubCommentProps> = ({
                   setOrderBy(toOrderBy);
                 }}
               >
-                <Radio value={2}>按热度排序</Radio>
-                <Radio value={1}>按时间排序</Radio>
+                <Radio value={2}>
+                  按热度排序
+                  <IconFire />
+                </Radio>
+                <Radio value={1}>
+                  按时间排序
+                  <IconClockCircle />
+                </Radio>
               </RadioGroup>
             </span>
           }

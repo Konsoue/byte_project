@@ -1,7 +1,19 @@
 import { useState, useEffect } from "react";
 import useFetch from "@/hooks/useFetch";
-import { Result, Button, Message } from "@arco-design/web-react";
-import { IconFaceSmileFill } from "@arco-design/web-react/icon";
+import {
+  Result,
+  Button,
+  Message,
+  BackTop,
+  Link,
+  Tooltip,
+} from "@arco-design/web-react";
+import {
+  IconFaceSmileFill,
+  IconStar,
+  IconStarFill,
+  IconMessage,
+} from "@arco-design/web-react/icon";
 import localStorageUtils from "@/Utils/localStorageUtils";
 import { history } from "@/route";
 import Header from "@/common/Header";
@@ -132,9 +144,10 @@ function Detail() {
   };
 
   return (
-    <div className="detail-box">
+    <div className="detail-box" style={{ position: "relative" }}>
+      {/* 页头 */}
       <Header />
-      <article className="article-container">
+      <article className="article-container" id="detail-top">
         {/* 有id则显示请求内容 */}
         {!detailId ? (
           returnWaitContent(
@@ -198,6 +211,42 @@ function Detail() {
           </div>
         )}
       </article>
+
+      {/* 三个悬浮按钮 */}
+      <BackTop
+        visibleHeight={30}
+        style={{ position: "absolute", bottom: "50px" }}
+        target={() => document.getElementById("detail-top") || window}
+      />
+      <BackTop
+        style={{ position: "absolute", bottom: "100px" }}
+        visibleHeight={0}
+      >
+        <Tooltip content="跳转至评论" position="left" trigger="hover">
+          <Link title="评论" href="#comment-top">
+            <IconMessage />
+          </Link>
+        </Tooltip>
+      </BackTop>
+      <BackTop
+        style={{ position: "absolute", bottom: "150px" }}
+        visibleHeight={0}
+      >
+        <Tooltip
+          content={collection ? "取消收藏" : "收藏"}
+          position="left"
+          trigger="hover"
+        >
+          <Button
+            shape="circle"
+            size="large"
+            title={collection ? "已收藏" : "收藏"}
+            onClick={collectionRefresh}
+          >
+            {collection ? <IconStarFill /> : <IconStar />}
+          </Button>
+        </Tooltip>
+      </BackTop>
     </div>
   );
 }
