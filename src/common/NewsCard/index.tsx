@@ -2,6 +2,7 @@ import { Card, Image } from "@arco-design/web-react";
 import { INewCardProps } from "./types";
 import { useHistory } from "react-router-dom";
 import { SS } from '@/Utils'
+import { useReduxDispatch } from '@/redux';
 import LoadImg from '@/static/images/load.gif'
 import "./index.scss";
 
@@ -14,10 +15,10 @@ const NewsCard: React.FC<INewCardProps> = ({
   id = "123",
 }) => {
   const history = useHistory();
-
+  const dispatch = useReduxDispatch();
   const toDetailPage = (id: string | number) => {
+    dispatch({ type: 'newsTab/setData', payload: { id: false } })
     history.push(`/detail/${id}`)
-    SS.setItem('newsTypeId', '');
   }
 
   return (
