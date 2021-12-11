@@ -5,17 +5,16 @@ import localStorageUtils from '@/Utils/localStorageUtils'
 import { IPubAvatarProps, IUserContentProps } from './types';
 import { LS, SS } from '@/Utils'
 const UserContent: React.FC<IUserContentProps> = (props) => {
-  const { toFlash } = props;
   const history = useHistory();
 
   const modalConfig = {
     title: '退出登录',
     content: '是否确认退出登录',
     onOk: () => {
-      toFlash?.({ type: 'flash' });
       localStorageUtils.unset();
       LS.clear();
-      history.push('/')
+      window.location.reload();
+      history.push('/');
     },
     closable: true,
   }
