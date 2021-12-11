@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useLayoutEffect } from "react";
+import React, { memo, useLayoutEffect } from "react";
 import PubSearch from "@/common/PubSearch";
 import PubAvatar from "./PubAvatar";
 import NewTabs from "./NewTabs";
@@ -13,13 +13,9 @@ const Header: React.FC<IHeaderProps> = (props) => {
   const location = useLocation();
   const userData = useReduxData(['userData', 'data']);
   const dispatch = useReduxDispatch();
-
   // 用户设置的路由拦截
   useLayoutEffect(() => {
     const { pathname } = location;
-    if (pathname.includes('/user')) {
-      if (!userData.login) history.push('/login');
-    }
     const data = localStorageUtils.get();
     if (JSON.stringify(data) !== "{}") {
       dispatch({
@@ -30,6 +26,8 @@ const Header: React.FC<IHeaderProps> = (props) => {
           name: data.user.name,
         }
       })
+    } else {
+      if (pathname.includes('/user')) history.push('/');
     }
   }, [])
 
