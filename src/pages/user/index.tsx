@@ -1,12 +1,4 @@
-/*
- * @Author: your name
- * @Date: 2021-12-06 21:39:41
- * @LastEditTime: 2021-12-09 20:27:49
- * @LastEditors: Please set LastEditors
- * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- * @FilePath: \byte_project\src\pages\user\index.tsx
- */
-import React, { useReducer, useMemo, createContext } from "react";
+import React, { useReducer, createContext } from "react";
 import SideBar from "@/common/sideBar/index";
 import { Layout, Card, Result, Button } from "@arco-design/web-react";
 import { Switch, Route } from "react-router-dom";
@@ -14,6 +6,7 @@ import { routeMethod } from "@/route/getRoute";
 import { withRouter, RouteComponentProps } from "react-router";
 import { IconFaceSmileFill } from "@arco-design/web-react/icon";
 import { IUserAction, IUserState } from "./types";
+import { useReduxData } from '@/redux'
 import { history } from "@/route";
 import TopHeader from "@/common/Header";
 import "./index.scss";
@@ -42,18 +35,12 @@ const userReducer = (state: IUserState, action: IUserAction) => {
 
 const User: React.FC<RouteComponentProps> = (props) => {
   const [state, dispatch] = useReducer(userReducer, initialState);
-
-  const theme = useMemo(() => {
-    return LS.getItem("useDark") || 'light';
-  }, [state.flash]  );
-
-  const fontSize = useMemo(() => {
-    return LS.getItem("fontSize") || 'small';
-  }, [state.flash]);
-
-  const themeColor = useMemo(() => {
-    return LS.getItem("themeColor") || 'blue';
-  }, [state.flash]);
+  const theme = useReduxData(['settingsData', 'theme'])
+  const fontSize = useReduxData(['settingsData', 'fontSize'])
+  const themeColor = useReduxData(['settingsData', 'themeColor'])
+  const useDark = theme || LS.getItem('theme')
+  const selectedSize = fontSize || LS.getItem('fontSize')
+  const selectedColor = themeColor || LS.getItem('themeColor')
 
   const renderContent = () => {
     return (
@@ -102,7 +89,7 @@ const User: React.FC<RouteComponentProps> = (props) => {
 
   return (
     <UserContext.Provider value={dispatch}>
-      <div className={`userPage ${theme} ${fontSize} ${themeColor}`}>
+      <div className={`userPage ${useDark} ${selectedSize} ${selectedColor}`}>
         <Layout className="user-box">
           <Header>
             <TopHeader />

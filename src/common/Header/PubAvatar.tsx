@@ -59,7 +59,7 @@ const UserContent: React.FC<IUserContentProps> = (props) => {
 }
 
 const PubAvatar: React.FC<IPubAvatarProps> = (props) => {
-  const { login, avatarUrl, toFlash } = props;
+  const { login, avatarUrl } = props;
   const history = useHistory();
 
   const userAvatar = useMemo(() => {
@@ -72,12 +72,12 @@ const PubAvatar: React.FC<IPubAvatarProps> = (props) => {
         }}
         position='bottom'
         trigger='click'
-        popup={() => <UserContent toFlash={toFlash} />}
+        popup={() => <UserContent />}
       >
         <Avatar><img src={avatarUrl} alt="avatar" /></Avatar>
       </Trigger>
     )
-  }, [login])
+  }, [login, avatarUrl])
 
   return (
     <div className="pub-avatar">

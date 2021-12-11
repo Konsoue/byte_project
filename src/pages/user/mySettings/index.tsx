@@ -1,17 +1,9 @@
-/*
- * @Author: your name
- * @Date: 2021-12-06 21:39:41
- * @LastEditTime: 2021-12-08 22:55:25
- * @LastEditors: Please set LastEditors
- * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- * @FilePath: \byte_project\src\pages\user\mySettings\index.tsx
- */
-import React, { useState, useContext } from "react";
+import React from "react";
 import { Button, Radio } from '@arco-design/web-react'
-import { UserContext } from '../index'
+import { useReduxData, useReduxDispatch } from '@/redux'
+import { LS } from '@/Utils'
 import '@/theme.scss'
 import './index.scss'
-import { LS } from '@/Utils'
 
 const RadioGroup = Radio.Group;
 const fontSizeOption = [
@@ -48,29 +40,29 @@ const themeColorOption = [
   }
 ]
 
-
 const MySettings: React.FC = (props) => {
-  // 用户可以设置主题色、字体大小、日间/夜间模式
-  let useDark = LS.getItem('useDark') || 'light'
-  const [theme, setTheme] = useState(useDark);
-  useDark = (theme === 'light') ? 'dark' : 'light';
 
-  let selectedSize = LS.getItem('fontSize') || 'small'
-  const [fontSize, setFontSize] = useState(selectedSize)
-
-  let selectedColor = LS.getItem('themeColor') || 'blue'
-  const [themeColor, setThemeColor] = useState(selectedColor)
-
-  const dispatch = useContext(UserContext);
+  const theme = useReduxData(['settingsData', 'theme'])
+  const fontSize = useReduxData(['settingsData', 'fontSize'])
+  const themeColor = useReduxData(['settingsData', 'themeColor'])
+  const dispatch = useReduxDispatch()
+  let useDark = theme || LS.getItem('theme')
+  let selectedSize = fontSize || LS.getItem('fontSize')
+  let selectedColor = themeColor || LS.getItem('themeColor')
 
   return (
-    <div className={`settingPage ${theme} ${fontSize} ${themeColor}`}>
+    <div className='settingPage'>
       <Button
         type="primary"
         onClick={() => {
-          setTheme(useDark)
-          dispatch({ type: 'flash' })
-          LS.setItem('useDark', useDark)
+          useDark = (theme === 'light') ? 'dark' : 'light'
+          dispatch({
+            type: 'settingsData/setTheme',
+            payload: {
+              theme: useDark
+            }
+          })
+          LS.setItem('theme', useDark)
         }}
       >
         {theme === 'light' ? '日间模式' : '夜间模式'}
@@ -87,8 +79,12 @@ const MySettings: React.FC = (props) => {
             marginTop: 20
           }}
           onChange={(e) => {
-            setFontSize(e)
-            dispatch({ type: 'flash' })
+            dispatch({
+              type: 'settingsData/setFontSize',
+              payload: {
+                fontSize: e
+              }
+            })
             LS.setItem('fontSize', e)
           }}
         >
@@ -102,8 +98,12 @@ const MySettings: React.FC = (props) => {
           size='large'
           defaultValue={`${selectedColor}`}
           onChange={(e) => {
-            setThemeColor(e)
-            dispatch({ type: 'flash' })
+            dispatch({
+              type: 'settingsData/setThemeColor',
+              payload: {
+                themeColor: e
+              }
+            })
             LS.setItem('themeColor', e)
           }}
         >
