@@ -88,13 +88,14 @@ function Detail() {
   useEffect(() => {
     // 判断是否有文章并给图片添加点击事件
     if (detail.title) {
-      const imgDoms = document.querySelectorAll("img");
+      const imgDoms = document
+        .querySelector(".content")
+        ?.querySelectorAll("img");
       const imgArr: string[] = [];
       imgDoms?.forEach((img, index) => {
         imgArr.push(img.src);
         img?.addEventListener("click", () => imgShow(index));
       });
-      console.log(imgArr);
       imgArr.length && setImgList(imgArr);
     }
 
@@ -246,40 +247,44 @@ function Detail() {
       </article>
 
       {/* 三个悬浮按钮 */}
+      {!isLogin && (
+        <>
+          <BackTop
+            style={{ position: "absolute", bottom: "100px" }}
+            visibleHeight={0}
+          >
+            <Tooltip content="跳转至评论" position="left" trigger="hover">
+              <Link title="评论" href="#comment-top">
+                <IconMessage />
+              </Link>
+            </Tooltip>
+          </BackTop>
+          <BackTop
+            style={{ position: "absolute", bottom: "150px" }}
+            visibleHeight={0}
+          >
+            <Tooltip
+              content={collection ? "取消收藏" : "收藏"}
+              position="left"
+              trigger="hover"
+            >
+              <Button
+                shape="circle"
+                size="large"
+                title={collection ? "已收藏" : "收藏"}
+                onClick={collectionRefresh}
+              >
+                {collection ? <IconStarFill /> : <IconStar />}
+              </Button>
+            </Tooltip>
+          </BackTop>
+        </>
+      )}
       <BackTop
         visibleHeight={30}
         style={{ position: "absolute", bottom: "50px" }}
         target={() => document.getElementById("detail-top") || window}
       />
-      <BackTop
-        style={{ position: "absolute", bottom: "100px" }}
-        visibleHeight={0}
-      >
-        <Tooltip content="跳转至评论" position="left" trigger="hover">
-          <Link title="评论" href="#comment-top">
-            <IconMessage />
-          </Link>
-        </Tooltip>
-      </BackTop>
-      <BackTop
-        style={{ position: "absolute", bottom: "150px" }}
-        visibleHeight={0}
-      >
-        <Tooltip
-          content={collection ? "取消收藏" : "收藏"}
-          position="left"
-          trigger="hover"
-        >
-          <Button
-            shape="circle"
-            size="large"
-            title={collection ? "已收藏" : "收藏"}
-            onClick={collectionRefresh}
-          >
-            {collection ? <IconStarFill /> : <IconStar />}
-          </Button>
-        </Tooltip>
-      </BackTop>
 
       {/* 图片预览框 */}
       <Image.PreviewGroup
