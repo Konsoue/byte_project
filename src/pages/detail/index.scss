@@ -1,4 +1,7 @@
 .detail-box {
+  img {
+    cursor: pointer;
+  }
 
   .article-container {
     .detail-content {
@@ -85,6 +88,10 @@
     }
 
   }
+}
+
+.arco-image-preview-img-container {
+  transition: all .3s;
 }
 
 @keyframes contentEnter {
