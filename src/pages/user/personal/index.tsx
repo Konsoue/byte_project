@@ -5,8 +5,6 @@ import { IconEdit } from '@arco-design/web-react/icon'
 import localStorageUtils from '@/Utils/localStorageUtils'
 import { updateAvatarConfig } from './actionCreator'
 import { useReduxData, useReduxDispatch } from '@/redux'
-import '@/theme.scss'
-import './index.scss'
 
 const PersonalPage: React.FC = () => {
   // 修改头像

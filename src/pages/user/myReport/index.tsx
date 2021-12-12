@@ -1,6 +1,4 @@
 import React from "react";
-import '@/theme.scss'
-import './index.scss'
 
 const index: React.FC = () => {
   // 用户可以在使用报告中看到自己本周/本月浏览的新闻关键词的词云
