@@ -14,7 +14,6 @@ const UserContent: React.FC<IUserContentProps> = (props) => {
       localStorageUtils.unset();
       LS.clear();
       window.location.reload();
-      history.push('/');
     },
     closable: true,
   }
@@ -74,7 +73,11 @@ const PubAvatar: React.FC<IPubAvatarProps> = (props) => {
         trigger='click'
         popup={() => <UserContent />}
       >
-        <Avatar><img src={avatarUrl} alt="avatar" /></Avatar>
+        <Avatar
+          style={{ backgroundColor: 'var(--theme-background)' }}
+        >
+          <img src={avatarUrl} alt="avatar" />
+          </Avatar>
       </Trigger>
     )
   }, [login, avatarUrl])
