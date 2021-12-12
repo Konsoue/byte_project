@@ -6,12 +6,9 @@ import { routeMethod } from "@/route/getRoute";
 import { withRouter, RouteComponentProps } from "react-router";
 import { IconFaceSmileFill } from "@arco-design/web-react/icon";
 import { IUserAction, IUserState } from "./types";
-import { useReduxData } from '@/redux'
 import { history } from "@/route";
 import TopHeader from "@/common/Header";
 import "./index.scss";
-import { LS } from "@/Utils";
-import "@/theme.scss";
 import "./index.scss";
 export const UserContext = createContext((a: any) => a);
 
@@ -35,12 +32,6 @@ const userReducer = (state: IUserState, action: IUserAction) => {
 
 const User: React.FC<RouteComponentProps> = (props) => {
   const [state, dispatch] = useReducer(userReducer, initialState);
-  const theme = useReduxData(['settingsData', 'theme'])
-  const fontSize = useReduxData(['settingsData', 'fontSize'])
-  const themeColor = useReduxData(['settingsData', 'themeColor'])
-  const useDark = theme || LS.getItem('theme')
-  const selectedSize = fontSize || LS.getItem('fontSize')
-  const selectedColor = themeColor || LS.getItem('themeColor')
 
   const renderContent = () => {
     return (
@@ -89,7 +80,7 @@ const User: React.FC<RouteComponentProps> = (props) => {
 
   return (
     <UserContext.Provider value={dispatch}>
-      <div className={`userPage ${useDark} ${selectedSize} ${selectedColor}`}>
+      <div className={`userPage`}>
         <Layout className="user-box">
           <Header>
             <TopHeader />
