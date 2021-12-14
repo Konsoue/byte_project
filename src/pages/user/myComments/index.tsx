@@ -1,29 +1,39 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import useFetch from '@/hooks/useFetch';
 import { commentUrl } from '@/Utils/urls'
-import { List } from '@arco-design/web-react';
+import { IResponseResult, ICommentsList } from './types'
+import CommentCard from "./commentsCard";
 
 const MyComments: React.FC = () => {
-  const { run: getCommentsArr } = useFetch({
+  const { run: getMyComments, data: myComments } = useFetch({
     url: commentUrl.getMyComments,
     type: 'GET',
   })
+  const [commentsArr, setArr] = useState([]);
   useEffect(() => {
-    getCommentsArr({
-      size: '10',
-      current: '1'
-    })
-      .then((res) => {
-        const data = res.data;
-        console.log(data)
-      })
-      .catch((err) => { })
+    getMyComments({})
   }, [])
 
-  return (<List
-    style={{ width: 1000 }}
-    size='large'
-    render={(item, index) => <List.Item key={index}>{item}</List.Item>}
-  />)
+  useEffect(() => {
+    if (myComments) {
+      const { data } = myComments as IResponseResult;
+      setArr(data.records);
+    }
+  }, [myComments])
+
+  return (
+    <article >
+      {commentsArr.map((item: ICommentsList) => (
+        <CommentCard
+          key={'comment'+item._id}
+          content={item.content}
+          id={item._id}
+          commentId={item.commentId}
+          newsId={item.newsId}
+          time={item.time}
+        />
+      ))}
+    </article>
+  )
 };
 export default MyComments;

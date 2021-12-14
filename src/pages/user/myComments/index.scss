@@ -1,0 +1,34 @@
+.card-item {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  .title {
+    padding: 10px 0;
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+  .footer {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .time {
+      margin-right: 20px;
+    }
+
+    .detail {
+      cursor: pointer;
+      position: relative;
+    }
+
+    .detail:hover {
+      color: rgb(var(--orangered-8));
+      text-decoration: underline;
+    }
+  }
+
+}
