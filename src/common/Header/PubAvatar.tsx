@@ -5,17 +5,15 @@ import localStorageUtils from '@/Utils/localStorageUtils'
 import { IPubAvatarProps, IUserContentProps } from './types';
 import { LS, SS } from '@/Utils'
 const UserContent: React.FC<IUserContentProps> = (props) => {
-  const { toFlash } = props;
   const history = useHistory();
 
   const modalConfig = {
     title: '退出登录',
     content: '是否确认退出登录',
     onOk: () => {
-      toFlash?.({ type: 'flash' });
       localStorageUtils.unset();
       LS.clear();
-      history.push('/')
+      window.location.reload();
     },
     closable: true,
   }
@@ -60,7 +58,7 @@ const UserContent: React.FC<IUserContentProps> = (props) => {
 }
 
 const PubAvatar: React.FC<IPubAvatarProps> = (props) => {
-  const { login, avatarUrl, toFlash } = props;
+  const { login, avatarUrl } = props;
   const history = useHistory();
 
   const userAvatar = useMemo(() => {
@@ -73,12 +71,16 @@ const PubAvatar: React.FC<IPubAvatarProps> = (props) => {
         }}
         position='bottom'
         trigger='click'
-        popup={() => <UserContent toFlash={toFlash} />}
+        popup={() => <UserContent />}
       >
-        <Avatar><img src={avatarUrl} alt="avatar" /></Avatar>
+        <Avatar
+          style={{ backgroundColor: 'var(--theme-background)' }}
+        >
+          <img src={avatarUrl} alt="avatar" />
+          </Avatar>
       </Trigger>
     )
-  }, [login])
+  }, [login, avatarUrl])
 
   return (
     <div className="pub-avatar">

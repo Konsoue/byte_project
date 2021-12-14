@@ -3,55 +3,50 @@ import NewsCard from "@/common/NewsCard";
 import { INewsListProps, INewsList, IResponceResult } from './types'
 import useFetch from '@/hooks/useFetch';
 import { newsUrl } from '@/Utils/urls'
-import { SS } from '@/Utils'
+import { LS } from '@/Utils'
 import { Spin } from '@arco-design/web-react';
+import { useReduxData, useReduxDispatch } from '@/redux'
 import './index.scss'
 
-
 const NewsList: React.FC<INewsListProps> = (props) => {
+  const newsTabId = useReduxData(['newsTab', 'data', 'id']);
+  const newsDigestData = useReduxData(['newsDigest', 'data', 'news']);
+  const newsDigestCurrent = useReduxData(['newsDigest', 'data', 'current']);
 
-  const { flash } = props;
-  const [reload, setReload] = useState(false);
+  const dispatch = useReduxDispatch();
   const { run: getNewsDigest, data: newsDigest, loading: newsLoad } = useFetch({
     url: newsUrl.getNewsDigest,
     type: 'get'
   })
 
   useEffect(() => {
-    const typeId = SS.getItem('newsTypeId');
-    const current = SS.getItem('newsCurrent');
-    getNewsDigest({ type: typeId, current });
-  }, [flash])
+    let typeId = newsTabId;
+    if (!typeId) {
+      const newsType = LS.getItem('newsType');
+      if (!newsType) return;
+      typeId = newsType[0]?.id;
+    }
+    if (typeId) getNewsDigest({ type: typeId, current: newsDigestCurrent });
+  }, [newsTabId, newsDigestCurrent])
+
 
   useEffect(() => {
     if (newsDigest) {
       const { data: { records: data } } = newsDigest as IResponceResult;
-      const current = SS.getItem('newsCurrent');
-      if (current > 1) {
-        const oldData = SS.getItem('newsDigest') || [];
-        SS.setItem('newsDigest', [...oldData, ...data]);
-      } else {
-        SS.setItem('newsDigest', data);
-      }
-      setReload(!reload);
+      let news = newsDigestCurrent > 1 ? [...newsDigestData, ...data] : data
+      dispatch({
+        type: 'newsDigest/setData',
+        payload: { news }
+      });
     }
   }, [newsDigest])
-
-  /**
-   * 缓存新闻列表
-   */
-  const newsList = useMemo(() => {
-    return SS.getItem('newsDigest') as INewsList[] || [];
-  }, [reload]);
 
   /**
    * 获取更多的新闻
    */
   const getMoreNews = () => {
-    const type = SS.getItem('newsTypeId');
-    const current = Number(SS.getItem('newsCurrent')) + 1;
-    SS.setItem('newsCurrent', current);
-    getNewsDigest({ type, current })
+    const current = newsDigestCurrent + 1;
+    dispatch({ type: 'newsDigest/setData', payload: { current } })
   }
 
   return (
@@ -59,7 +54,7 @@ const NewsList: React.FC<INewsListProps> = (props) => {
       <div className="spin-container">
         {newsLoad && <Spin dot />}
       </div>
-      {newsList?.map((news: INewsList) => (
+      {newsDigestData?.map((news: INewsList) => (
         <NewsCard
           key={news._id}
           id={news._id}

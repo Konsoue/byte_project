@@ -1,11 +1,13 @@
 .detail-box {
+  img {
+    cursor: pointer;
+  }
 
   .article-container {
     .detail-content {
       padding: 15px;
       min-height: calc(100vh - 120px);
       background: var(--theme-background);
-      background: #fff;
 
       h1 {
         text-align: center;
@@ -46,6 +48,49 @@
     justify-content: center;
     align-items: center;
   }
+
+  .arco-backtop {
+    height: 40px;
+    width: 40px;
+    right: 40px;
+
+    svg {
+      stroke: rgb(var(--blue-7));
+      font-size: 18px;
+    }
+
+    .arco-link,
+    .arco-btn {
+      display: flex;
+      height: 100%;
+      width: 100%;
+      border-radius: 50%;
+      justify-content: center;
+      align-content: center;
+      align-items: center;
+      padding: 0;
+      background-color: rgb(var(--gray-2)) !important;
+      box-shadow: 0 0 3px #ccc;
+    }
+
+    .arco-icon-to-top {
+      stroke: #fff;
+    }
+
+    .arco-icon-star-fill {
+      font-size: 18px;
+      color: rgb(var(--yellow-5)) !important;
+
+      path {
+        stroke: rgb(var(--yellow-7));
+      }
+    }
+
+  }
+}
+
+.arco-image-preview-img-container {
+  transition: all .3s;
 }
 
 @keyframes contentEnter {

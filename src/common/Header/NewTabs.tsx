@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 import { Tabs } from '@arco-design/web-react';
 import useFetch from '@/hooks/useFetch';
 import { useHistory } from 'react-router-dom'
@@ -8,76 +8,59 @@ import {
   INewTabProps,
   IResponceResult,
 } from './types'
-import { SS, LS } from '@/Utils'
+import { LS } from '@/Utils'
+import { useReduxData, useReduxDispatch } from '@/redux'
 const { TabPane } = Tabs;
 
-const defaultTabs = [
-  {
-    name: '推荐',
-    id: '1'
-  },
-  {
-    name: '热点',
-    id: '2'
-  },
-  {
-    name: '科技',
-    id: '3'
-  },
-]
-
-let newTabsList = [] as ITabsPaneProps[];
-let newsActiveTab: string = '';
-
 const NewTabs: React.FC<INewTabProps> = (props) => {
-  const { toFlash } = props;
-  const [reloadTabs, setReloadTab] = useState(false);
+  const newsTabId = useReduxData(['newsTab', 'data', 'id']);
+  const userLogin = useReduxData(['userData', 'data', 'login']);
+  const newsTab = useReduxData(['newsTab', 'data', 'newsType']) as ITabsPaneProps[];
+  const dispatch = useReduxDispatch()
   const { location: { pathname }, push: pushRoute } = useHistory();
   const { run: getNewsType, data: newsType } = useFetch({
     url: newsUrl.getNewsType
   })
 
-  useEffect(() => {
-    getNewsType()
+  useLayoutEffect(() => {
+    const newsType = LS.getItem('newsType');
+    if (!newsType) getNewsType();
+    else {
+      let id = newsTabId;
+      if (!newsTabId && pathname === '/') id = newsTab[0].id;
+      dispatch({
+        type: 'newsTab/setData',
+        payload: {
+          newsType,
+          id
+        }
+      })
+    }
   }, [])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (newsType) {
-      if (pathname.includes('/user')
-        || pathname.includes('/detail')
-      ) return;
-
       const { data } = newsType as IResponceResult;
-      const typeId = SS.getItem('newsTypeId') || data[0].id;
-      SS.setItem('newsTypeId', typeId);
       if (!LS.getItem('newsType')) LS.setItem('newsType', data);
-      setReloadTab(!reloadTabs);
+      let id = newsTabId;
+      if (!newsTabId) id = data[0].id;
+      dispatch({ type: 'newsTab/setData', payload: { newsType: data, id } })
     }
   }, [newsType])
 
-  // 按需刷新 Tabs，例如获取 newType，排序 newType 后刷新页面
-  useEffect(() => {
-    newTabsList = LS.getItem('newsType') || defaultTabs;
-    toFlash?.({ type: 'flash' });
-  }, [reloadTabs])
-
   const tabChange = (key: string) => {
-    SS.setItem('newsTypeId', key);
+    dispatch({ type: 'newsTab/setData', payload: { id: key } })
+    dispatch({ type: 'newsDigest/setData', payload: { current: 1 } })
     if (pathname !== '/') pushRoute('/')
-    else {
-      setReloadTab(!reloadTabs);
-      SS.setItem('newsCurrent', 1);
-    }
   }
-  newsActiveTab = SS.getItem('newsTypeId');
 
   return (
     <Tabs className="header-tabs"
-      activeTab={newsActiveTab}
+      activeTab={newsTabId}
       onChange={tabChange}
     >
       {
-        newTabsList.map(news => <TabPane key={news.id} title={news.name} />)
+        newsTab.map(news => <TabPane key={news.id} title={news.name} />)
       }
     </Tabs>
   )

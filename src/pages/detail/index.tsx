@@ -1,7 +1,20 @@
 import { useState, useEffect } from "react";
 import useFetch from "@/hooks/useFetch";
-import { Result, Button, Message } from "@arco-design/web-react";
-import { IconFaceSmileFill } from "@arco-design/web-react/icon";
+import {
+  Result,
+  Button,
+  Message,
+  BackTop,
+  Link,
+  Tooltip,
+  Image,
+} from "@arco-design/web-react";
+import {
+  IconFaceSmileFill,
+  IconStar,
+  IconStarFill,
+  IconMessage,
+} from "@arco-design/web-react/icon";
 import localStorageUtils from "@/Utils/localStorageUtils";
 import { history } from "@/route";
 import Header from "@/common/Header";
@@ -23,6 +36,7 @@ function Detail() {
   // 判断是否登陆状态
   const isLogin = JSON.stringify(userData) === "{}";
 
+  const [imgList, setImgList] = useState<string[]>([]);
   // 存储新闻主题
   const [detail, setDetail] = useState<IDetailProps>({
     title: "",
@@ -37,7 +51,10 @@ function Detail() {
   });
   // 收藏
   const [collection, setCollection] = useState(false);
-
+  // 图片预览开关
+  const [visible, setVisible] = useState(false);
+  // 图片预览current
+  const [current, setCurrent] = useState(0);
   // 获取新闻主体请求
   const { run: getNews } = useFetch(
     isLogin ? visitorGetNewsItemConfig : getNewsItemConfig
@@ -66,6 +83,35 @@ function Detail() {
         });
     }
   }, []);
+
+  // 渲染图片后进行监听事件
+  useEffect(() => {
+    // 判断是否有文章并给图片添加点击事件
+    if (detail.title) {
+      const imgDoms = document
+        .querySelector(".content")
+        ?.querySelectorAll("img");
+      const imgArr: string[] = [];
+      imgDoms?.forEach((img, index) => {
+        imgArr.push(img.src);
+        img?.addEventListener("click", () => imgShow(index));
+      });
+      imgArr.length && setImgList(imgArr);
+    }
+
+    // 卸载时取消图片挂载事件
+    return () => {
+      document.querySelectorAll("img")?.forEach((img, index) => {
+        img?.removeEventListener("click", () => imgShow(index));
+      });
+    };
+  }, [detail.title]);
+
+  // 设置点击展示图片
+  const imgShow = (index: number) => {
+    setVisible(true);
+    setCurrent(index);
+  };
 
   // 返回提示内容，用于请求出错或者没有id
   const returnWaitContent = (str: string, strBtn: string, fun: Function) => {
@@ -132,9 +178,10 @@ function Detail() {
   };
 
   return (
-    <div className="detail-box">
+    <div className="detail-box" style={{ position: "relative" }}>
+      {/* 页头 */}
       <Header />
-      <article className="article-container">
+      <article className="article-container" id="detail-top">
         {/* 有id则显示请求内容 */}
         {!detailId ? (
           returnWaitContent(
@@ -198,6 +245,57 @@ function Detail() {
           </div>
         )}
       </article>
+
+      {/* 三个悬浮按钮 */}
+      {!isLogin && (
+        <>
+          <BackTop
+            style={{ position: "absolute", bottom: "100px" }}
+            visibleHeight={0}
+          >
+            <Tooltip content="跳转至评论" position="left" trigger="hover">
+              <Link title="评论" href="#comment-top">
+                <IconMessage />
+              </Link>
+            </Tooltip>
+          </BackTop>
+          <BackTop
+            style={{ position: "absolute", bottom: "150px" }}
+            visibleHeight={0}
+          >
+            <Tooltip
+              content={collection ? "取消收藏" : "收藏"}
+              position="left"
+              trigger="hover"
+            >
+              <Button
+                shape="circle"
+                size="large"
+                title={collection ? "已收藏" : "收藏"}
+                onClick={collectionRefresh}
+              >
+                {collection ? <IconStarFill /> : <IconStar />}
+              </Button>
+            </Tooltip>
+          </BackTop>
+        </>
+      )}
+      <BackTop
+        visibleHeight={30}
+        style={{ position: "absolute", bottom: "50px" }}
+        target={() => document.getElementById("detail-top") || window}
+      />
+
+      {/* 图片预览框 */}
+      <Image.PreviewGroup
+        srcList={imgList}
+        visible={visible}
+        onVisibleChange={setVisible}
+        current={current}
+        onChange={(index) => {
+          setCurrent(index);
+        }}
+      />
     </div>
   );
 }
