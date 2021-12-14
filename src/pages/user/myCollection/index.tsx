@@ -28,10 +28,12 @@ const MyCollection: React.FC = () => {
     <article >
       {collectionArr.map((news: INewsList) => (
         <NewsCard
-          key={news._id}
+          key={'collect'+news._id}
           title={news.title}
           img={news.img}
           content={news.digest}
+          id = {news._id}
+          time={news.publishTime}
         />
       ))}
     </article>
