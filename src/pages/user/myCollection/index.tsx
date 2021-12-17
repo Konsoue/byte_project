@@ -32,7 +32,7 @@ const MyCollection: React.FC = () => {
           title={news.title}
           img={news.img}
           content={news.digest}
-          id = {news._id}
+          id = {news.newsId}
           time={news.publishTime}
         />
       ))}

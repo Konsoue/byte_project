@@ -10,9 +10,11 @@
     .arco-card-body {
       height: 100%;
       overflow: auto;
+      padding: 0;
 
       .content-box {
         height: 100%;
+        padding: 16px;
         box-sizing: border-box;
         border-color: var(--theme-background-2);
         background-color: var(--theme-background);

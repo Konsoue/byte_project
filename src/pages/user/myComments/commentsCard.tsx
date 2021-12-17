@@ -29,7 +29,7 @@ const CommentCard: React.FC<IComCardProps> = ({
         <div className="time">{time.split(" ")[0]}</div>
         <div
           className="detail"
-          onClick={() => toDetailPage(id)}
+          onClick={() => toDetailPage(newsId)}
         >查看详情</div>
       </div>
     </Card >
