@@ -10,4 +10,5 @@ export interface INewsList {
   publishTime: string;
   source: string;
   title: string;
+  newsId?: string;
 }

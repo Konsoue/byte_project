@@ -3,10 +3,11 @@ import { Avatar, Trigger, Modal } from '@arco-design/web-react';
 import { useHistory } from 'react-router-dom'
 import localStorageUtils from '@/Utils/localStorageUtils'
 import { IPubAvatarProps, IUserContentProps } from './types';
-import { LS, SS } from '@/Utils'
+import { LS } from '@/Utils'
+import { useReduxDispatch } from '@/redux';
 const UserContent: React.FC<IUserContentProps> = (props) => {
   const history = useHistory();
-
+  const dispatch = useReduxDispatch();
   const modalConfig = {
     title: '退出登录',
     content: '是否确认退出登录',
@@ -24,7 +25,7 @@ const UserContent: React.FC<IUserContentProps> = (props) => {
 
   const toUserPage = (url: string) => {
     history.push(url);
-    SS.setItem('newsTypeId', '');
+    dispatch({ type: 'newsTab/setData', payload: { id: false } })
   }
 
   return (
@@ -77,7 +78,7 @@ const PubAvatar: React.FC<IPubAvatarProps> = (props) => {
           style={{ backgroundColor: 'var(--theme-background)' }}
         >
           <img src={avatarUrl} alt="avatar" />
-          </Avatar>
+        </Avatar>
       </Trigger>
     )
   }, [login, avatarUrl])

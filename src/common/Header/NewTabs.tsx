@@ -14,7 +14,6 @@ const { TabPane } = Tabs;
 
 const NewTabs: React.FC<INewTabProps> = (props) => {
   const newsTabId = useReduxData(['newsTab', 'data', 'id']);
-  const userLogin = useReduxData(['userData', 'data', 'login']);
   const newsTab = useReduxData(['newsTab', 'data', 'newsType']) as ITabsPaneProps[];
   const dispatch = useReduxDispatch()
   const { location: { pathname }, push: pushRoute } = useHistory();
