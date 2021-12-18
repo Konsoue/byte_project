@@ -3,7 +3,8 @@ import {
   INewsUrl,
   ICollectionUrl,
   ICommentUrl,
-  ILikeUrl
+  ILikeUrl,
+  ILogUrl
 } from './types'
 import localStorageUtils from "@/Utils/localStorageUtils";
 
@@ -13,9 +14,9 @@ export const userUrl: IUserUrl = {
   create: '/api/user/create',
   updateAvatar: '/api/user/updateAvatar',
   updatePassword: '/api/user/updatePassword',
-  sendCreateMail:'/api/user/sendCreateMail',
-  resetPassword:'/api/user/resetPassword',
-  sendForgotMail:'/api/user/sendForgotMail',
+  sendCreateMail: '/api/user/sendCreateMail',
+  resetPassword: '/api/user/resetPassword',
+  sendForgotMail: '/api/user/sendForgotMail',
 }
 
 
@@ -50,4 +51,8 @@ export const likeUrl: ILikeUrl = {
   add: '/api/like/add',
   delete: '/api/like/delete',
   getMyLikes: '/api/like/getMyLikes',
+}
+
+export const logUrl: ILogUrl = {
+  getMyLogs: '/api/log/getMyLogs'
 }

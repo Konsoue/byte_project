@@ -40,3 +40,7 @@ export interface IStorageData {
   expire?: Date;
   [attr: string]: any;
 }
+
+export interface ILogUrl {
+  getMyLogs: string
+}
