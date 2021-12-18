@@ -3,7 +3,7 @@ import Chart from '@/common/Chart'
 import useFetch from "@/hooks/useFetch";
 import { logUrl } from '@/Utils/urls'
 import { is, LS } from '@/Utils'
-import { IResponseResult } from './types'
+import { IResponseResult, ILogsXAxis } from './types'
 import { Switch } from '@arco-design/web-react';
 import { EChartsOption } from 'echarts'
 import './index.scss'
@@ -47,6 +47,10 @@ const option: EChartsOption = {
   yAxis: {
     type: 'value'
   },
+  tooltip: {
+    trigger: 'axis',
+    // formatter: ''
+  },
   series: [
   ]
 };
@@ -57,12 +61,18 @@ const option: EChartsOption = {
  * @param logType
  * @returns
  */
-const createTypeTimeOption = (typeTimes: any[], logType: number) => {
+const createTypeTimeOption = (
+  typeTimes: any[],
+  logType: number,
+  option: EChartsOption,
+  logsXAxis: ILogsXAxis
+) => {
   const typeYAxisData = typeTimes?.filter((item: any) => !is.Void(item)) || [];
   const newTypeTimeOption = JSON.parse(JSON.stringify(option));
   newTypeTimeOption.series[0] = {
     data: typeYAxisData,
-    type: 'bar'
+    type: 'bar',
+    name: '访问次数'
   }
   newTypeTimeOption.title.text = typeTotitle[logType].typeTime;
   newTypeTimeOption.xAxis.data = logsXAxis.typeTime;
@@ -75,11 +85,17 @@ const createTypeTimeOption = (typeTimes: any[], logType: number) => {
  * @param logType
  * @returns
  */
-const createUseTimeOption = (useTimes: any[], logType: number) => {
+const createUseTimeOption = (
+  useTimes: any[],
+  logType: number,
+  option: EChartsOption,
+  logsXAxis: ILogsXAxis
+) => {
   const newUseTimeOption = JSON.parse(JSON.stringify(option));
   newUseTimeOption.series[0] = {
     data: useTimes,
-    type: 'line'
+    type: 'line',
+    name: '操作次数'
   }
   newUseTimeOption.title.text = typeTotitle[logType].useTime;
   newUseTimeOption.xAxis.data = logsXAxis.useTime;
@@ -104,8 +120,8 @@ const MyReport: React.FC = () => {
   useEffect(() => {
     if (logData) {
       const { data } = logData as IResponseResult;
-      const typeOtion = createTypeTimeOption(data.typeTimes, logType);
-      const useTimeOption = createUseTimeOption(data.useTimeTimes, logType);
+      const typeOtion = createTypeTimeOption(data.typeTimes, logType, option, logsXAxis);
+      const useTimeOption = createUseTimeOption(data.useTimeTimes, logType, option, logsXAxis);
       setUseTime(useTimeOption);
       setTypeTime(typeOtion);
     }
