@@ -1,7 +1,6 @@
 
 export interface IHeaderProps {
-  toFlash?: Function;
-  flash?: boolean;
+  topRef?: any;
 }
 
 export interface INewTabProps extends IHeaderProps {

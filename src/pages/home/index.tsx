@@ -6,10 +6,11 @@
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \byte_project\src\pages\home\index.tsx
  */
-import { useReducer } from "react";
+import { useReducer, createRef } from "react";
 import Header from '@/common/Header';
 import { IHomeAction, IHomeState } from './types'
 import NewsList from '@/common/NewsList';
+import { BackTop } from '@arco-design/web-react';
 import './index.scss';
 
 const initialState = {
@@ -30,13 +31,19 @@ const homeReducer = (state: IHomeState, action: IHomeAction) => {
 
 function Home() {
   const [state, dispatch] = useReducer(homeReducer, initialState)
-
+  const topRef = createRef();
   return (
     <div id="home-container">
-      <Header toFlash={dispatch} flash={state.flash} />
-      <article className="article-container">
+      <Header topRef={topRef} />
+      <article id="home-article" className="article-container">
         <NewsList flash={state.flash} toFlash={dispatch} />
       </article>
+      <BackTop
+        ref={topRef}
+        visibleHeight={30}
+        style={{ position: 'absolute' }}
+        target={() => document.getElementById('home-article') || window}
+      />
     </div>
   );
 }
