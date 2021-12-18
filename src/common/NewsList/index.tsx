@@ -1,4 +1,4 @@
-import { useMemo, useEffect, useState, memo } from 'react'
+import { useEffect, memo } from 'react'
 import NewsCard from "@/common/NewsCard";
 import { INewsListProps, INewsList, IResponceResult } from './types'
 import useFetch from '@/hooks/useFetch';

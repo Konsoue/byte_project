@@ -22,7 +22,7 @@ const MyComments: React.FC = () => {
   }, [myComments])
 
   return (
-    <article >
+    <article className="comment-container">
       {commentsArr.map((item: ICommentsList) => (
         <CommentCard
           key={'comment'+item._id}

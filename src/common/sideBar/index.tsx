@@ -1,7 +1,7 @@
 /*
  ** 侧边栏SideBar入口文件
  */
-import React, { FC, ReactElement, ReactText, Fragment } from "react";
+import { FC, ReactElement, ReactText, Fragment } from "react";
 import { Menu, Affix } from "@arco-design/web-react";
 import { withRouter, RouteComponentProps } from "react-router";
 import { menuConfig } from "./menuConfig";
