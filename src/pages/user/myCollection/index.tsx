@@ -3,7 +3,7 @@ import useFetch from '@/hooks/useFetch';
 import { collectionUrl } from '@/Utils/urls'
 import NewsCard from "@/common/NewsCard";
 import { IResponseResult, INewsList } from './types'
-
+import './index.scss';
 
 const MyCollection: React.FC = () => {
 
@@ -25,7 +25,7 @@ const MyCollection: React.FC = () => {
   }, [myCollections])
 
   return (
-    <article >
+    <article className="collection-conatiner">
       {collectionArr.map((news: INewsList) => (
         <NewsCard
           key={'collect'+news._id}

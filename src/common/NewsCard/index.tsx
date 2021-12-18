@@ -1,7 +1,6 @@
 import { Card, Image } from "@arco-design/web-react";
 import { INewCardProps } from "./types";
 import { useHistory } from "react-router-dom";
-import { SS } from '@/Utils'
 import { useReduxDispatch } from '@/redux';
 import LoadImg from '@/static/images/load.gif'
 import "./index.scss";
