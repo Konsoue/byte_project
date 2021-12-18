@@ -1,16 +1,24 @@
 body {
   color: var(--theme-text);
   background: var(--theme-background);
+
+  .arco-card.card-item {
+    background-color: transparent;
+  }
+
   .arco-card-size-default {
     font-size: var(--theme-font-size);
 
   }
+
   .article-container {
     background: var(--theme-background-2);
+
     .arco-card {
       background: var(--theme-background);
     }
-    .arco-card-bordered{
+
+    .arco-card-bordered {
       border: 1px solid var(--theme-border);
     }
   }
@@ -50,6 +58,7 @@ body {
   .arco-btn-primary:not(.arco-btn-disabled):not(.arco-btn-loading):hover {
     background: var(--theme-color-background);
   }
+
   .arco-btn-text:not(.arco-btn-disabled) {
     color: var(--theme-color-text)
   }
@@ -58,6 +67,7 @@ body {
   .arco-backtop-button:hover {
     background: var(--theme-color-background);
   }
+
   .arco-btn-primary:not(.arco-btn-disabled) {
     background: var(--theme-color-background);
   }
@@ -66,15 +76,21 @@ body {
   .detail-box .arco-backtop svg {
     stroke: var(--theme-color-background);
   }
+
   .detail-box .arco-backtop .arco-icon-to-top {
-    stroke: white!important;
+    stroke: white !important;
   }
+
   // 单选框
   .arco-radio-button.arco-radio-checked {
     color: var(--theme-color-text);
   }
 
   // header
+  .arco-tabs-header-title {
+    color: var(--theme-text);
+  }
+
   .arco-tabs-header-title-active,
   .arco-tabs-header-title-active:hover {
     color: var(--theme-color-text);
@@ -85,14 +101,30 @@ body {
   }
 
   .arco-input-inner-wrapper-focus {
-    border-color:var(--theme-color-text);
+    border-color: var(--theme-color-text);
   }
-  .arco-modal-title .arco-icon-info-circle-fill{
+
+  .arco-modal-title .arco-icon-info-circle-fill {
     color: var(--theme-color-text);
   }
+
   .arco-icon .arco-icon-info-circle-fill {
     stroke: var(--theme-color-text);
   }
+
+  .arco-tabs-nav-icon-disabled {
+    color: var(--color-text-4);
+  }
+
+  .arco-card-body,
+  .userPage .arco-menu-light .arco-menu-item,
+  .arco-comment-content,
+  .arco-comment-author,
+  .arco-comment-actions,
+  .arco-tabs-header-scroll .arco-icon-hover {
+    color: var(--theme-text);
+  }
+
 }
 
 .bold {
