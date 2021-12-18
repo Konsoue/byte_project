@@ -18,7 +18,6 @@ const NewsCard: React.FC<INewCardProps> = ({
   const dispatch = useReduxDispatch();
   const toDetailPage = (id: string | number) => {
     dispatch({ type: 'newsTab/setData', payload: { id: false } })
-    console.log(id);
     history.push(`/detail/${id}`)
   }
 

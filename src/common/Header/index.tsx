@@ -9,6 +9,7 @@ import { useReduxData, useReduxDispatch } from '@/redux'
 import "./index.scss";
 
 const Header: React.FC<IHeaderProps> = (props) => {
+  const { topRef } = props;
   const history = useHistory();
   const location = useLocation();
   const userData = useReduxData(['userData', 'data']);
@@ -43,7 +44,7 @@ const Header: React.FC<IHeaderProps> = (props) => {
               }}
             ></div>
           </div>
-          <NewTabs />
+          <NewTabs topRef={topRef} />
         </div>
         <div className="header-middle">
           <PubSearch />

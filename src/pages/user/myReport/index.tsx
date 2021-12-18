@@ -18,7 +18,7 @@ const logsXAxis = {
   })(),
   typeTime: (() => {
     const newType = LS.getItem('newsType');
-    return newType.map((item: any) => item.name)
+    return newType?.map?.((item: any) => item.name)
   })()
 }
 
@@ -39,6 +39,7 @@ const option: EChartsOption = {
   title: {
     text: typeTotitle[1].useTime,
     left: "center",
+    textStyle: {},
   },
   xAxis: {
     type: 'category',
@@ -49,11 +50,16 @@ const option: EChartsOption = {
   },
   tooltip: {
     trigger: 'axis',
-    // formatter: ''
   },
+  textStyle: {},
   series: [
   ]
 };
+
+// 获取主题字体颜色
+const getTextColor = () => {
+  return getComputedStyle(document.body).getPropertyValue('--theme-text')
+}
 
 /**
  * 创建图表的 typeTimeOption
@@ -74,6 +80,9 @@ const createTypeTimeOption = (
     type: 'bar',
     name: '访问次数'
   }
+  const themeText = getTextColor()
+  newTypeTimeOption.textStyle.color = themeText;
+  newTypeTimeOption.title.textStyle.color = themeText;
   newTypeTimeOption.title.text = typeTotitle[logType].typeTime;
   newTypeTimeOption.xAxis.data = logsXAxis.typeTime;
   return newTypeTimeOption;
@@ -97,6 +106,9 @@ const createUseTimeOption = (
     type: 'line',
     name: '操作次数'
   }
+  const themeText = getTextColor()
+  newUseTimeOption.textStyle.color = themeText;
+  newUseTimeOption.title.textStyle.color = themeText;
   newUseTimeOption.title.text = typeTotitle[logType].useTime;
   newUseTimeOption.xAxis.data = logsXAxis.useTime;
   return newUseTimeOption;

@@ -13,6 +13,7 @@ import { useReduxData, useReduxDispatch } from '@/redux'
 const { TabPane } = Tabs;
 
 const NewTabs: React.FC<INewTabProps> = (props) => {
+  const { topRef } = props;
   const newsTabId = useReduxData(['newsTab', 'data', 'id']);
   const newsTab = useReduxData(['newsTab', 'data', 'newsType']) as ITabsPaneProps[];
   const dispatch = useReduxDispatch()
@@ -50,6 +51,7 @@ const NewTabs: React.FC<INewTabProps> = (props) => {
   const tabChange = (key: string) => {
     dispatch({ type: 'newsTab/setData', payload: { id: key } })
     dispatch({ type: 'newsDigest/setData', payload: { current: 1 } })
+    if (topRef) topRef.current?.click();
     if (pathname !== '/') pushRoute('/')
   }
 

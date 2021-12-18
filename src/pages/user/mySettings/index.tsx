@@ -50,7 +50,7 @@ const light = {
 const night = {
   '--theme-background': '#111',
   '--theme-background-2': '#000',
-  '--theme-text': '#FFF',
+  '--theme-text': '#e3e3e3',
   '--theme-border': '#303030',
   defaultLabel: 'night'
 }
