@@ -4,7 +4,8 @@ import {
   ICollectionUrl,
   ICommentUrl,
   ILikeUrl,
-  ILogUrl
+  ILogUrl,
+  IWeatherUrl
 } from './types'
 import localStorageUtils from "@/Utils/localStorageUtils";
 
@@ -55,4 +56,10 @@ export const likeUrl: ILikeUrl = {
 
 export const logUrl: ILogUrl = {
   getMyLogs: '/api/log/getMyLogs'
+}
+
+// const weatherApi = '';
+
+export const weatherUrl: IWeatherUrl = {
+  guangzhou: '/weather_mini?city=广州',
 }

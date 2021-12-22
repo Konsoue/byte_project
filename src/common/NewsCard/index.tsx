@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Card, Image } from "@arco-design/web-react";
 import { INewCardProps } from "./types";
 import { useHistory } from "react-router-dom";
@@ -12,6 +13,7 @@ const NewsCard: React.FC<INewCardProps> = ({
   source = "央视新闻",
   time = "2021-02-05",
   id = "123",
+  showCard = false,
 }) => {
   const history = useHistory();
   const dispatch = useReduxDispatch();
@@ -20,8 +22,12 @@ const NewsCard: React.FC<INewCardProps> = ({
     history.push(`/detail/${id}`)
   }
 
+  if (showCard && content.length > 100) {
+    content = content.slice(0, 100) + '...';
+  }
+
   return (
-    <Card className="card-item">
+    <Card className={`${showCard && 'is-card'} card-item`}>
       <div className="card-left">
         <div className="img-container">
           <Image src={img} />

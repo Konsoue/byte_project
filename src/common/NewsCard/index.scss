@@ -88,6 +88,36 @@
   }
 }
 
-.card-item:hover {
-  box-shadow: 1px 1px 15px 10px #d6d6d6;
+.newslist-container {
+  .card-item:hover {
+    box-shadow: 1px 1px 15px 10px #d6d6d6;
+  }
+}
+
+
+.is-card.card-item {
+  max-width: 30%;
+
+  .arco-card-body {
+    display: block;
+    height: 375px;
+
+    .card-left {
+      display: block;
+      max-width: none;
+      max-height: 180px;
+      height: 180px;
+      width: auto;
+    }
+
+    .card-right {
+      padding: 0 5px 15px 5px;
+      height: calc(100% - 190px);
+
+      .content {
+        padding: 4px 0 0 0;
+      }
+
+    }
+  }
 }

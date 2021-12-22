@@ -9,6 +9,7 @@ import { useReduxData, useReduxDispatch } from '@/redux'
 import './index.scss'
 
 const NewsList: React.FC<INewsListProps> = (props) => {
+  const { showCard } = props;
   const newsTabId = useReduxData(['newsTab', 'data', 'id']);
   const newsDigestData = useReduxData(['newsDigest', 'data', 'news']);
   const newsDigestCurrent = useReduxData(['newsDigest', 'data', 'current']);
@@ -50,21 +51,24 @@ const NewsList: React.FC<INewsListProps> = (props) => {
   }
 
   return (
-    <div className="newslist-container">
+    <div className={`newslist-container`}>
       <div className="spin-container">
         {newsLoad && <Spin dot />}
       </div>
-      {newsDigestData?.map((news: INewsList) => (
-        <NewsCard
-          key={news._id}
-          id={news._id}
-          title={news.title}
-          img={news.img}
-          content={news.digest}
-          time={news.publishTime}
-          source={news.source}
-        />
-      ))}
+      <div className={`${showCard && 'show-card'}`}>
+        {newsDigestData?.map((news: INewsList) => (
+          <NewsCard
+            key={news._id}
+            id={news._id}
+            title={news.title}
+            img={news.img}
+            content={news.digest}
+            time={news.publishTime}
+            source={news.source}
+            showCard={showCard}
+          />
+        ))}
+      </div>
       <section className="more-contianer">
         <div className="more-news" onClick={getMoreNews}>
           <span className="more-icon">

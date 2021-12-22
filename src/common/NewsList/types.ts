@@ -1,6 +1,5 @@
 export interface INewsListProps {
-  toFlash?: Function;
-  flash?: boolean;
+  showCard?: boolean;
 }
 
 export interface INewsList {

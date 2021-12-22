@@ -7,4 +7,5 @@ export interface INewCardProps {
   star?: boolean;
   time?: string;
   source?: string;
+  showCard?: boolean;
 }

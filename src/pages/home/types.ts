@@ -1,7 +1,18 @@
-export interface IHomeAction {
+export interface IHomeProps {}
+
+export interface IForecast {
+  date: string;
+  fengli:string;
+  fengxiang:string;
+  high: string;
+  low: string;
   type: string;
 }
 
-export interface IHomeState {
-  flash: boolean;
+export interface IWeatherData {
+  city: string;
+  forecast: Array<IForecast>;
+  ganmao: string;
+  wendu: string;
+  yesterday: object;
 }
