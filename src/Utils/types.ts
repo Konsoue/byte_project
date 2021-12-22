@@ -44,3 +44,8 @@ export interface IStorageData {
 export interface ILogUrl {
   getMyLogs: string
 }
+
+export interface IWeatherUrl {
+  guangzhou: string;
+  [attr: string]: string;
+}

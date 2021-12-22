@@ -2,6 +2,7 @@ import React, { memo, useLayoutEffect } from "react";
 import PubSearch from "@/common/PubSearch";
 import PubAvatar from "./PubAvatar";
 import NewTabs from "./NewTabs";
+import PubWeather from "./PubWeather";
 import { IHeaderProps } from "./types";
 import localStorageUtils from "@/Utils/localStorageUtils";
 import { useHistory, useLocation } from 'react-router-dom'
@@ -50,6 +51,7 @@ const Header: React.FC<IHeaderProps> = (props) => {
           <PubSearch />
         </div>
         <div className="header-right">
+          <PubWeather />
           <PubAvatar
             login={userData.login}
             avatarUrl={userData.avatar}
