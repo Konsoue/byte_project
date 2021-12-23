@@ -1,17 +1,17 @@
 import { Card, Image } from "@arco-design/web-react";
-import { IComCardProps } from "./types";
+import { ILikeCardProps } from "./types";
 import { useHistory } from "react-router-dom";
 import LoadImg from '@/static/images/load.gif'
 import "./index.scss";
 
-const CommentCard: React.FC<IComCardProps> = ({
-  newsTitle= '123',
+const LikeCard: React.FC<ILikeCardProps> = ({
+  commentId = '123',
   content = '123',
   newsId = '123',
   id = '123',
   time = "2021-02-05",
   userAvatar = LoadImg,
-  username = '123',
+  userName = '123',
 }) => {
   const history = useHistory();
 
@@ -23,11 +23,10 @@ const CommentCard: React.FC<IComCardProps> = ({
     <Card className="card-item">
       <div className="title">
         <div className="img-box">
-          {userAvatar !== null ? <Image src={userAvatar} /> : null}
-
+          <Image src={userAvatar} />
         </div>
         <div className="user">
-          {userAvatar !== null ? <span>对用户{username}的评论:</span> : <span>对新闻《{newsTitle}》的评论</span>}
+          <span>用户：</span>{userName}
         </div>
       </div>
       <div
@@ -47,4 +46,4 @@ const CommentCard: React.FC<IComCardProps> = ({
   );
 };
 
-export default CommentCard;
+export default LikeCard;

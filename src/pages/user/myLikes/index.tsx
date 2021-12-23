@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import useFetch from '@/hooks/useFetch';
 import { likeUrl } from '@/Utils/urls'
 import { IResponseResult, IlikesList } from './types'
-import CommentCard from "../myComments/commentsCard";
+import LikeCard from "./likesCard";
 
 const MyLikes: React.FC = () => {
 
@@ -23,15 +23,17 @@ const MyLikes: React.FC = () => {
   }, [myLikes])
 
   return (
-    <article >
+    <article className="like-container">
       {likesArr.map((item: IlikesList) => (
-        <CommentCard
+        <LikeCard
           key={'like' + item._id}
           content={item.content}
           id={item._id}
           time={item.time}
           commentId={item.commentId}
           newsId={item.newsId}
+          userAvatar={item.userAvatar}
+          userName={item.userName}
         />
       ))}
     </article>

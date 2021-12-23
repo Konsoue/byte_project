@@ -25,12 +25,13 @@ const MyComments: React.FC = () => {
     <article className="comment-container">
       {commentsArr.map((item: ICommentsList) => (
         <CommentCard
-          key={'comment'+item._id}
+          key={'comment' + item._id}
           content={item.content}
           id={item._id}
-          commentId={item.commentId}
+          newsTitle={item.newsTitle}
           newsId={item.newsId}
           time={item.time}
+          userAvatar={item.userAvatar}
         />
       ))}
     </article>

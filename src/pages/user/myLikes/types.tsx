@@ -7,6 +7,18 @@ export interface IlikesList {
   content: string;
   time: string;
   title: string;
-  commentId:string;
-  newsId:string
+  commentId: string;
+  newsId: string;
+  userAvatar?: string;
+  userName?: string;
+}
+
+export interface ILikeCardProps {
+  commentId: string;
+  content: string;
+  newsId: string;
+  time: string;
+  id: string;
+  userAvatar?: string;
+  userName?: string;
 }
