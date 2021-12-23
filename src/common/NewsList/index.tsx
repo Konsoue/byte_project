@@ -4,7 +4,8 @@ import { INewsListProps, INewsList, IResponceResult } from './types'
 import useFetch from '@/hooks/useFetch';
 import { newsUrl } from '@/Utils/urls'
 import { LS } from '@/Utils'
-import { Spin } from '@arco-design/web-react';
+import { Spin, Result } from '@arco-design/web-react';
+import { IconFaceSmileFill } from '@arco-design/web-react/icon';
 import { useReduxData, useReduxDispatch } from '@/redux'
 import './index.scss'
 
@@ -13,7 +14,7 @@ const NewsList: React.FC<INewsListProps> = (props) => {
   const newsTabId = useReduxData(['newsTab', 'data', 'id']);
   const newsDigestData = useReduxData(['newsDigest', 'data', 'news']);
   const newsDigestCurrent = useReduxData(['newsDigest', 'data', 'current']);
-
+  const newsKeyword = useReduxData(['newsTab', 'data', 'keyword']);
   const dispatch = useReduxDispatch();
   const { run: getNewsDigest, data: newsDigest, loading: newsLoad } = useFetch({
     url: newsUrl.getNewsDigest,
@@ -27,7 +28,7 @@ const NewsList: React.FC<INewsListProps> = (props) => {
       if (!newsType) return;
       typeId = newsType[0]?.id;
     }
-    if (typeId) getNewsDigest({ type: typeId, current: newsDigestCurrent });
+    if (typeId) getNewsDigest({ type: typeId, current: newsDigestCurrent || 1, keyword: newsKeyword || '' });
   }, [newsTabId, newsDigestCurrent])
 
 
@@ -46,7 +47,7 @@ const NewsList: React.FC<INewsListProps> = (props) => {
    * 获取更多的新闻
    */
   const getMoreNews = () => {
-    const current = newsDigestCurrent + 1;
+    const current = (newsDigestCurrent || 1) + 1;
     dispatch({ type: 'newsDigest/setData', payload: { current } })
   }
 
@@ -68,15 +69,28 @@ const NewsList: React.FC<INewsListProps> = (props) => {
             showCard={showCard}
           />
         ))}
+        {
+          !newsDigestData.length && (
+            <Result
+              status={null}
+              icon={<IconFaceSmileFill style={{ color: 'rgb(var(--arcoblue-6))' }} />}
+              title='暂无此类新闻'
+            >
+            </Result>
+          )
+        }
       </div>
-      <section className="more-contianer">
-        <div className="more-news" onClick={getMoreNews}>
-          <span className="more-icon">
-            <svg className={`${newsLoad && 'animate__rotateIn'}`} width="48" height="48" viewBox="0 0 48 48" fill="none"><path d="M42 24c0 9.941-8.059 18-18 18S6 33.941 6 24 14.059 6 24 6" stroke="rgb(162,53,17)" strokeWidth="4" /></svg>
-          </span>
-          <span className="more-word">{newsLoad ? '正在加载' : '点击加载更多'}</span>
-        </div>
-      </section>
+      {
+        newsDigestData.length !== 0 &&
+        <section className="more-contianer">
+          <div className="more-news" onClick={getMoreNews}>
+            <span className="more-icon">
+              <svg className={`${newsLoad && 'animate__rotateIn'}`} width="48" height="48" viewBox="0 0 48 48" fill="none"><path d="M42 24c0 9.941-8.059 18-18 18S6 33.941 6 24 14.059 6 24 6" stroke="rgb(162,53,17)" strokeWidth="4" /></svg>
+            </span>
+            <span className="more-word">{newsLoad ? '正在加载' : '点击加载更多'}</span>
+          </div>
+        </section>
+      }
     </div>
   )
 }

@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Card, Image } from "@arco-design/web-react";
 import { INewCardProps } from "./types";
 import { useHistory } from "react-router-dom";
@@ -18,7 +17,7 @@ const NewsCard: React.FC<INewCardProps> = ({
   const history = useHistory();
   const dispatch = useReduxDispatch();
   const toDetailPage = (id: string | number) => {
-    dispatch({ type: 'newsTab/setData', payload: { id: false } })
+    dispatch({ type: 'newsTab/setData', payload: { id: false, keyword: '' } })
     history.push(`/detail/${id}`)
   }
 

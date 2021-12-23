@@ -22,6 +22,7 @@ const newsTab = createSlice({
     data: {
       newsType: defaultTabs,
       id: false,
+      keyword: '',
     },
   },
   reducers: {
