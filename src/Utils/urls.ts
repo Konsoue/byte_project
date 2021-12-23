@@ -58,8 +58,6 @@ export const logUrl: ILogUrl = {
   getMyLogs: '/api/log/getMyLogs'
 }
 
-// const weatherApi = '';
-
 export const weatherUrl: IWeatherUrl = {
   guangzhou: '/weather_mini?city=广州',
 }

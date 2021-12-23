@@ -1,5 +1,6 @@
 export interface INewsListProps {
   showCard?: boolean;
+  isSearch?: boolean;
 }
 
 export interface INewsList {

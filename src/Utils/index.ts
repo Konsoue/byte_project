@@ -1,3 +1,4 @@
+import { clearTimeout } from 'timers';
 import { IStorageData } from './types'
 
 // 判断类型
@@ -117,3 +118,16 @@ class MyStorage {
 
 export const LS = new MyStorage(window.localStorage);
 export const SS = new MyStorage(window.sessionStorage);
+
+
+export const debounce = (fn: Function, delay: number = 800) => {
+  let timer: NodeJS.Timeout;
+  const debounceFn = function<T> (...args: T[]): any {
+    if (timer) window.clearTimeout(timer);
+    timer = setTimeout(() => {
+      fn.apply(debounceFn, args);
+      window.clearTimeout(timer);
+    }, delay);
+  }
+  return debounceFn;
+}

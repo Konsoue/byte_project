@@ -25,7 +25,7 @@ const UserContent: React.FC<IUserContentProps> = (props) => {
 
   const toUserPage = (url: string) => {
     history.push(url);
-    dispatch({ type: 'newsTab/setData', payload: { id: false } })
+    dispatch({ type: 'newsTab/setData', payload: { id: false, keyword: '' } })
   }
 
   return (
