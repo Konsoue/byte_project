@@ -1,0 +1,9 @@
+.editName {
+  margin-top: 20px;
+  width: 250px;
+  cursor: 'pointer';
+  .editWrapper {
+    display: flex;
+    justify-content: center;
+  }
+}
