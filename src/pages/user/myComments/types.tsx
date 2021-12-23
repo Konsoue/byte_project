@@ -6,15 +6,19 @@ export interface ICommentsList {
   _id: string;
   newsId: string;
   content: string;
-  commentId: string;
+  newsTitle?: string;
   time: string;
   title: string;
+  userAvatar?: string;
+  username?: string;
 }
 
 export interface IComCardProps {
-  commentId: string;
+  newsTitle?: string;
   content: string;
   newsId: string;
   time: string;
-  id: string
+  id: string;
+  userAvatar?: string;
+  username?: string;
 }
