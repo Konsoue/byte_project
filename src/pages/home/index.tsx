@@ -6,15 +6,18 @@
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \byte_project\src\pages\home\index.tsx
  */
-import { createRef, useLayoutEffect, useState } from "react";
+import { createRef, useLayoutEffect, useState, useMemo } from "react";
 import Header from '@/common/Header';
 import NewsList from '@/common/NewsList';
 import { IHomeProps, IWeatherData } from "./types";
-import { BackTop } from '@arco-design/web-react';
+import { BackTop, Button } from '@arco-design/web-react';
 import { useReduxData } from "@/redux";
+import { useLocation, useHistory } from 'react-router-dom'
+import { useReduxDispatch } from "@/redux";
 import './index.scss';
 import dayjs from 'dayjs'
 
+// 生成天气文字
 const createText = (weather: IWeatherData): any => {
   const date = dayjs(new Date()).format('YYYY年MM月DD日');
   let { type, high, low } = weather.forecast[0];
@@ -24,11 +27,20 @@ const createText = (weather: IWeatherData): any => {
   return text;
 }
 
+// 获取路由对应hash值
+const getHashValue = (urlHash: string, key: string): string => {
+  const matches = urlHash.match(new RegExp(key + '=([^&]*)'));
+  return matches ? matches[1] : '';
+}
+
 const Home: React.FC<IHomeProps> = (props) => {
   const topRef = createRef();
   const [weatherText, setText] = useState('');
   const weatherData = useReduxData(['weather', 'data', 'data'])
   const [showCard, setShow] = useState(false);
+  const location = useLocation();
+  const dispatch = useReduxDispatch();
+  const history = useHistory();
 
   useLayoutEffect(() => {
     if (weatherData) {
@@ -36,6 +48,27 @@ const Home: React.FC<IHomeProps> = (props) => {
       setText(text);
     }
   }, [weatherData])
+
+  const isSearch = useMemo(() => {
+    const { search } = location;
+    const res = getHashValue(search, 'search');
+    return res.length !== 0;
+  }, [location])
+
+  // 清空搜索链接，返回首页
+  const clearSearch = () => {
+    dispatch({
+      type: 'newsTab/setData',
+      payload: {
+        keyword: '',
+      }
+    })
+    dispatch({
+      type: 'newsDigest/setData',
+      payload: { current: false }
+    })
+    history.push('/');
+  }
 
   return (
     <div id="home-container">
@@ -64,11 +97,22 @@ const Home: React.FC<IHomeProps> = (props) => {
               </div>
             </div>
           </div>
+          {
+            isSearch &&
+            <div className="clear-search">
+              <Button
+                className="clear-btn"
+                onClick={clearSearch}
+              >
+                返回
+              </Button>
+            </div>
+          }
           <div className="weather">
             <pre>{weatherText}</pre>
           </div>
         </div>
-        <NewsList showCard={showCard} />
+        <NewsList showCard={showCard} isSearch={isSearch} />
       </article>
       <BackTop
         ref={topRef}
