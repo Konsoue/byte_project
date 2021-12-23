@@ -1,6 +1,6 @@
 import { useLayoutEffect } from "react";
 import { weatherUrl } from "@/Utils/urls";
-import { useReduxDispatch, useReduxData } from "@/redux";
+import { useReduxDispatch } from "@/redux";
 import { useLocation } from 'react-router-dom'
 import useWeather from "@/hooks/useWeather";
 import { IResponceResult } from './types'
