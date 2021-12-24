@@ -21,27 +21,26 @@ const LikeCard: React.FC<ILikeCardProps> = ({
 
   return (
     <Card className="card-item">
-      <div className="title">
-        <div className="img-box">
-          <Image src={userAvatar} />
-        </div>
-        <div className="user">
-          <span>用户：</span>{userName}
-        </div>
+
+      <div className="img-box">
+        <Image src={userAvatar} />
       </div>
+
+      <div className="user">
+        <div className="title">
+          <span >{userName}</span>
+          <span className="user-title"> 赞了我的评论</span>
+        </div>
+        <div className="time">{time.split(" ")[0]}</div>
+      </div>
+
       <div
         className="content"
+        onClick={() => toDetailPage(newsId)}
       >
-        <span className="span-font">评论内容： </span>
         {content}
       </div>
-      <div className="footer">
-        <div className="time">{time.split(" ")[0]}</div>
-        <div
-          className="detail"
-          onClick={() => toDetailPage(newsId)}
-        >查看详情</div>
-      </div>
+
     </Card >
   );
 };

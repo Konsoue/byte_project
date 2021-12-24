@@ -5,7 +5,7 @@ import LoadImg from '@/static/images/load.gif'
 import "./index.scss";
 
 const CommentCard: React.FC<IComCardProps> = ({
-  newsTitle= '123',
+  newsTitle = '123',
   content = '123',
   newsId = '123',
   id = '123',
@@ -21,28 +21,29 @@ const CommentCard: React.FC<IComCardProps> = ({
 
   return (
     <Card className="card-item">
-      <div className="title">
-        <div className="img-box">
-          {userAvatar !== null ? <Image src={userAvatar} /> : null}
+      <div className="img-box">
+        {userAvatar !== null ? <Image src={userAvatar} /> : null}
+      </div>
+      <div className="comment-content">
 
+        <div className="comment-middle">
+          <div className="user">
+            {userAvatar !== null ? <span>对用户{username}的评论:</span> : <span>对新闻《{newsTitle}》的评论:</span>}
+          </div>
+
+          <div className="time">
+            <span>{time.split(" ")[0]}</span>
+          </div>
         </div>
-        <div className="user">
-          {userAvatar !== null ? <span>对用户{username}的评论:</span> : <span>对新闻《{newsTitle}》的评论</span>}
-        </div>
-      </div>
-      <div
-        className="content"
-      >
-        <span className="span-font">评论内容： </span>
-        {content}
-      </div>
-      <div className="footer">
-        <div className="time">{time.split(" ")[0]}</div>
+
         <div
-          className="detail"
+          className="content"
           onClick={() => toDetailPage(newsId)}
-        >查看详情</div>
+        >
+          {content}
+        </div>
       </div>
+
     </Card >
   );
 };
