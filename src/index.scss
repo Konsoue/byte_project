@@ -133,3 +133,18 @@ body {
 .margin-right-large {
   margin-right: 20px;
 }
+
+.btn-in-theme {
+  color: var(--color-white) !important;
+  background: var(--theme-color-background) !important;
+}
+
+.icon-in-theme {
+  color: var(--theme-color-background) !important;
+}
+
+.load-in-theme {
+  .arco-spin-dot{
+    background: var(--theme-color-background) !important;
+  }
+}

@@ -72,7 +72,7 @@ const Home: React.FC<IHomeProps> = (props) => {
 
   return (
     <div id="home-container">
-      <Header topRef={topRef} />
+      <Header topRef={topRef} isSearch={isSearch} clearSearch={clearSearch} />
       <article id="home-article" className="article-container">
         <div className="list-top">
           <div className="control">
@@ -97,22 +97,11 @@ const Home: React.FC<IHomeProps> = (props) => {
               </div>
             </div>
           </div>
-          {
-            isSearch &&
-            <div className="clear-search">
-              <Button
-                className="clear-btn"
-                onClick={clearSearch}
-              >
-                返回
-              </Button>
-            </div>
-          }
           <div className="weather">
             <pre>{weatherText}</pre>
           </div>
         </div>
-        <NewsList showCard={showCard} isSearch={isSearch} />
+        <NewsList showCard={showCard} isSearch={isSearch} clearSearch={clearSearch}/>
       </article>
       <BackTop
         ref={topRef}
