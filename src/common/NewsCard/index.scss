@@ -53,21 +53,17 @@
       padding: 2px 0;
       font-size: calc(var(--theme-font-size) + 4px);
       cursor: pointer;
+      transition: color .2s;
     }
 
     .title:hover {
       color: rgb(var(--orangered-8));
-      text-decoration: underline;
     }
 
     .content {
       padding: 4px 70px 0 0;
       overflow: hidden;
       cursor: pointer;
-    }
-
-    .content:hover {
-      text-decoration: underline;
     }
 
     .footer {
@@ -89,8 +85,19 @@
 }
 
 .newslist-container {
+  .arco-image {
+    overflow: hidden;
+
+    img {
+      transition: all .3s;
+    }
+  }
   .card-item:hover {
-    box-shadow: 1px 1px 15px 10px #d6d6d6;
+    box-shadow:2px 2px 2px 2px  #d6d6d6;
+
+    img {
+      transform: scale(1.05);
+    }
   }
 }
 

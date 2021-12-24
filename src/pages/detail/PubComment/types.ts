@@ -47,6 +47,7 @@ export interface ICommentCardProps {
     _id: string;
     isMine?: boolean;
     isLike?: boolean;
+    followNum?:number;
   };
   avatarUrl: string;
   toDeleteComment: Function;

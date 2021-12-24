@@ -6,13 +6,13 @@ import LoadImg from '@/static/images/load.gif'
 import "./index.scss";
 
 const NewsCard: React.FC<INewCardProps> = ({
-  title = "昨日XX县某某村造啥啥啥被啥啥啥了",
-  content = "这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西这里有点东西",
   img = LoadImg,
-  source = "央视新闻",
-  time = "2021-02-05",
-  id = "123",
   showCard = false,
+  title,
+  content,
+  source,
+  time,
+  id,
 }) => {
   const history = useHistory();
   const dispatch = useReduxDispatch();
@@ -35,12 +35,12 @@ const NewsCard: React.FC<INewCardProps> = ({
       <div className="card-right">
         <header
           className="title"
-          onClick={() => toDetailPage(id)}
+          onClick={() => toDetailPage(id!)}
         >
           {title}
         </header>
         {
-          !showCard && <article className="content" onClick={() => toDetailPage(id)}>
+          !showCard && <article className="content" onClick={() => toDetailPage(id!)}>
             {content}
           </article>
         }
