@@ -96,24 +96,28 @@
 
 
 .is-card.card-item {
-  max-width: 30%;
-  min-width: 290px;
+  max-width: 24%;
+  min-width: 280px;
 
   .arco-card-body {
     display: block;
-    height: 375px;
+    height: 280px;
 
     .card-left {
       display: block;
       max-width: none;
-      max-height: 180px;
-      height: 180px;
+      max-height: 120px;
+      height: 120px;
       width: auto;
     }
 
     .card-right {
       padding: 0 5px 15px 5px;
-      height: calc(100% - 190px);
+      height: calc(100% - 150px);
+
+      .title {
+        padding-top: 8px;
+      }
 
       .content {
         padding: 4px 0 0 0;

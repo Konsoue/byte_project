@@ -39,7 +39,11 @@ const NewsCard: React.FC<INewCardProps> = ({
         >
           {title}
         </header>
-        <article className="content" onClick={() => toDetailPage(id)}>{content}</article>
+        {
+          !showCard && <article className="content" onClick={() => toDetailPage(id)}>
+            {content}
+          </article>
+        }
         <footer className="footer">
           <div className="time">{time.split(" ")[0]}</div>
           <div className="source">{source}</div>
