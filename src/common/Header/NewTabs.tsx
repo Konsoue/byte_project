@@ -52,13 +52,14 @@ const NewTabs: React.FC<INewTabProps> = (props) => {
     dispatch({ type: 'newsTab/setData', payload: { id: key } })
     dispatch({ type: 'newsDigest/setData', payload: { current: 1 } })
     if (topRef) topRef.current?.click();
-    if (pathname !== '/') pushRoute('/')
+    // if (pathname !== '/') pushRoute('/')
   }
 
   return (
     <Tabs className="header-tabs"
       activeTab={newsTabId}
       onChange={tabChange}
+      onClickTab={() => pushRoute('/')}
     >
       {
         newsTab.map(news => <TabPane key={news.id} title={news.name} />)

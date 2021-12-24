@@ -90,7 +90,7 @@ const ReplyComment: React.FC<IReplyCommentProps> = ({
         }
       />
       {state === "all" && (
-        <Spin tip="请等待" loading={loading}>
+        <Spin className="load-in-theme" tip="请等待" loading={loading}>
           {/* 评论页 */}
           <List bordered={false}>
             {data.records?.map((item, index) => {

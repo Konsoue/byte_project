@@ -5,11 +5,13 @@ import { newsUrl } from '@/Utils/urls';
 import { useReduxData, useReduxDispatch } from '@/redux'
 import { useHistory, useLocation } from 'react-router-dom';
 import { debounce } from '@/Utils'
+import { IPubSearchProps } from './type'
 import './index.scss';
 
 const InputSearch = Input.Search;
 
-const PubSearch: React.FC = () => {
+const PubSearch: React.FC<IPubSearchProps> = (props) => {
+  const { isSearch, clearSearch } = props;
   const newsTabId = useReduxData(['newsTab', 'data', 'id']);
   const newsType = useReduxData(['newsTab', 'data', 'newsType']);
   const newsCurrent = useReduxData(['newsDigest', 'data', 'current']);
@@ -44,6 +46,12 @@ const PubSearch: React.FC = () => {
     }
   }, [data])
 
+  // useEffect(() => {
+  //   if (!isSearch) {
+  //     clearSearch();
+  //   }
+  // }, [isSearch])
+
   useEffect(() => {
     if (!newsCurrent) setKeyword('');
   }, [newsCurrent])
@@ -62,7 +70,7 @@ const PubSearch: React.FC = () => {
 
   const clearWord = () => {
     setKeyword('');
-    dispatch({ type: 'newsTab/setData', payload: { keyword: '' } })
+    clearSearch?.();
   }
 
   const change = useMemo(() => {
