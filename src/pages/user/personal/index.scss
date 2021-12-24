@@ -1,9 +1,33 @@
 .editName {
+  margin-left: 20px;
   margin-top: 20px;
   width: 250px;
   cursor: 'pointer';
+
   .editWrapper {
     display: flex;
     justify-content: center;
+  }
+
+}
+
+.personal-page {
+  display: flex;
+  flex-wrap: wrap;
+  .personal-box {
+    padding: 5px 30px;
+    margin-top: 20px;
+    height: 20px;
+    width: 100%;
+
+    text-align: center;
+    .reset-form {
+      margin: 0 auto;
+      max-width: 1000px;
+    }
+
+    button {
+      margin: 5px;
+    }
   }
 }
