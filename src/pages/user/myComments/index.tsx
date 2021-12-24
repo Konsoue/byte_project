@@ -18,6 +18,7 @@ const MyComments: React.FC = () => {
     if (myComments) {
       const { data } = myComments as IResponseResult;
       setArr(data.records);
+      console.log(data)
     }
   }, [myComments])
 
