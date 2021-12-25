@@ -27,12 +27,22 @@ const CommentCard: React.FC<ICommentCardProps> = ({
   avatarUrl,
   toDeleteComment,
 }) => {
-  const { content, likesNum, time, _id, userName, userAvatar, isMine, isLike } =
-    data;
+  const {
+    content,
+    likesNum,
+    time,
+    _id,
+    userName,
+    userAvatar,
+    isMine,
+    isLike,
+    followNum,
+  } = data;
   const { run: getComment } = useFetch(commentUrlConfig);
   const { run: addLike } = useFetch(addLikeConfig);
   const { run: deleteLike } = useFetch(deleteLikeConfig);
   const [like, setLike] = useState(isLike);
+  const [replyNum, setReplyNum] = useState(followNum);
   const [replyState, setReplyState] = useState(ReplyState.close);
   // 回复详情
   const [replyData, setReply] = useState({
@@ -69,6 +79,7 @@ const CommentCard: React.FC<ICommentCardProps> = ({
           records: res.data.records,
           total: res.data.total,
         });
+        setReplyNum(res.data.total);
       })
       .catch(() => {
         setReply({
@@ -97,22 +108,22 @@ const CommentCard: React.FC<ICommentCardProps> = ({
             {like ? <IconHeartFill /> : <IconHeart />}
             {likesNum + Number(!isLike ? Number(like) : -Number(!like))}
           </Button>,
-          <Button
-            className="custom-comment-action"
-            type="text"
-            size="mini"
-            key="reply"
-            onClick={() => {
-              if (replyState === ReplyState.close) {
-                setReplyState(ReplyState.reply);
-              } else if (replyState === ReplyState.reply) {
-                setReplyState(ReplyState.close);
-              }
-            }}
-          >
-            <IconSend />
-            回复
-          </Button>,
+          // <Button
+          //   className="custom-comment-action"
+          //   type="text"
+          //   size="mini"
+          //   key="reply"
+          //   onClick={() => {
+          //     if (replyState === ReplyState.close) {
+          //       setReplyState(ReplyState.reply);
+          //     } else if (replyState === ReplyState.reply) {
+          //       setReplyState(ReplyState.close);
+          //     }
+          //   }}
+          // >
+          //   <IconSend />
+          //   回复
+          // </Button>,
           <Button
             className="custom-comment-action"
             type="text"
@@ -127,7 +138,8 @@ const CommentCard: React.FC<ICommentCardProps> = ({
             }}
           >
             <IconMessage />
-            {replyState === ReplyState.all ? "收起回复" : "查看回复"}
+            {replyState === ReplyState.all ? "收起回复" : "回复"}
+            {replyNum === 0 ? null : replyNum}
           </Button>,
           isMine && (
             <Button

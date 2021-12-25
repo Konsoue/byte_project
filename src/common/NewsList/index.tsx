@@ -4,13 +4,13 @@ import { INewsListProps, INewsList, IResponceResult } from './types'
 import useFetch from '@/hooks/useFetch';
 import { newsUrl } from '@/Utils/urls'
 import { LS } from '@/Utils'
-import { Spin, Result } from '@arco-design/web-react';
+import { Spin, Result, Button, Message } from '@arco-design/web-react';
 import { IconFaceSmileFill } from '@arco-design/web-react/icon';
 import { useReduxData, useReduxDispatch } from '@/redux'
 import './index.scss'
 
 const NewsList: React.FC<INewsListProps> = (props) => {
-  const { showCard } = props;
+  const { showCard, clearSearch } = props;
   const newsTabId = useReduxData(['newsTab', 'data', 'id']);
   const newsDigestData = useReduxData(['newsDigest', 'data', 'news']);
   const newsDigestCurrent = useReduxData(['newsDigest', 'data', 'current']);
@@ -35,6 +35,10 @@ const NewsList: React.FC<INewsListProps> = (props) => {
   useEffect(() => {
     if (newsDigest) {
       const { data: { records: data } } = newsDigest as IResponceResult;
+      if (!data.length) {
+        Message.info('没有更多了');
+        return;
+      }
       let news = newsDigestCurrent > 1 ? [...newsDigestData, ...data] : data
       dispatch({
         type: 'newsDigest/setData',
@@ -54,7 +58,7 @@ const NewsList: React.FC<INewsListProps> = (props) => {
   return (
     <div className={`newslist-container`}>
       <div className="spin-container">
-        {newsLoad && <Spin dot />}
+        {newsLoad && <Spin className="load-in-theme" dot />}
       </div>
       <div className={`${showCard && 'show-card'}`}>
         {newsDigestData?.map((news: INewsList) => (
@@ -73,8 +77,9 @@ const NewsList: React.FC<INewsListProps> = (props) => {
           !newsDigestData.length && (
             <Result
               status={null}
-              icon={<IconFaceSmileFill style={{ color: 'rgb(var(--arcoblue-6))' }} />}
+              icon={<IconFaceSmileFill className='icon-in-theme' />}
               title='暂无此类新闻'
+              extra={<Button className="btn-in-theme" onClick={() => clearSearch?.()}>返回</Button>}
             >
             </Result>
           )

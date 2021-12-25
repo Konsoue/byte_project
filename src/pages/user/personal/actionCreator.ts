@@ -19,3 +19,7 @@ export const updateNameConfig: IfetchParams = {
   url: userUrl.updateName,
   type: "post",
 };
+export const resetPasswordConfig: IfetchParams = {
+  url: userUrl.updatePassword,
+  type: "post",
+};

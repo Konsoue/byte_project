@@ -123,7 +123,7 @@ function Detail() {
         }}
         status={null}
         icon={
-          <IconFaceSmileFill spin style={{ color: "rgb(var(--arcoblue-6))" }} />
+          <IconFaceSmileFill spin className='icon-in-theme' />
         }
         title={str}
         extra={

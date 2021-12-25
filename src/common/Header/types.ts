@@ -1,5 +1,7 @@
 export interface IHeaderProps {
   topRef?: any;
+  isSearch?: boolean;
+  clearSearch?: Function;
 }
 
 export interface INewTabProps extends IHeaderProps {
@@ -28,8 +30,8 @@ export interface IUserContentProps extends IPubAvatarProps {
 
 export interface IForecast {
   date: string;
-  fengli:string;
-  fengxiang:string;
+  fengli: string;
+  fengxiang: string;
   high: string;
   low: string;
   type: string;

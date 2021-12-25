@@ -1,11 +1,11 @@
 export interface INewCardProps {
-  id?: number | string;
+  id?: string | number;
   title?: string;
-  content?: string;
+  content: string;
   img?: string;
   loading?: boolean;
   star?: boolean;
-  time?: string;
+  time: string;
   source?: string;
   showCard?: boolean;
 }
