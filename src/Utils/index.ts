@@ -1,4 +1,3 @@
-import { clearTimeout } from 'timers';
 import { IStorageData } from './types'
 
 // 判断类型
