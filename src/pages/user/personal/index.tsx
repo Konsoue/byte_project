@@ -1,11 +1,3 @@
-/*
- * @Author: your name
- * @Date: 2021-12-07 22:51:34
- * @LastEditTime: 2021-12-23 17:41:09
- * @LastEditors: Please set LastEditors
- * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- * @FilePath: \byte_project\src\pages\user\personal\index.tsx
- */
 import React, { useState } from "react";
 import useFetch from "@/hooks/useFetch";
 import {
@@ -14,11 +6,13 @@ import {
   Upload,
   Input,
   Divider,
+  Modal,
 } from "@arco-design/web-react";
 import { IconEdit } from "@arco-design/web-react/icon";
 import localStorageUtils from "@/Utils/localStorageUtils";
 import { updateAvatarConfig, updateNameConfig } from "./actionCreator";
 import { useReduxData, useReduxDispatch } from "@/redux";
+import Cropper from './Cropper'
 import "./index.scss";
 import ForgetForm from './ForgetForm'
 const PersonalPage: React.FC = () => {
@@ -37,6 +31,30 @@ const PersonalPage: React.FC = () => {
     <div className="personal-page">
       <Upload
         showUploadList={false}
+        beforeUpload={(file) => {
+          return new Promise((resolve) => {
+            const modal = Modal.confirm({
+              title: '裁剪图片',
+              style: { width: 500 },
+              footer: null,
+              content: (
+                <Cropper
+                  file={file}
+                  onOk={(file: File) => {
+                    resolve(file)
+                    modal.close()
+                  }}
+                  onCancel={() => {
+                    resolve(false);
+                    Message.info('取消上传');
+                    modal.close();
+                  }}
+                >
+                </Cropper>
+              )
+            })
+          })
+        }}
         customRequest={({ file }) => {
           updateAvatar({ file }).then((res) => {
             dispatch({
@@ -90,16 +108,16 @@ const PersonalPage: React.FC = () => {
             ></Input.Search>
           </div>
         ) : (
-          <div className="normalWrapper" style={{ fontSize: 24 }}>
-            {userName}
-            <IconEdit
-              style={{ marginLeft: "5px", cursor: "pointer" }}
-              onClick={() => {
-                setEditing(!Editing);
-              }}
-            />
-          </div>
-        )}
+            <div className="normalWrapper" style={{ fontSize: 24 }}>
+              {userName}
+              <IconEdit
+                style={{ marginLeft: "5px", cursor: "pointer" }}
+                onClick={() => {
+                  setEditing(!Editing);
+                }}
+              />
+            </div>
+          )}
       </div>
 
       <div className="personal-box">
