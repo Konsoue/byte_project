@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState,useEffect} from "react";
 import { Button, Radio } from '@arco-design/web-react'
 import { LS } from '@/Utils'
 import './index.scss'
@@ -35,6 +35,10 @@ const themeColorOption = [
   {
     value: 'purple',
     label: '紫'
+  },
+  {
+    value: 'more',
+    label: '更多'
   }
 ]
 
@@ -56,26 +60,26 @@ const night = {
 }
 
 const pink =  {
-  '--theme-color-text': 'rgb(255, 151, 168)',
-  '--theme-color-background': 'rgb(255, 151, 168)',
+  '--theme-color-text': '#FF97A8',
+  '--theme-color-background': '#FF97A8',
   defaultLabel: 'pink'
 }
 
 const blue = {
-  '--theme-color-text': 'rgba(23, 93, 254)',
-  '--theme-color-background': 'rgba(23, 93, 254)',
+  '--theme-color-text': '#175DFE',
+  '--theme-color-background': '#175DFE',
   defaultLabel: 'blue'
 }
 
 const green = {
-  '--theme-color-text': 'rgb(51, 189, 85)',
-  '--theme-color-background': 'rgb(51, 189, 85)',
+  '--theme-color-text': '#33BD55',
+  '--theme-color-background': '#33BD55',
   defaultLabel: 'green'
 }
 
 const purple = {
-  '--theme-color-text': 'rgba(149, 20, 255, 0.938)',
-  '--theme-color-background': 'rgba(149, 20, 255, 0.938)',
+  '--theme-color-text': '#9514FF',
+  '--theme-color-background': '#9514FF',
   defaultLabel: 'purple'
 }
 
@@ -99,6 +103,23 @@ const MySettings: React.FC = (props) => {
   let selectedSize =  LS.getItem('fontSize')
   let selectedColor =  LS.getItem('themeColor')
 const [theme, setTheme] = useState(useDark.defaultLabel)
+
+  // 渲染完成后给color监听更多设置的变化
+  useEffect(() => {
+    const colorDom: HTMLFormElement = document.querySelector('.color-box') as HTMLFormElement
+    colorDom && colorDom.addEventListener('change',()=>{
+      // 获取改变的颜色并赋值
+      const color = colorDom.value
+      const more = {
+        '--theme-color-text': color,
+        '--theme-color-background': color,
+        defaultLabel: 'more'
+      }
+      setProperties(more)
+      LS.setItem('themeColor', more)
+    })
+  }, [])
+
   const setProperties = (obj: Object) => {
     const body = document.querySelector('body')
     for (let key of Object.keys(obj)) {
@@ -165,10 +186,13 @@ const [theme, setTheme] = useState(useDark.defaultLabel)
           size='large'
           defaultValue={selectedColor.defaultLabel || 'blue'}
           onChange={(e) => {
+            // 拿到更多选择dom
+            const dom: HTMLFormElement = document.querySelector('.color-box') as HTMLFormElement
             switch(e) {
               case 'pink': {
                 setProperties(pink)
                 LS.setItem('themeColor', pink)
+                // colorDom&& colorDom.value = pink['--theme-color-background']
                 break;
               }
               case 'green': {
@@ -181,15 +205,22 @@ const [theme, setTheme] = useState(useDark.defaultLabel)
                 LS.setItem('themeColor', purple)
                 break;
               }
+              case 'more': {
+                dom.click()
+                break;
+              }
               default: {
                 setProperties(blue)
                 LS.setItem('themeColor', blue)
                 break;
               }
             }
+            // 实现每次更改改变颜色
+            dom.value = LS.getItem('themeColor')['--theme-color-background']
           }}
         >
         </RadioGroup>
+          <input type={'color'} className="color-box" title="更多颜色" defaultValue={selectedColor['--theme-color-background']}></input>
       </div>
 
     </div>
