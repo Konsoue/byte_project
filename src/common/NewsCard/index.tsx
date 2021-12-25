@@ -29,7 +29,7 @@ const NewsCard: React.FC<INewCardProps> = ({
     <Card className={`${showCard && 'is-card'} card-item`}>
       <div className="card-left">
         <div className="img-container">
-          <Image src={img} />
+          <Image src={img} preview={false} onClick={() => toDetailPage(id!)}/>
         </div>
       </div>
       <div className="card-right">
