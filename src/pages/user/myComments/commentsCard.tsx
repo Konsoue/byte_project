@@ -11,7 +11,8 @@ const CommentCard: React.FC<IComCardProps> = ({
   id = '123',
   time = "2021-02-05",
   userAvatar = LoadImg,
-  username = '123',
+  userName = '123',
+  newsImg = LoadImg,
 }) => {
   const history = useHistory();
 
@@ -22,13 +23,13 @@ const CommentCard: React.FC<IComCardProps> = ({
   return (
     <Card className="card-item">
       <div className="img-box">
-        {userAvatar !== null ? <Image src={userAvatar} /> : null}
+        {userAvatar !== null ? <Image className="user-avatar" src={userAvatar} /> : <Image className="news-img" src={newsImg} />}
       </div>
       <div className="comment-content">
 
         <div className="comment-middle">
           <div className="user">
-            {userAvatar !== null ? <span>对用户{username}的评论:</span> : <span>对新闻《{newsTitle}》的评论:</span>}
+            {userAvatar !== null ? <span>对用户{userName}的评论:</span> : <span>对新闻《{newsTitle}》的评论:</span>}
           </div>
 
           <div className="time">
