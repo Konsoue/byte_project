@@ -3,6 +3,7 @@ $article-container-padding: 10px 12% 0 12%;
 
 .article-container {
   position: relative;
+  min-width: 660px;
   height: calc(100vh - $header-height);
   box-sizing: border-box;
   margin: $header-height auto 0;

@@ -34,7 +34,7 @@
     .arco-image::before {
       content: "";
       position: absolute;
-      width: 100%;
+      width: inherit;
       height: 100%;
       background-image: url('~@/static/images/load.gif');
       background-size: cover;
@@ -92,8 +92,9 @@
       transition: all .3s;
     }
   }
+
   .card-item:hover {
-    box-shadow:2px 2px 2px 2px  #d6d6d6;
+    box-shadow: 2px 2px 2px 2px #d6d6d6;
 
     img {
       transform: scale(1.05);
@@ -103,8 +104,10 @@
 
 
 .is-card.card-item {
-  max-width: 24%;
-  min-width: 280px;
+  float: left;
+  width: 24%;
+  min-width: 240px;
+  margin-right: 0.5%;
 
   .arco-card-body {
     display: block;
@@ -112,10 +115,15 @@
 
     .card-left {
       display: block;
-      max-width: none;
       max-height: 120px;
       height: 120px;
-      width: auto;
+      min-width: 100%;
+      max-width: 100%;
+      width: 100%;
+
+      .img-container {
+        width: inherit;
+      }
     }
 
     .card-right {

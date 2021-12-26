@@ -148,3 +148,13 @@ body {
     background: var(--theme-color-background) !important;
   }
 }
+
+.clearfix::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.clearfix {
+  *zoom: 1;
+}

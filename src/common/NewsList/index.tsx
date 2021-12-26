@@ -29,16 +29,13 @@ const NewsList: React.FC<INewsListProps> = (props) => {
       typeId = newsType[0]?.id;
     }
     if (typeId) getNewsDigest({ type: typeId, current: newsDigestCurrent || 1, keyword: newsKeyword || '' });
-  }, [newsTabId, newsDigestCurrent])
+  }, [newsTabId, newsDigestCurrent, newsKeyword])
 
 
   useEffect(() => {
     if (newsDigest) {
       const { data: { records: data } } = newsDigest as IResponceResult;
-      if (!data.length) {
-        Message.info('没有更多了');
-        return;
-      }
+      if (!data.length && newsDigestCurrent > 1) Message.info('没有更多了');
       let news = newsDigestCurrent > 1 ? [...newsDigestData, ...data] : data
       dispatch({
         type: 'newsDigest/setData',
@@ -60,7 +57,7 @@ const NewsList: React.FC<INewsListProps> = (props) => {
       <div className="spin-container">
         {newsLoad && <Spin className="load-in-theme" dot />}
       </div>
-      <div className={`${showCard && 'show-card'}`}>
+      <div className={`${showCard && 'show-card clearfix'}`}>
         {newsDigestData?.map((news: INewsList) => (
           <NewsCard
             key={news._id}
