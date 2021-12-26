@@ -18,7 +18,6 @@ const MyComments: React.FC = () => {
     if (myComments) {
       const { data } = myComments as IResponseResult;
       setArr(data.records);
-      console.log(data)
     }
   }, [myComments])
 
@@ -33,6 +32,8 @@ const MyComments: React.FC = () => {
           newsId={item.newsId}
           time={item.time}
           userAvatar={item.userAvatar}
+          userName={item.userName}
+          newsImg={item.newsImg}
         />
       ))}
     </article>

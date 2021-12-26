@@ -10,7 +10,8 @@ export interface ICommentsList {
   time: string;
   title: string;
   userAvatar?: string;
-  username?: string;
+  userName?: string;
+  newsImg?:string;
 }
 
 export interface IComCardProps {
@@ -20,5 +21,6 @@ export interface IComCardProps {
   time: string;
   id: string;
   userAvatar?: string;
-  username?: string;
+  userName?: string;
+  newsImg?:string;
 }
