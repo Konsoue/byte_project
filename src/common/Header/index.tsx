@@ -15,23 +15,23 @@ const Header: React.FC<IHeaderProps> = (props) => {
   const location = useLocation();
   const userData = useReduxData(['userData', 'data']);
   const dispatch = useReduxDispatch();
-  // 用户设置的路由拦截
-  useLayoutEffect(() => {
-    const { pathname } = location;
-    const data = localStorageUtils.get();
-    if (JSON.stringify(data) !== "{}") {
-      dispatch({
-        type: 'userData/setData',
-        payload: {
-          login: true,
-          avatar: data.user.avatar,
-          name: data.user.name,
-        }
-      })
-    } else {
-      if (pathname.includes('/user')) history.push('/');
-    }
-  }, [])
+  // // 用户设置的路由拦截
+  // useLayoutEffect(() => {
+  //   const { pathname } = location;
+  //   const data = localStorageUtils.get();
+  //   if (JSON.stringify(data) !== "{}") {
+  //     dispatch({
+  //       type: 'userData/setData',
+  //       payload: {
+  //         login: true,
+  //         avatar: data.user.avatar,
+  //         name: data.user.name,
+  //       }
+  //     })
+  //   } else {
+  //     if (pathname.includes('/user')) history.push('/');
+  //   }
+  // }, [])
 
   return (
     <div className="pub-header-container">

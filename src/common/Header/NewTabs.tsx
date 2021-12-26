@@ -16,6 +16,7 @@ const NewTabs: React.FC<INewTabProps> = (props) => {
   const { topRef } = props;
   const newsTabId = useReduxData(['newsTab', 'data', 'id']);
   const newsTab = useReduxData(['newsTab', 'data', 'newsType']) as ITabsPaneProps[];
+  const newsKeyword = useReduxData(['newsTab', 'data', 'keyword']);
   const dispatch = useReduxDispatch()
   const { location: { pathname }, push: pushRoute } = useHistory();
   const { run: getNewsType, data: newsType } = useFetch({
@@ -49,17 +50,21 @@ const NewTabs: React.FC<INewTabProps> = (props) => {
   }, [newsType])
 
   const tabChange = (key: string) => {
-    dispatch({ type: 'newsTab/setData', payload: { id: key } })
+    dispatch({ type: 'newsTab/setData', payload: { id: key, keyword: '' } })
     dispatch({ type: 'newsDigest/setData', payload: { current: 1 } })
     if (topRef) topRef.current?.click();
-    // if (pathname !== '/') pushRoute('/')
+  }
+
+  const clickTab = (key: string) => {
+    if (newsKeyword !== '') tabChange(key);
+    pushRoute('/');
   }
 
   return (
     <Tabs className="header-tabs"
       activeTab={newsTabId}
       onChange={tabChange}
-      onClickTab={() => pushRoute('/')}
+      onClickTab={clickTab}
     >
       {
         newsTab.map(news => <TabPane key={news.id} title={news.name} />)
