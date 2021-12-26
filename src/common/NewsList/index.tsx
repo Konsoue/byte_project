@@ -57,7 +57,7 @@ const NewsList: React.FC<INewsListProps> = (props) => {
       <div className="spin-container">
         {newsLoad && <Spin className="load-in-theme" dot />}
       </div>
-      <div className={`${showCard && 'show-card'}`}>
+      <div className={`${showCard && 'show-card clearfix'}`}>
         {newsDigestData?.map((news: INewsList) => (
           <NewsCard
             key={news._id}
