@@ -7,6 +7,7 @@ import localStorageUtils from "@/Utils/localStorageUtils";
 import { history } from "@/route";
 import { ILoginFormProps } from "./types";
 import { IconEmail, IconPen } from "@arco-design/web-react/icon";
+import { useReduxDispatch } from "@/redux";
 const layout = {
   labelCol: { span: 6 },
   wrapperCol: { span: 18 },
@@ -15,16 +16,26 @@ const layout = {
 const LoginForm: React.FC<ILoginFormProps> = ({ setStatus }) => {
   const [formLogin] = Form.useForm();
   const { run: login } = useFetch(loginFetchConfig);
+  const dispatch = useReduxDispatch();
 
   // 校验成功的回掉
   const onSubmit = (values: any) => {
     login(values).then((res) => {
+      const user = res.data.user;
       // 登陆成功写入数据
       localStorageUtils.set(res.data);
       // 登陆成功提示
       Message.success("登陆成功");
       // 跳转到管理页面
       history.push({ pathname: "/" });
+      dispatch({
+        type: "userData/setData",
+        payload: {
+          name: user.name,
+          avatar: user.avatar,
+          login: true
+        },
+      })
     });
   };
 
