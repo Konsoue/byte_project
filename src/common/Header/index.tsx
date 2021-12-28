@@ -1,17 +1,38 @@
-import React, { memo } from "react";
+import React, { memo, useLayoutEffect } from "react";
 import PubSearch from "@/common/PubSearch";
 import PubAvatar from "./PubAvatar";
 import NewTabs from "./NewTabs";
 import PubWeather from "./PubWeather";
 import { IHeaderProps } from "./types";
-import { useHistory } from 'react-router-dom'
-import { useReduxData } from '@/redux'
+import localStorageUtils from "@/Utils/localStorageUtils";
+import { useHistory, useLocation } from 'react-router-dom'
+import { useReduxData, useReduxDispatch } from '@/redux'
 import "./index.scss";
 
 const Header: React.FC<IHeaderProps> = (props) => {
   const { topRef, isSearch, clearSearch } = props;
   const history = useHistory();
+  const location = useLocation();
   const userData = useReduxData(['userData', 'data']);
+  const dispatch = useReduxDispatch();
+  
+  // 用户设置的路由拦截
+  useLayoutEffect(() => {
+    const { pathname } = location;
+    const data = localStorageUtils.get();
+    if (JSON.stringify(data) !== "{}") {
+      dispatch({
+        type: 'userData/setData',
+        payload: {
+          login: true,
+          avatar: data.user.avatar,
+          name: data.user.name,
+        }
+      })
+    } else {
+      if (pathname.includes('/user')) history.push('/');
+    }
+  }, [])
 
   return (
     <div className="pub-header-container">

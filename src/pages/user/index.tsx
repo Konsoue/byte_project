@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React from "react";
 import SideBar from "@/common/sideBar/index";
 import { Layout, Card, Result, Button } from "@arco-design/web-react";
 import { Switch, Route } from "react-router-dom";
@@ -6,36 +6,13 @@ import { routeMethod } from "@/route/getRoute";
 import { withRouter, RouteComponentProps } from "react-router";
 import { IconFaceSmileFill } from "@arco-design/web-react/icon";
 import TopHeader from "@/common/Header";
-import localStorageUtils from "@/Utils/localStorageUtils";
-import { useReduxDispatch } from '@/redux'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import "./index.scss";
 
 const { Sider, Content, Header } = Layout;
 
 const User: React.FC<RouteComponentProps> = (props) => {
-  const reduxDispatch = useReduxDispatch();
-  const location = useLocation();
   const history = useHistory();
-
-  // 用户设置的路由拦截
-  useLayoutEffect(() => {
-    const { pathname } = location;
-    const data = localStorageUtils.get();
-    if (JSON.stringify(data) !== "{}") {
-      reduxDispatch({
-        type: 'userData/setData',
-        payload: {
-          login: true,
-          avatar: data.user.avatar,
-          name: data.user.name,
-        }
-      })
-    } else {
-      if (pathname.includes('/user')) history.push('/');
-    }
-  }, [])
-
 
   const renderContent = () => {
     return (
