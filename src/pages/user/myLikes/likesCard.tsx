@@ -28,8 +28,7 @@ const LikeCard: React.FC<ILikeCardProps> = ({
 
       <div className="user">
         <div className="title">
-          <span >{userName}</span>
-          <span className="user-title"> 赞了我的评论</span>
+          <span className="user-title">我赞了 {userName} 的评论</span>
         </div>
         <div className="time">{time.split(" ")[0]}</div>
       </div>

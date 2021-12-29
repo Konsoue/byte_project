@@ -34,7 +34,7 @@
         width: 85%;
 
         .comment-middle {
-          margin-top: 15px;
+          margin-top: 8px;
           display: flex;
           flex-direction: row;
           justify-content: space-around;
@@ -43,11 +43,12 @@
             flex: 3;
             font-size: 15px;
             color: rgb(105, 104, 104);
+            font-weight: bold;
           }
 
           .time {
             flex: 1;
-            margin: 10px 100px;
+            margin: 0px 0px 7px;
             font-size: 14px;
             color: rgb(105, 104, 104);
             text-align: right;
