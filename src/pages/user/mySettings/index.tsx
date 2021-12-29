@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useReduxDispatch } from '@/redux'
-import { Button, Message, Radio, Tree } from '@arco-design/web-react'
+import { Button, Message, Radio, Tree, Divider} from '@arco-design/web-react'
 import {
   InewsTab,
   InewsTree
@@ -161,6 +161,7 @@ const MySettings: React.FC = (props) => {
   }
   return (
     <div className='settingPage'>
+       <Divider orientation='left'>主题设置</Divider>
       <Button
         type="primary"
         onClick={() => {
@@ -254,8 +255,8 @@ const MySettings: React.FC = (props) => {
         </RadioGroup>
           <input type={'color'} className="color-box" title="更多颜色" defaultValue={selectedColor['--theme-color-background']}></input>
       </div>
+       <Divider orientation='left'>新闻栏目设置 : </Divider>
       <div className="tabChange">
-        <div className="title">新闻栏目设置 : </div>
         <Tree
           draggable={draggable}
           checkable={checked}
