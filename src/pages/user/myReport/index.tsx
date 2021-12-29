@@ -123,6 +123,7 @@ const MyReport: React.FC = () => {
   const [typeTime, setTypeTime] = useState(option);
   const { run: getMyLogs, data: logData, loading: logsLoding } = useFetch({
     url: logUrl.getMyLogs,
+    type: 'get'
   });
 
   useEffect(() => {
