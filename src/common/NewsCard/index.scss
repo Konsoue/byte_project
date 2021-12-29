@@ -26,12 +26,17 @@
 
     .arco-image,
     .arco-image-img {
+      animation-name: contentEnter2;
+      animation-duration: calc(1s * 0.75);
       position: relative;
       width: inherit;
       height: 100%;
     }
 
     .arco-image::before {
+      // transition: all .3s;
+      animation-name: contentEnter;
+      animation-duration: calc(1s * 0.75);
       content: "";
       position: absolute;
       width: inherit;
@@ -94,7 +99,7 @@
   }
 
   .card-item:hover {
-    box-shadow: 2px 2px 2px 2px #d6d6d6;
+    box-shadow: 2px 2px 2px 2px #d6d6d62f;
 
     img {
       transform: scale(1.05);
@@ -139,5 +144,29 @@
       }
 
     }
+  }
+}
+
+@keyframes contentEnter {
+  from {
+    transform: translate(0, 10%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes contentEnter2 {
+  from {
+    transform: translate(0, 5%);
+    opacity: 0.8;
+  }
+
+  to {
+    transform: translate(0, 0);
+    opacity: 1;
   }
 }

@@ -1,7 +1,6 @@
 body {
   color: var(--theme-text);
   background: var(--theme-background);
-
   .arco-card.card-item {
     background-color: transparent;
   }
@@ -124,6 +123,15 @@ body {
     color: var(--theme-text);
   }
 
+  .arco-tree-node-title-text {
+    color: var(--theme-text);
+    font-size: var(--theme-font-size) !important;
+  }
+
+  .arco-divider-text {
+    background-color: var(--theme-background) !important;
+    color:  var(--theme-text) !important;
+  }
 }
 
 .bold {

@@ -5,11 +5,11 @@
       display: flex;
       justify-content: space-around;
       width: 100%;
-      height: 140px;
+      height: 100px;
       border-radius: 5px;
 
       .img-box {
-        width: 15%;
+        width: 10%;
         text-align: center;
         margin: 15px 0;
 
@@ -17,21 +17,21 @@
           width: 100%;
           margin-top: 10px;
           .arco-image-img {
-            width: 75px;
+            width: 50px;
             border-radius: 40px;
           }
         }
         .news-img {
-          width: 100%;
+          height: 100%;
           overflow: hidden;
           .arco-image-img {
-            width: 100%;
+            height: 100%;
           }
         }
       }
 
       .comment-content {
-        width: 80%;
+        width: 85%;
 
         .comment-middle {
           margin-top: 15px;
